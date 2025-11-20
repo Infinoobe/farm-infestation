@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8a03171f4628c0d40ad0b67f76a01979
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - currentPlant: {instanceID: 0}
+  - weedPrefabTest: {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
