@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
         var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         var velocity = input * Speed;
         Controller.Move(velocity * Time.deltaTime);
+        if (input.magnitude > 0.01)
+        {
+            transform.LookAt(transform.position + input);
+        }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
