@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
     [SerializeField] private Plant plantPrefab; // to delete later?
+    const int DAMAGE = 100;
 
     void Start()
     {
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
             {
                 if ((enemy.transform.position - transform.position).magnitude < AttackRange)
                 {
-                    enemy.Hit();
+                    enemy.DealDamage(DAMAGE);
                 }
             }
         }

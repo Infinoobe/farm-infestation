@@ -152,6 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
+  AttackRange: 2
+  plantingRange: 3
+  plantPrefab: {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
 --- !u!95 &6211206287205239526
 Animator:
   serializedVersion: 7

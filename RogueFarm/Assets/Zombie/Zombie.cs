@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Zombie : MonoBehaviour
+public class Zombie : MonoBehaviour, IDamagable
 {
     private NavMeshAgent Agent;
     private Player Player;
@@ -20,9 +20,13 @@ public class Zombie : MonoBehaviour
         Agent.destination = Player.transform.position;
     }
 
-    public void Hit()
+    public void DealDamage(int damage)
     {
         Agent.Warp(SpawnPosition);
     }
 
+    public void KillYourself()
+    {
+        Destroy(gameObject);
+    }
 }
