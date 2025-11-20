@@ -5,7 +5,7 @@ public class Field : MonoBehaviour
 {
     [SerializeField] private Plant currentPlant;
 
-    [SerializeField] private Plant weedPrefabTest;
+    [SerializeField] private Plant weedPrefabTest;  // for testing from inspector
     [ContextMenu("Plant Seed")]
     public void test() {
         PlantSeed(weedPrefabTest);
@@ -18,5 +18,10 @@ public class Field : MonoBehaviour
         {
             currentPlant = Instantiate(plantPrefab, transform.position, Quaternion.identity, transform);
         }
+    }
+
+    public bool IsEmpty()
+    {
+        return currentPlant == null;
     }
 }

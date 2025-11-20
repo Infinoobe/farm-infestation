@@ -5,7 +5,10 @@ public class Player : MonoBehaviour
     private CharacterController Controller;
     public float Speed = 5f;
     public float AttackRange = 2.0f;
-     void Start()
+    [SerializeField] private float plantingRange = 3f;
+    [SerializeField] private Plant plantPrefab; // to delete later?
+
+    void Start()
     {
         Controller = GetComponent<CharacterController>();
     }
@@ -27,6 +30,39 @@ public class Player : MonoBehaviour
                     enemy.Hit();
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) // plant action
+        {
+            PlantOnNearestField();
+        }
+    }
+
+    private void PlantOnNearestField()
+    {
+        Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
+        Field nearest = null;
+        float minDistance = Mathf.Infinity;
+        Vector3 playerPos = transform.position;
+
+        foreach (Field field in allFields)
+        {
+            if (!field.IsEmpty()) continue;
+            float dist = Vector3.Distance(playerPos, field.transform.position);
+            if (dist < minDistance && dist <= plantingRange)
+            {
+                minDistance = dist;
+                nearest = field;
+            }
+        }
+
+        if (nearest != null)
+        {
+            nearest.PlantSeed(plantPrefab); // TODO choose plant
+        }
+        else
+        {
+            Debug.Log("No available plants!");
         }
     }
 }
