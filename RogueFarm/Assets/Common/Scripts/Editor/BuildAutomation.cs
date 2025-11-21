@@ -26,9 +26,9 @@ namespace Editor
             }
             
             var f = new FileInfo(report.summary.outputPath);
-            var zipFile = f.Directory.FullName + ".zip";
+            var zipFile = f.FullName + ".zip";
             
-            ZipArchive(f.Directory.FullName, zipFile);
+            ZipArchive(f.FullName, zipFile);
             Debug.Log("Archive complete");
 
             ButlerItchUpload(zipFile, "infinoobe/farm-infestation:web");
