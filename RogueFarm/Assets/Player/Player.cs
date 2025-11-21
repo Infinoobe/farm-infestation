@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public float Speed = 5f;
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
-    [SerializeField] private Plant plantPrefab; // to delete later?
+    public Plant plantPrefab; // to delete later?
     const int DAMAGE = 100;
 
     void Start()
@@ -43,6 +43,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetPlantToUse(Plant plant)
+    {
+        plantPrefab = plant;
+    }
+
     private void PlantOnNearestField()
     {
         Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
@@ -54,20 +59,20 @@ public class Player : MonoBehaviour
         {
             if (!field.IsEmpty()) continue;
             float dist = Vector3.Distance(playerPos, field.transform.position);
-            if (dist < minDistance && dist <= plantingRange)
+            if (dist < minDistance)
             {
                 minDistance = dist;
                 nearest = field;
             }
         }
 
-        if (nearest != null)
+        if (nearest != null && minDistance <= plantingRange)
         {
             nearest.PlantSeed(plantPrefab); // TODO choose plant
         }
         else
         {
-            Debug.Log("No available plants!");
+            Debug.Log($"No available fields. Nearest is {minDistance}!");
         }
     }
 }
