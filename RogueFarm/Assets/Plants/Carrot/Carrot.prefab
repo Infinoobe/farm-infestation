@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1126132416229102580}
   - component: {fileID: 5088195311929033051}
-  - component: {fileID: -9083653215909363332}
   m_Layer: 12
   m_Name: Carrot
   m_TagString: Untagged
@@ -51,21 +50,6 @@ MonoBehaviour:
   grownPlant: {fileID: 5328269239436685222}
   GrowthTime: 5
   health: 100
---- !u!114 &-9083653215909363332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2703125554296294715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!1001 &1388562037585117502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92,7 +76,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ceede2f3c21a6a418e99b1a75d50400, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ceede2f3c21a6a418e99b1a75d50400, type: 3}
       propertyPath: m_LocalPosition.z
@@ -179,7 +163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ceede2f3c21a6a418e99b1a75d50400, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ceede2f3c21a6a418e99b1a75d50400, type: 3}
       propertyPath: m_LocalPosition.z
