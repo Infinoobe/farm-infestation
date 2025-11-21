@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public abstract class Plant : MonoBehaviour, IDamagable
+public class Plant : MonoBehaviour, IDamagable
 {
     private bool isGrown = false;
     [SerializeField] private GameObject growingPlant;
