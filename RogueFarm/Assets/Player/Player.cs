@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) // plant action
+        if (Input.GetKeyDown(KeyCode.E) && GameState.Instance.IsDay()) // plant action
         {
             PlantOnNearestField();
         }

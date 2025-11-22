@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growingPlant: {fileID: 2259608405657233351}
   grownPlant: {fileID: 8212200025339119867}
-  GrowthTime: 5
+  growthTime: 3
   health: 100
 --- !u!1 &4808851546067871320
 GameObject:

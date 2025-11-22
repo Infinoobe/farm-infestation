@@ -6,14 +6,24 @@ public class Plant : MonoBehaviour, IDamagable
     private bool isGrown = false;
     [SerializeField] private GameObject growingPlant;
     [SerializeField] private GameObject grownPlant;
-    [SerializeField] private float GrowthTime = 5f;
+    [SerializeField] private int growthTime = 2;
     [SerializeField] private int health = 100;
 
     public void Start()
     {
         growingPlant.SetActive(!isGrown);
         grownPlant.SetActive(isGrown);
-        Invoke(nameof(Grow), GrowthTime);
+        GameState.Instance.OnDayStarted += HandleDayStarted;
+    }
+
+    private void HandleDayStarted()
+    {
+        if (isGrown) return;
+        growthTime--;
+        if (growthTime <= 0)
+        {
+            Grow();
+        }
     }
 
     public void DealDamage(int damage)
@@ -24,6 +34,7 @@ public class Plant : MonoBehaviour, IDamagable
 
     public void KillYourself()
     {
+        GameState.Instance.OnDayStarted -= HandleDayStarted;
         Destroy(gameObject);
     }
 
