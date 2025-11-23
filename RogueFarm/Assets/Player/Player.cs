@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public float Speed = 5f;
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
-    public Plant plantPrefab; // to delete later?
+    public Plant plantPrefab;
     const int DAMAGE = 100;
 
     void Start()
@@ -16,30 +16,48 @@ public class Player : MonoBehaviour
      
     void Update()
     {
+        MoveAndRotate();
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (GameState.Instance.IsDay())
+            {
+                PlantOnNearestField();
+            }
+            else
+            {
+                Attack();
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameState.Instance.GoToSleep();
+        }
+    }
+
+    private void MoveAndRotate()
+    {
         var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         var velocity = input * Speed;
         Controller.Move(velocity * Time.deltaTime);
+        
         if (input.magnitude > 0.01)
         {
             transform.LookAt(transform.position + input);
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+    private void Attack()
+    {
+        GetComponent<Animator>().Play("Attack");
+        var enemies = FindObjectsByType<Zombie>(FindObjectsSortMode.None);
+        foreach (var enemy in enemies)
         {
-            GetComponent<Animator>().Play("Attack");
-            var enemies = FindObjectsByType<Zombie>(FindObjectsSortMode.None);
-            foreach (var enemy in enemies)
+            if ((enemy.transform.position - transform.position).magnitude < AttackRange)
             {
-                if ((enemy.transform.position - transform.position).magnitude < AttackRange)
-                {
-                    enemy.DealDamage(DAMAGE);
-                }
+                enemy.DealDamage(DAMAGE);
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && GameState.Instance.IsDay()) // plant action
-        {
-            PlantOnNearestField();
         }
     }
 

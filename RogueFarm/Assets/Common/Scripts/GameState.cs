@@ -39,15 +39,14 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
-        StartNextPhase();
+        StartDay();
     }
 
-
-    void Update()
+    public void GoToSleep()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (IsDay())
         {
-            StartNextPhase();
+            StartNight();
         }
     }
 
@@ -103,6 +102,12 @@ public class GameState : MonoBehaviour
     public bool CanSpawnZombieThisNight()
     {
         return perNightZombiesSpawned < zombiesToSpawn;
+    }
+
+    public int GetZombiesToKill()
+    {
+        if (!IsNight()) return 0;
+        return zombiesToSpawn - perNightZombiesSpawned + perNightZombiesAlive;
     }
 }
 
