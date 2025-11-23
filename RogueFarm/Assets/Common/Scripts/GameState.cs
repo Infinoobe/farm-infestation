@@ -5,10 +5,15 @@ public class GameState : MonoBehaviour
 {
     private GamePhase currGamePhase = GamePhase.None;
     private int currentDay = 0;
+    private int currentZombies = 0;
 
     // Events
     public event Action OnDayStarted;
     public event Action OnNightStarted;
+
+    // Zombie settings
+    [SerializeField] public int zombiesToSpawn = 5;
+    [SerializeField] public int zombieLimit = 3;
 
     public static GameState Instance { get; private set; }
     public GamePhase CurrentPhase => currGamePhase;
@@ -65,6 +70,16 @@ public class GameState : MonoBehaviour
         Debug.Log("Starting night");
         currGamePhase = GamePhase.Night;
         OnNightStarted?.Invoke();
+    }
+
+    public int getCurrentZombies()
+    {
+        return currentZombies;
+    }
+
+    public void addCurrentZombies(int x)
+    {
+        currentZombies += x;
     }
 }
 

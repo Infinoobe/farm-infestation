@@ -7,7 +7,6 @@ using UnityEngine;
 public class ZombieSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject zombieType;
-    [SerializeField] private int zombieCount = 3;
     [SerializeField] private float zombieTime = 1f;
     private List<GameObject> myZombies = new List<GameObject>();
     private Coroutine spawnCoroutine;
@@ -42,9 +41,16 @@ public class ZombieSpawner : MonoBehaviour
 
     private IEnumerator SpawnZombiesCoroutine()
     {
-        for (int i = 0; i < zombieCount; i++)
+        while (GameState.Instance.zombiesToSpawn > 0)
         {
-            SpawnZombie();
+            if (GameState.Instance.getCurrentZombies() < GameState.Instance.zombieLimit)
+            {
+                SpawnZombie();
+                GameState.Instance.addCurrentZombies(1);
+                GameState.Instance.zombiesToSpawn--;
+
+                Debug.Log("Zombie Spawned! Zombies left: " + GameState.Instance.zombiesToSpawn);
+            }
             yield return new WaitForSeconds(zombieTime);
         }
     }
