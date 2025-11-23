@@ -962,7 +962,6 @@ GameObject:
   - component: {fileID: 711014041}
   - component: {fileID: 711014044}
   - component: {fileID: 711014043}
-  - component: {fileID: 711014042}
   m_Layer: 12
   m_Name: Grown Model
   m_TagString: Untagged
@@ -986,29 +985,6 @@ Transform:
   - {fileID: 1932436600}
   m_Father: {fileID: 1619996732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &711014042
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 711014040}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &711014043
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1135,7 +1111,6 @@ GameObject:
   - component: {fileID: 797132917}
   - component: {fileID: 797132920}
   - component: {fileID: 797132919}
-  - component: {fileID: 797132918}
   m_Layer: 12
   m_Name: Leaf (3)
   m_TagString: Untagged
@@ -1158,29 +1133,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1932436600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -70}
---- !u!136 &797132918
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797132916}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &797132919
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1513,9 +1465,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1815026734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125.75, y: -13.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 125.75, y: 13.5}
   m_SizeDelta: {x: 251.5, y: 27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1051708267
@@ -1852,7 +1804,6 @@ GameObject:
   - component: {fileID: 1188791345}
   - component: {fileID: 1188791348}
   - component: {fileID: 1188791347}
-  - component: {fileID: 1188791346}
   m_Layer: 12
   m_Name: Leaf
   m_TagString: Untagged
@@ -1875,29 +1826,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1932436600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
---- !u!136 &1188791346
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1188791344}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &1188791347
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2459,7 +2387,6 @@ GameObject:
   - component: {fileID: 1833339393}
   - component: {fileID: 1833339396}
   - component: {fileID: 1833339395}
-  - component: {fileID: 1833339394}
   m_Layer: 12
   m_Name: Leaf (2)
   m_TagString: Untagged
@@ -2482,29 +2409,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1932436600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
---- !u!136 &1833339394
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833339392}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &1833339395
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2772,9 +2676,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1815026734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -86.249985, y: -27.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 86.75, y: -27.5}
   m_SizeDelta: {x: 173.5, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930801875
@@ -2798,6 +2702,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'E - Plant/Attack
+
+    Q - Change plant
 
     P - Go to sleep'
   m_isRightToLeft: 0
@@ -2826,7 +2732,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3134,7 +3040,6 @@ GameObject:
   - component: {fileID: 2146337861}
   - component: {fileID: 2146337864}
   - component: {fileID: 2146337863}
-  - component: {fileID: 2146337862}
   m_Layer: 12
   m_Name: Leaf (1)
   m_TagString: Untagged
@@ -3157,29 +3062,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1932436600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 70}
---- !u!136 &2146337862
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146337860}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &2146337863
 MeshRenderer:
   m_ObjectHideFlags: 0

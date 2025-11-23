@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     const int DAMAGE = 100;
 
     private int currentPlantIndex = 0;
+    public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
 
     // Events
     public UnityEvent<Plant> OnPlantChanged = new UnityEvent<Plant>();
@@ -108,7 +109,7 @@ public class Player : MonoBehaviour
         if (currentPlantIndex >= plantPrefabs.Length)
             currentPlantIndex = 0;
 
-        Debug.Log("Selected plant: " + plantPrefabs[currentPlantIndex].name);
-        OnPlantChanged.Invoke(plantPrefabs[currentPlantIndex]);
+        Debug.Log("Selected plant: " + SelectedPlant.name);
+        OnPlantChanged.Invoke(SelectedPlant);
     }
 }

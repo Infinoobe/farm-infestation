@@ -6,25 +6,13 @@ public class SeedDispenser : MonoBehaviour
     public Player player;
     public Plant plantToUse;
     public Renderer dispenserRenderer;
-    public string defaultHexColor = "EAFF66";
-    public string selectedHexColor = "0000FF";
-    
-    private Color defaultColor;
-    private Color selectedColor;
-
-    // Tries to use HexColor, otherwise chooses more default ones
-    private void Awake()
-    {
-        if (!ColorUtility.TryParseHtmlString(selectedHexColor, out selectedColor))
-            selectedColor = Color.blue;
-
-        if (!ColorUtility.TryParseHtmlString(defaultHexColor, out defaultColor))
-            defaultColor = Color.white;
-    }
+    public Color defaultHexColor = new Color(0xEA/255.0f,1,0x66/255.0f,0.5f);
+    public Color selectedHexColor = new Color(0x00/255.0f,0x00/255.0f,0xFF/255.0f,0.5f);
 
     private void OnEnable()
     {
         player.OnPlantChanged.AddListener(UpdateColor);
+        UpdateColor(player.SelectedPlant);
     }
 
     private void OnDisable()
@@ -35,8 +23,8 @@ public class SeedDispenser : MonoBehaviour
     private void UpdateColor(Plant selectedPlant)
     {
         if (selectedPlant == plantToUse)
-            dispenserRenderer.material.color = selectedColor;
+            dispenserRenderer.material.color = selectedHexColor;
         else
-            dispenserRenderer.material.color = defaultColor;
+            dispenserRenderer.material.color = defaultHexColor;
     }
 }
