@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float plantingRange = 3f;
     public Plant[] plantPrefabs;
     const int DAMAGE = 100;
+    public GameObject playerSpriteQuad;
 
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
