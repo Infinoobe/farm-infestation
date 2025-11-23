@@ -637,7 +637,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -645,7 +645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -679,6 +679,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedCarrot
       objectReference: {fileID: 0}
+    - target: {fileID: 6932636052605198743, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 806788398}
     - target: {fileID: 6932636052605198743, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: plantToUse
       value: 
@@ -884,7 +888,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -892,7 +896,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1881007197566124348, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -926,6 +930,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedPotato
       objectReference: {fileID: 0}
+    - target: {fileID: 6932636052605198743, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 806788398}
     - target: {fileID: 6932636052605198743, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
       propertyPath: plantToUse
       value: 
@@ -1226,6 +1234,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797132916}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &806788398 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+  m_PrefabInstance: {fileID: 8628891553195047026}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543f41b1d1f345849aebbce69a0ed58a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,6 +3285,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeedWeed
       objectReference: {fileID: 0}
+    - target: {fileID: 6932636052605198743, guid: 919e3b39c9b215348a4b1f3fb40b9c6d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 806788398}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -3346,6 +3369,18 @@ PrefabInstance:
       propertyPath: 'plantPrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 5088195311929033051, guid: a81b031299a76f84895fb70bea59e847, type: 3}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: OnPlantChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: OnPlantChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: OnPlantChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
