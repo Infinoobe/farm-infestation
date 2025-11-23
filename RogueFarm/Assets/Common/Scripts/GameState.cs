@@ -1,19 +1,22 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameState : MonoBehaviour
 {
     private GamePhase currGamePhase = GamePhase.None;
     private int currentDay = 0;
-    private int currentZombies = 0;
 
     // Events
-    public event Action OnDayStarted;
-    public event Action OnNightStarted;
+    [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
+    [SerializeField] public UnityEvent OnNightStarted = new UnityEvent();
 
     // Zombie settings
     [SerializeField] public int zombiesToSpawn = 5;
     [SerializeField] public int zombieLimit = 3;
+
+    private int perNightZombiesSpawned;
+    private int perNightZombiesAlive;
 
     public static GameState Instance { get; private set; }
     public GamePhase CurrentPhase => currGamePhase;
@@ -32,7 +35,6 @@ public class GameState : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -62,24 +64,45 @@ public class GameState : MonoBehaviour
         Debug.Log("Starting day");
         currentDay++;
         currGamePhase = GamePhase.Day;
-        OnDayStarted?.Invoke();
+        OnDayStarted.Invoke();
     }
 
     private void StartNight()
     {
         Debug.Log("Starting night");
         currGamePhase = GamePhase.Night;
-        OnNightStarted?.Invoke();
+        perNightZombiesSpawned = 0;
+        perNightZombiesAlive = 0;
+        OnNightStarted.Invoke();
     }
 
-    public int getCurrentZombies()
+    public void ZombieSpawned()
     {
-        return currentZombies;
+        ++perNightZombiesSpawned;
+        ++perNightZombiesAlive;
+        
+        Debug.Log($"Zombie Spawned! Zombies left: {zombiesToSpawn - perNightZombiesSpawned}" );
+    }
+    
+    public void ZombieDied()
+    {
+        --perNightZombiesAlive;
+        Debug.Log($"Zombie Dead! Zombies left: { perNightZombiesAlive}");
+        if (perNightZombiesAlive == 0 && !CanSpawnZombieThisNight())
+        {
+            Invoke(nameof(StartDay), 0.0f); // don't change while despawning zombie
+        }
+    }
+    
+
+    public bool CanSpawnZombieNow()
+    {
+        return CanSpawnZombieThisNight() && perNightZombiesAlive < zombieLimit;
     }
 
-    public void addCurrentZombies(int x)
+    public bool CanSpawnZombieThisNight()
     {
-        currentZombies += x;
+        return perNightZombiesSpawned < zombiesToSpawn;
     }
 }
 

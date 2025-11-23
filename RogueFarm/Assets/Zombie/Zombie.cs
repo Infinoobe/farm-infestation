@@ -6,13 +6,13 @@ public class Zombie : MonoBehaviour, IDamagable
 {
     private NavMeshAgent Agent;
     private Player Player;
-    private Vector3 SpawnPosition;
+
+    public ZombieSpawner Spawner;
     
     public void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
         Player = FindAnyObjectByType<Player>();
-        SpawnPosition = transform.position;
     }
 
     public void Update()
@@ -22,11 +22,17 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void DealDamage(int damage)
     {
-        Agent.Warp(SpawnPosition);
+        KillYourself();
     }
 
     public void KillYourself()
     {
+        if (Spawner != null) Spawner.OnZombieDied(this);
         Destroy(gameObject);
+    }
+
+    public void KillYourselfFromDaylight()
+    {
+        KillYourself();
     }
 }

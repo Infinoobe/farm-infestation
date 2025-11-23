@@ -13,7 +13,7 @@ public class Plant : MonoBehaviour, IDamagable
     {
         growingPlant.SetActive(!isGrown);
         grownPlant.SetActive(isGrown);
-        GameState.Instance.OnDayStarted += HandleDayStarted;
+        GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
     }
 
     private void HandleDayStarted()
@@ -34,7 +34,7 @@ public class Plant : MonoBehaviour, IDamagable
 
     public void KillYourself()
     {
-        GameState.Instance.OnDayStarted -= HandleDayStarted;
+        GameState.Instance.OnDayStarted.RemoveListener(HandleDayStarted);
         Destroy(gameObject);
     }
 

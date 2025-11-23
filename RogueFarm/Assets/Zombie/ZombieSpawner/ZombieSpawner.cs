@@ -1,20 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.XR.OpenVR;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject zombieType;
+    [SerializeField] private Zombie zombieType;
     [SerializeField] private float zombieTime = 1f;
-    private List<GameObject> myZombies = new List<GameObject>();
+    private List<Zombie> myZombies = new ();
     private Coroutine spawnCoroutine;
 
     void Start()
     {
-        GameState.Instance.OnNightStarted += HandleNightStarted;
-        GameState.Instance.OnDayStarted += HandleDayStarted;
+        GameState.Instance.OnNightStarted.AddListener(HandleNightStarted);
+        GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
     }
 
     private void HandleDayStarted()
@@ -25,10 +24,11 @@ public class ZombieSpawner : MonoBehaviour
             spawnCoroutine = null;
         }
 
-        foreach (var zombie in myZombies)
+        var zombiesCpy = new List<Zombie>(myZombies);
+        foreach (var zombie in zombiesCpy)
         {
             if (zombie != null)
-                Destroy(zombie);
+                zombie.KillYourselfFromDaylight();
         }
 
         myZombies.Clear();
@@ -41,15 +41,12 @@ public class ZombieSpawner : MonoBehaviour
 
     private IEnumerator SpawnZombiesCoroutine()
     {
-        while (GameState.Instance.zombiesToSpawn > 0)
+        while (GameState.Instance.CanSpawnZombieThisNight())
         {
-            if (GameState.Instance.getCurrentZombies() < GameState.Instance.zombieLimit)
+            if (GameState.Instance.CanSpawnZombieNow())
             {
                 SpawnZombie();
-                GameState.Instance.addCurrentZombies(1);
-                GameState.Instance.zombiesToSpawn--;
-
-                Debug.Log("Zombie Spawned! Zombies left: " + GameState.Instance.zombiesToSpawn);
+                GameState.Instance.ZombieSpawned();
             }
             yield return new WaitForSeconds(zombieTime);
         }
@@ -58,6 +55,14 @@ public class ZombieSpawner : MonoBehaviour
     private void SpawnZombie()
     {
         Vector3 pos = transform.position + new Vector3(0, 1, 0);
-        myZombies.Add(Instantiate(zombieType, pos, Quaternion.identity, transform));
+        var z = Instantiate(zombieType, pos, Quaternion.identity, transform);
+        z.Spawner = this;
+        myZombies.Add(z);
+    }
+
+    public void OnZombieDied(Zombie z)
+    {
+        myZombies.Remove(z);
+        GameState.Instance.ZombieDied();
     }
 }
