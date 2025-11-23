@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -6,8 +7,13 @@ public class Player : MonoBehaviour
     public float Speed = 5f;
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
-    public Plant plantPrefab;
+    public Plant[] plantPrefabs;
     const int DAMAGE = 100;
+
+    private int currentPlantIndex = 0;
+
+    // Events
+    public UnityEvent<Plant> OnPlantChanged = new UnityEvent<Plant>();
 
     void Start()
     {
@@ -17,7 +23,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         MoveAndRotate();
-        
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (GameState.Instance.IsDay())
@@ -33,6 +39,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameState.Instance.GoToSleep();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            CyclePlants();
         }
     }
 
@@ -61,11 +72,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetPlantToUse(Plant plant)
-    {
-        plantPrefab = plant;
-    }
-
     private void PlantOnNearestField()
     {
         Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
@@ -86,11 +92,23 @@ public class Player : MonoBehaviour
 
         if (nearest != null && minDistance <= plantingRange)
         {
-            nearest.PlantSeed(plantPrefab); // TODO choose plant
+            nearest.PlantSeed(plantPrefabs[currentPlantIndex]);
         }
         else
         {
             Debug.Log($"No available fields. Nearest is {minDistance}!");
         }
+    }
+
+    // Cycles through Plants added in plantPrefabs list
+    private void CyclePlants()
+    {
+        currentPlantIndex++;
+
+        if (currentPlantIndex >= plantPrefabs.Length)
+            currentPlantIndex = 0;
+
+        Debug.Log("Selected plant: " + plantPrefabs[currentPlantIndex].name);
+        OnPlantChanged.Invoke(plantPrefabs[currentPlantIndex]);
     }
 }

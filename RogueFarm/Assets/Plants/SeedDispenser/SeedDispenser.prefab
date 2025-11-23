@@ -47,7 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56cc134947a7cb41ba33b4c11e02441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
   plantToUse: {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
+  dispenserRenderer: {fileID: 5943070315146658039}
+  defaultHexColor: EAFF66
+  selectedHexColor: 0000FF
 --- !u!33 &1674229233768781156
 MeshFilter:
   m_ObjectHideFlags: 0

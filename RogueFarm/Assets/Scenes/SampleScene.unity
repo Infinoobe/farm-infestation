@@ -3330,6 +3330,22 @@ PrefabInstance:
       propertyPath: plantPrefab
       value: 
       objectReference: {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: plantPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: 'plantPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: 'plantPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5088195311929033051, guid: fd428aa11f9dba249a4792413cbc51a8, type: 3}
+    - target: {fileID: 6995272627084493882, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+      propertyPath: 'plantPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5088195311929033051, guid: a81b031299a76f84895fb70bea59e847, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
