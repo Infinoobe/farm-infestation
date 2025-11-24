@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
     public Plant[] plantPrefabs;
-    const int DAMAGE = 100;
+    const int DAMAGE = 1;
     public GameObject playerSpriteQuad;
 
     private int currentPlantIndex = 0;

@@ -8,6 +8,9 @@ public class Zombie : MonoBehaviour, IDamagable
     private Player Player;
 
     public ZombieSpawner Spawner;
+
+    // Combat
+    private int hitPoints = 2;
     
     public void Start()
     {
@@ -22,7 +25,10 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void DealDamage(int damage)
     {
-        KillYourself();
+        GetComponent<Animator>().Play("Damage");
+        hitPoints -= damage;
+        if (hitPoints <= 0)
+            KillYourself();
     }
 
     public void KillYourself()
