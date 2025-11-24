@@ -9,8 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float plantingRange = 3f;
     public Plant[] plantPrefabs;
     const int DAMAGE = 1;
-    public GameObject playerSpriteQuad;
-
+    public Animator animator;
+    public GameObject sword;
+    
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
 
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
      
     void Update()
     {
+        sword.SetActive(GameState.Instance.IsNight());
         MoveAndRotate();
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -54,7 +56,8 @@ public class Player : MonoBehaviour
         var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         var velocity = input * Speed;
         Controller.Move(velocity * Time.deltaTime);
-        
+        animator.SetFloat("Speed", velocity.magnitude);
+
         if (input.magnitude > 0.01)
         {
             transform.LookAt(transform.position + input);
@@ -63,7 +66,7 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        GetComponent<Animator>().Play("Attack");
+        animator.SetTrigger("Attack");
         var enemies = FindObjectsByType<Zombie>(FindObjectsSortMode.None);
         foreach (var enemy in enemies)
         {
@@ -94,6 +97,7 @@ public class Player : MonoBehaviour
 
         if (nearest != null && minDistance <= plantingRange)
         {
+            animator.SetTrigger("Plant");
             nearest.PlantSeed(plantPrefabs[currentPlantIndex]);
         }
         else
