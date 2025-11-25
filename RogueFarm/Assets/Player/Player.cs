@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     private void MoveAndRotate()
     {
         var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (input.magnitude > 1.0)
+            input = input.normalized;
         var velocity = input * Speed;
         Controller.Move(velocity * Time.deltaTime);
         animator.SetFloat("Speed", velocity.magnitude);
