@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5088195311929033051}
   m_Layer: 12
   m_Name: Carrot
-  m_TagString: Untagged
+  m_TagString: plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growingPlant: {fileID: 2271010485456845935}
   grownPlant: {fileID: 5328269239436685222}
-  GrowthTime: 5
+  growthTime: 2
   health: 100
 --- !u!1001 &1388562037585117502
 PrefabInstance:

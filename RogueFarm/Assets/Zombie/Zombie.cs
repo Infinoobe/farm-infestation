@@ -20,7 +20,7 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void Update()
     {
-        Agent.destination = Player.transform.position;
+        // Agent.destination = Player.transform.position;
     }
 
     public void DealDamage(int damage)
