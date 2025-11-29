@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, IDamagable
     
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
+    public bool IsDead => hitPoints <= 0;
 
     // Combat
     public int hitPoints = 100;
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
-        if (hitPoints <= 0) return;
+        if (IsDead) return;
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Planting")) return;
 
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void DealDamage(int damageDealt)
     {
-        if (hitPoints <= 0) return;
+        if (IsDead) return;
         
         animator.Play("Damage");
         hitPoints -= damageDealt;
