@@ -35,7 +35,8 @@ public class Player : MonoBehaviour, IDamagable
         if (IsDead) return;
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Planting")) return;
-
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Sword Attack")) return;
+        
         sword.SetActive(GameState.Instance.IsNight());
         MoveAndRotate();
 

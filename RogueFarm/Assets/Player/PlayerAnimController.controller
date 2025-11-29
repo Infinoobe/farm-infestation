@@ -17,7 +17,7 @@ AnimatorStateMachine:
     m_Position: {x: 940, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4077059302253254265}
-    m_Position: {x: 440, y: -100, z: 0}
+    m_Position: {x: 680, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5157753196486252535}
     m_Position: {x: 750, y: -130, z: 0}
@@ -29,7 +29,7 @@ AnimatorStateMachine:
     m_Position: {x: 170, y: -40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8966362484138610285}
-    m_Position: {x: 660, y: -10, z: 0}
+    m_Position: {x: 440, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8659758772796875179}
     m_Position: {x: 700, y: 60, z: 0}
@@ -244,6 +244,31 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &-1466478307979113019
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Attack
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 2223707146554014065}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.7540984
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -426,10 +451,10 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: c9e8a417a28a2b1478fc822505c06e5e, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: Speed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_TimeParameter: Speed
 --- !u!1102 &5157753196486252535
 AnimatorState:
   serializedVersion: 6
@@ -564,6 +589,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 7497310688462284970}
   - {fileID: 2258194269724067538}
+  - {fileID: -1466478307979113019}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
