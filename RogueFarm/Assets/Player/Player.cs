@@ -32,6 +32,8 @@ public class Player : MonoBehaviour, IDamagable
     void Update()
     {
         if (hitPoints <= 0) return;
+        
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Planting")) return;
 
         sword.SetActive(GameState.Instance.IsNight());
         MoveAndRotate();
