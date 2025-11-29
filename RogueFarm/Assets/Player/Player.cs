@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour, IDamagable
 {
     private CharacterController Controller;
+
     public float Speed = 5f;
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour, IDamagable
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
 
     // Combat
-    private int hitPoints = 100;
+    public int hitPoints = 100;
     private int damage = 10;
 
     // Events
@@ -24,10 +25,14 @@ public class Player : MonoBehaviour, IDamagable
     void Start()
     {
         Controller = GetComponent<CharacterController>();
+        GameState.Instance.Player = this;
     }
-     
+
+
     void Update()
     {
+        if (hitPoints <= 0) return;
+
         sword.SetActive(GameState.Instance.IsNight());
         MoveAndRotate();
 
@@ -56,7 +61,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void DealDamage(int damageDealt)
     {
-        GetComponent<Animator>().Play("Damage");
+        animator.Play("Damage");
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
             KillYourself();
@@ -64,6 +69,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void KillYourself()
     {
+        animator.Play("Death");
         Debug.Log("Player Died!");
     }
 

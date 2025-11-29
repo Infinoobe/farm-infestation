@@ -9,7 +9,8 @@ namespace UI
         void Update()
         {
             zombiesCounter.enabled = GameState.Instance.IsNight();
-            zombiesCounter.text = $"Zombies to kill: {GameState.Instance.GetZombiesToKill()}";
+            zombiesCounter.text = $"HP: {GameState.Instance.Player.hitPoints}\n"
+                                  +$"Zombies to kill: {GameState.Instance.GetZombiesToKill()}";
         }
     }
 }

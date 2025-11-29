@@ -23,6 +23,7 @@ public class GameState : MonoBehaviour
     public bool IsDay() { return currGamePhase == GamePhase.Day; }
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
     public int CurrentDay => currentDay;
+    public Player Player;
 
     private void Awake()
     {
