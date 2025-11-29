@@ -61,6 +61,8 @@ public class Player : MonoBehaviour, IDamagable
 
     public void DealDamage(int damageDealt)
     {
+        if (hitPoints <= 0) return;
+        
         animator.Play("Damage");
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
