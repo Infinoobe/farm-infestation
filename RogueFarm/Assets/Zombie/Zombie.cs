@@ -10,7 +10,8 @@ public class Zombie : MonoBehaviour, IDamagable
     public ZombieSpawner Spawner;
 
     // Combat
-    private int hitPoints = 2;
+    private int hitPoints = 20;
+    private int damage = 10;
     
     public void Start()
     {
@@ -23,10 +24,10 @@ public class Zombie : MonoBehaviour, IDamagable
         // Agent.destination = Player.transform.position;
     }
 
-    public void DealDamage(int damage)
+    public void DealDamage(int damageDealt)
     {
         GetComponent<Animator>().Play("Damage");
-        hitPoints -= damage;
+        hitPoints -= damageDealt;
         if (hitPoints <= 0)
             KillYourself();
     }
@@ -40,5 +41,10 @@ public class Zombie : MonoBehaviour, IDamagable
     public void KillYourselfFromDaylight()
     {
         KillYourself();
+    }
+
+    public int getDamage()
+    {
+        return damage;
     }
 }

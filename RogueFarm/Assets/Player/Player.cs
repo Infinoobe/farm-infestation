@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     private CharacterController Controller;
     public float Speed = 5f;
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
     public Plant[] plantPrefabs;
-    const int DAMAGE = 1;
     public Animator animator;
     public GameObject sword;
     
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
+
+    // Combat
+    private int hitPoints = 100;
+    private int damage = 10;
 
     // Events
     public UnityEvent<Plant> OnPlantChanged = new UnityEvent<Plant>();
@@ -51,6 +54,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void DealDamage(int damageDealt)
+    {
+        GetComponent<Animator>().Play("Damage");
+        hitPoints -= damageDealt;
+        if (hitPoints <= 0)
+            KillYourself();
+    }
+
+    public void KillYourself()
+    {
+        Debug.Log("Player Died!");
+    }
+
     private void MoveAndRotate()
     {
         var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -74,7 +90,7 @@ public class Player : MonoBehaviour
         {
             if ((enemy.transform.position - transform.position).magnitude < AttackRange)
             {
-                enemy.DealDamage(DAMAGE);
+                enemy.DealDamage(damage);
             }
         }
     }
