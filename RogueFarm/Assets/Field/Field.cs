@@ -5,13 +5,6 @@ public class Field : MonoBehaviour
 {
     [SerializeField] private Plant currentPlant;
 
-    [SerializeField] private Plant weedPrefabTest;  // for testing from inspector
-    [ContextMenu("Plant Seed")]
-    public void test() {
-        PlantSeed(weedPrefabTest);
-    }
-
-
     public void PlantSeed(Plant plantPrefab)
     {
         if (currentPlant == null)
@@ -20,8 +13,20 @@ public class Field : MonoBehaviour
         }
     }
 
+    public void CollectPlant()
+    {
+        if (!CanBeCollected()) return;
+        currentPlant.CollectItem();
+    }
+
     public bool IsEmpty()
     {
         return currentPlant == null;
+    }
+
+    public bool CanBeCollected()
+    {
+        if (IsEmpty()) return false;
+        return currentPlant.IsGrown;
     }
 }

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamagable
     public float AttackRange = 2.0f;
     [SerializeField] private float plantingRange = 3f;
     public Plant[] plantPrefabs;
+    public Item[] neededSeeds;
     public Animator animator;
     public GameObject sword;
     
@@ -51,7 +52,12 @@ public class Player : MonoBehaviour, IDamagable
                 Attack();
             }
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.F) && GameState.Instance.IsDay())
+        {
+            CollectNearestPlant();
+        }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameState.Instance.GoToSleep();
@@ -107,6 +113,35 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
+    private void CollectNearestPlant()
+    {
+        Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
+        Field nearest = null;
+        float minDistance = Mathf.Infinity;
+        Vector3 playerPos = transform.position;
+
+        foreach (Field field in allFields)
+        {
+            if (!field.CanBeCollected()) continue;
+            float dist = Vector3.Distance(playerPos, field.transform.position);
+            if (dist < minDistance)
+            {
+                minDistance = dist;
+                nearest = field;
+            }
+        }
+
+        if (nearest != null && minDistance <= plantingRange)
+        {
+            animator.SetTrigger("Plant");
+            nearest.CollectPlant();
+        }
+        else
+        {
+            Debug.Log("No available fields to collect!");
+        }
+    }
+
     private void PlantOnNearestField()
     {
         Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
@@ -127,8 +162,15 @@ public class Player : MonoBehaviour, IDamagable
 
         if (nearest != null && minDistance <= plantingRange)
         {
-            animator.SetTrigger("Plant");
-            nearest.PlantSeed(plantPrefabs[currentPlantIndex]);
+            if (GameState.Instance.PullItem(neededSeeds[currentPlantIndex]))
+            {
+                animator.SetTrigger("Plant");
+                nearest.PlantSeed(plantPrefabs[currentPlantIndex]);
+            }
+            else
+            {
+                Debug.Log($"No item {neededSeeds[currentPlantIndex].name}.");
+            }
         }
         else
         {

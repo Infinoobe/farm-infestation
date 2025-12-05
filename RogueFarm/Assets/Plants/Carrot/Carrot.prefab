@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3f51acfda2f9345b1ca2f9f9e4bd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectItem: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+  collectItemAmount: 10
   growingPlant: {fileID: 2271010485456845935}
   grownPlant: {fileID: 5328269239436685222}
   growthTime: 2

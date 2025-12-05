@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +7,8 @@ public class GameState : MonoBehaviour
 {
     private GamePhase currGamePhase = GamePhase.None;
     private int currentDay = 0;
+
+    [SerializeField] private Inventory inventory;
 
     // Events
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
@@ -24,6 +27,11 @@ public class GameState : MonoBehaviour
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
     public int CurrentDay => currentDay;
     public Player Player;
+
+    public Dictionary<Item, int> GetItems()
+    {
+        return inventory.items;
+    }
 
     private void Awake()
     {
@@ -109,6 +117,20 @@ public class GameState : MonoBehaviour
     {
         if (!IsNight()) return 0;
         return zombiesToSpawn - perNightZombiesSpawned + perNightZombiesAlive;
+    }
+
+    public bool PullItem(Item item, int amount = 1)
+    {
+        if (inventory.GetAmount(item) == 0 
+            || inventory.GetAmount(item) < amount) return false;
+
+        inventory.RemoveItem(item, amount);
+        return true;
+    }
+
+    public void AddItem(Item item, int amount = 1)
+    {
+        inventory.AddItem(item, amount);
     }
 }
 

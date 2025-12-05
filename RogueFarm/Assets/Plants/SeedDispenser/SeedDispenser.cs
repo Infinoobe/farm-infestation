@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SeedDispenser : MonoBehaviour
 {
@@ -23,7 +24,9 @@ public class SeedDispenser : MonoBehaviour
     private void UpdateColor(Plant selectedPlant)
     {
         if (selectedPlant == plantToUse)
+        {
             dispenserRenderer.material.color = selectedHexColor;
+        }
         else
             dispenserRenderer.material.color = defaultHexColor;
     }

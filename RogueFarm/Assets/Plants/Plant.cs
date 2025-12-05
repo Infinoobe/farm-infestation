@@ -4,10 +4,14 @@ using System;
 public class Plant : MonoBehaviour, IDamagable
 {
     private bool isGrown = false;
+    [SerializeField] private Item collectItem;
+    [SerializeField] private int collectItemAmount;
     [SerializeField] private GameObject growingPlant;
     [SerializeField] private GameObject grownPlant;
     [SerializeField] private int growthTime = 2;
     [SerializeField] private int health = 100;
+
+    public bool IsGrown => isGrown;
 
     public void Start()
     {
@@ -36,6 +40,13 @@ public class Plant : MonoBehaviour, IDamagable
     {
         GameState.Instance.OnDayStarted.RemoveListener(HandleDayStarted);
         Destroy(gameObject);
+    }
+
+    public void CollectItem()
+    {
+        if (!isGrown) return;
+        GameState.Instance.AddItem(collectItem, collectItemAmount);
+        KillYourself();
     }
 
     public void Grow()
