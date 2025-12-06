@@ -135,11 +135,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  AttackRange: 2
+  AttackRange: 1
   plantingRange: 3
   plantPrefabs: []
+  neededSeeds: []
   animator: {fileID: 4033709399600204765}
   sword: {fileID: 1510715506965206046}
+  playerAnimEvents: {fileID: 6072969647759613369}
   hitPoints: 100
   OnPlantChanged:
     m_PersistentCalls:
@@ -270,6 +272,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f319be0e3a9568a4a8a581c87507b9e7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4033709399600204765}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f319be0e3a9568a4a8a581c87507b9e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6072969647759613369}
   m_SourcePrefab: {fileID: 100100000, guid: f319be0e3a9568a4a8a581c87507b9e7, type: 3}
 --- !u!4 &7403606954846994707 stripped
 Transform:
@@ -303,6 +308,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6072969647759613369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343516817777656714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d44c2cadd17a684989a6f37958e818e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimDealDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &8683486520051685680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f319be0e3a9568a4a8a581c87507b9e7, type: 3}

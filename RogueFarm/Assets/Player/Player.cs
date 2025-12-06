@@ -6,12 +6,13 @@ public class Player : MonoBehaviour, IDamagable
     private CharacterController Controller;
 
     public float Speed = 5f;
-    public float AttackRange = 2.0f;
+    public float AttackRange = 1.0f;
     [SerializeField] private float plantingRange = 3f;
     public Plant[] plantPrefabs;
     public Item[] neededSeeds;
     public Animator animator;
     public GameObject sword;
+    public PlayerAnimEvents playerAnimEvents;
     
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         Controller = GetComponent<CharacterController>();
         GameState.Instance.Player = this;
+        playerAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
     }
 
 
@@ -103,10 +105,16 @@ public class Player : MonoBehaviour, IDamagable
     private void Attack()
     {
         animator.SetTrigger("Attack");
+    }
+
+    public void DealAttackDamage()
+    {
         var enemies = FindObjectsByType<Zombie>(FindObjectsSortMode.None);
+        var attackPosition = transform.position + transform.forward * AttackRange;
+        //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
         foreach (var enemy in enemies)
         {
-            if ((enemy.transform.position - transform.position).magnitude < AttackRange)
+            if ((enemy.transform.position - attackPosition).magnitude < AttackRange)
             {
                 enemy.DealDamage(damage);
             }
