@@ -17,9 +17,13 @@ namespace UI
 
         void Update()
         {
-            zombiesCounter.enabled = GameState.Instance.IsNight();
-            zombiesCounter.text = $"HP: {GameState.Instance.Player.hitPoints}\n"
-                                  +$"Zombies to kill: {GameState.Instance.GetZombiesToKill()}";
+            var uiText = $"HP: {GameState.Instance.Player.hitPoints}";
+            if (GameState.Instance.IsNight())
+            {
+                uiText += $"\nZombies to kill: {GameState.Instance.GetZombiesToKill()}";
+            }
+            zombiesCounter.text = uiText;
+            
             deadSplashScreen.SetActive(GameState.Instance.Player.IsDead);
 
             if (Input.GetKeyDown(KeyCode.Tab))
