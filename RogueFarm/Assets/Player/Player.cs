@@ -17,6 +17,8 @@ public class Player : MonoBehaviour, IDamagable
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
     public bool IsDead => hitPoints <= 0;
+    
+    public float invulnerableTimestamp = 0.0f;
 
     // Combat
     public int hitPoints = 100;
@@ -74,9 +76,11 @@ public class Player : MonoBehaviour, IDamagable
     public void DealDamage(int damageDealt)
     {
         if (IsDead) return;
+        if (Time.time < invulnerableTimestamp) return;
         
         animator.Play("Damage");
         hitPoints -= damageDealt;
+        invulnerableTimestamp = Time.time + 0.1f;
         if (hitPoints <= 0)
             KillYourself();
     }
