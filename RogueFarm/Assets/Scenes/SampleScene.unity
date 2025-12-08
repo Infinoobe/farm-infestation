@@ -1682,7 +1682,7 @@ MonoBehaviour:
   Lookahead:
     Enabled: 1
     Time: 0.6
-    Smoothing: 4
+    Smoothing: 7
     IgnoreY: 0
 --- !u!1001 &344176586
 PrefabInstance:
@@ -6681,6 +6681,14 @@ PrefabInstance:
     - target: {fileID: 5789213534345131006, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7604268180536435499, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 278.9546
+      objectReference: {fileID: 0}
+    - target: {fileID: 7604268180536435499, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 88.71484
       objectReference: {fileID: 0}
     - target: {fileID: 9128095433754061845, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: m_Name
