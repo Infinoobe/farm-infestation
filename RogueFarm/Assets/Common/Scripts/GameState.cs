@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,9 @@ public class GameState : MonoBehaviour
     private GamePhase currGamePhase = GamePhase.None;
     private int currentDay = 0;
 
+    // Backpack
     [SerializeField] private Inventory inventory;
+    [SerializeField] public int money = 0;
 
     // Events
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
@@ -130,7 +133,10 @@ public class GameState : MonoBehaviour
 
     public void AddItem(Item item, int amount = 1)
     {
-        inventory.AddItem(item, amount);
+        if (item.itemName == "Money")
+            money += amount;
+        else
+            inventory.AddItem(item, amount);
     }
 }
 

@@ -17,7 +17,15 @@ namespace UI
 
         void Update()
         {
-            var uiText = $"HP: {GameState.Instance.Player.hitPoints}";
+            var uiText = $"";
+            
+            if (GameState.Instance.IsDay())
+            {
+                uiText += $"Money: {GameState.Instance.money}\n";
+            }
+
+            uiText += $"HP: {GameState.Instance.Player.hitPoints}";
+
             if (GameState.Instance.IsNight())
             {
                 uiText += $"\nZombies to kill: {GameState.Instance.GetZombiesToKill()}";
