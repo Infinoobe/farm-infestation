@@ -8,6 +8,7 @@ public class Zombie : MonoBehaviour, IDamagable
     private Player Player;
 
     public ZombieSpawner Spawner;
+    public Animator animator;
 
     // Combat
     private int hitPoints = 20;
