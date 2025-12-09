@@ -9,15 +9,18 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public ZombieSpawner Spawner;
     public Animator animator;
+    public ZombieAnimEvents zombieAnimEvents;
 
     // Combat
     private int hitPoints = 20;
     private int damage = 10;
+    private float attackRange = 1.0f;
     
     public void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
         Player = FindAnyObjectByType<Player>();
+        zombieAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
     }
 
     public void Update()
@@ -31,6 +34,20 @@ public class Zombie : MonoBehaviour, IDamagable
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
             KillYourself();
+    }
+
+    public void DealAttackDamage()
+    {
+        var enemies = FindObjectsByType<Player>(FindObjectsSortMode.None);
+        var attackPosition = transform.position + transform.forward * attackRange;
+        //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
+        foreach (var enemy in enemies)
+        {
+            if ((enemy.transform.position - attackPosition).magnitude < attackRange)
+            {
+                enemy.DealDamage(damage);
+            }
+        }
     }
 
     public void KillYourself()
