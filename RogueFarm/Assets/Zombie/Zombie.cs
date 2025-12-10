@@ -30,7 +30,7 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void DealDamage(int damageDealt)
     {
-        GetComponent<Animator>().Play("Damage");
+        animator.Play("Damage");
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
             KillYourself();
