@@ -11,6 +11,8 @@ public class Zombie : MonoBehaviour, IDamagable
     public Animator animator;
     public ZombieAnimEvents zombieAnimEvents;
 
+    public ParticleSystem bloodPfx;
+    
     // Combat
     private int hitPoints = 20;
     private int damage = 10;
@@ -31,6 +33,7 @@ public class Zombie : MonoBehaviour, IDamagable
     public void DealDamage(int damageDealt)
     {
         animator.Play("Damage");
+        bloodPfx.Play();
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
             KillYourself();
