@@ -10,12 +10,15 @@ public class GameState : MonoBehaviour
     private int currentDay = 0;
 
     // Backpack
+    [SerializeField] Item[] startingItems;
     [SerializeField] private Inventory inventory;
     [SerializeField] public int money = 0;
+    [SerializeField] private Item moneyItem;
 
     // Events
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
     [SerializeField] public UnityEvent OnNightStarted = new UnityEvent();
+    [SerializeField] public UnityEvent RefreshShop = new UnityEvent();
 
     // Zombie settings
     [SerializeField] public int zombiesToSpawn = 5;
@@ -52,6 +55,10 @@ public class GameState : MonoBehaviour
     void Start()
     {
         StartDay();
+        foreach (var item in startingItems)
+        {
+            AddItem(item, 10);
+        }
     }
 
     public void GoToSleep()
@@ -133,10 +140,37 @@ public class GameState : MonoBehaviour
 
     public void AddItem(Item item, int amount = 1)
     {
-        if (item.itemName == "Money")
+        if (item == moneyItem)
             money += amount;
         else
             inventory.AddItem(item, amount);
+    }
+
+    public void SellItem(Item item, int amount = 1)
+    {
+        if(PullItem(item, amount))
+        {
+            AddItem(moneyItem, amount*item.valueSelling);
+            RefreshShop?.Invoke();
+        }
+        else
+        {
+            Debug.Log("No item in backpack");
+        }
+    }
+
+    public void BuyItem(Item item, int amount = 1)
+    {
+        if (money >= item.valueBuying*amount)
+        {
+            money -= item.valueBuying * amount;
+            AddItem(item, amount);
+            RefreshShop?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Not enough money");
+        }
     }
 }
 

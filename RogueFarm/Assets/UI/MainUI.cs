@@ -9,10 +9,12 @@ namespace UI
         public TMP_Text zombiesCounter;
         public GameObject deadSplashScreen;
         public GameObject backpackPanel;
+        public GameObject shopPanel;
 
         private void Start()
         {
             backpackPanel.SetActive(false);
+            shopPanel.SetActive(false);
         }
 
         void Update()
@@ -38,6 +40,11 @@ namespace UI
             {
                 SwitchBackpack();
             }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                SwitchShop();
+            }
         }
 
         public void RestartGame()
@@ -48,6 +55,11 @@ namespace UI
         public void SwitchBackpack()
         {
             backpackPanel.SetActive(!backpackPanel.activeSelf);
+        }
+
+        public void SwitchShop()
+        {
+            shopPanel.SetActive(!shopPanel.activeSelf);
         }
     }
 }

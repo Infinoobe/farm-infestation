@@ -9,6 +9,8 @@ public class BackpackUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (GameState.Instance == null)
+            return;
         ClearBackpackView();
         Dictionary<Item, int> items = GameState.Instance.GetItems();
         foreach (var kvp in items)

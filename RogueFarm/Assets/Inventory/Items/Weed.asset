@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Weed
   icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  value: 100
+  valueBuying: 200
+  valueSelling: 100
