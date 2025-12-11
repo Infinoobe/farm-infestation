@@ -1,4 +1,5 @@
 using Interactable;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -68,6 +69,22 @@ public class Player : MonoBehaviour, IDamagable
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CyclePlants();
+        }
+        
+        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            MainUI.Instance.SwitchBackpack();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab) && MainUI.Instance.IsBackpackVisible())
+        {
+            MainUI.Instance.SwitchBackpack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            MainUI.Instance.SwitchShop();
         }
     }
 

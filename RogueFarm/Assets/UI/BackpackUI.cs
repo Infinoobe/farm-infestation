@@ -5,6 +5,7 @@ using TMPro;
 
 public class BackpackUI : MonoBehaviour
 {
+    public GameObject itemsList;
     [SerializeField] private GameObject itemViewPrefab;
 
     private void OnEnable()
@@ -20,7 +21,7 @@ public class BackpackUI : MonoBehaviour
 
             if (amount <= 0) continue;
 
-            GameObject obj = Instantiate(itemViewPrefab, transform);
+            GameObject obj = Instantiate(itemViewPrefab, itemsList.transform);
 
             Image icon = obj.transform.Find("ItemImage").GetComponent<Image>();
             TMP_Text nameText = obj.transform.Find("ItemText").GetComponent<TMP_Text>();
@@ -32,7 +33,7 @@ public class BackpackUI : MonoBehaviour
 
     private void ClearBackpackView()
     {
-        foreach (Transform child in transform)
+        foreach (Transform child in itemsList.transform)
             Destroy(child.gameObject);
     }
 }

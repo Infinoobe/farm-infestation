@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +8,8 @@ namespace UI
 {
     public class MainUI : MonoBehaviour
     {
+        public static MainUI Instance;
+        
         public TMP_Text bottomLeft;
         public TMP_Text topRight;
         public TMP_Text hpLabel;
@@ -15,6 +18,17 @@ namespace UI
         public GameObject deadSplashScreen;
         public GameObject backpackPanel;
         public GameObject shopPanel;
+
+        public void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -41,16 +55,6 @@ namespace UI
             hpImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth);
             
             deadSplashScreen.SetActive(GameState.Instance.Player.IsDead);
-
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                SwitchBackpack();
-            }
-
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                SwitchShop();
-            }
         }
 
         public void RestartGame()
@@ -66,6 +70,11 @@ namespace UI
         public void SwitchShop()
         {
             shopPanel.SetActive(!shopPanel.activeSelf);
+        }
+
+        public bool IsBackpackVisible()
+        {
+            return backpackPanel.activeSelf;
         }
     }
 }
