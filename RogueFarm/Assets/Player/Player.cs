@@ -149,7 +149,7 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    private bool TryGetInteractable(out IInteractable nearest)
+    public bool TryGetInteractable(out IInteractable nearest)
     {
         var interactionPosition = transform.position + transform.forward * AttackRange;
         interactionPosition.y = 0;

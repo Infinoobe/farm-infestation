@@ -45,9 +45,17 @@ public class Field : MonoBehaviour, IInteractable
 
     public string GetDescription()
     {
-        if (currentPlant == null) return "Plant";
+        if (currentPlant == null)
+        {
+            var selectedPlantSeed = GameState.Instance.Player.SelectedPlantSeed;
+            var items = GameState.Instance.GetItems();
+            items.TryGetValue(selectedPlantSeed, out var count);
+            if (count > 0)
+                return $"Plant {selectedPlantSeed.itemName}";
+            return $"Do nothing (no {selectedPlantSeed.itemName})";
+        }
         if (currentPlant.IsGrown) return "Collect";
-        return "XXX (Growing)";
+        return "Do nothing (Plant Growing)";
     }
     
     public void Interact(Player p)
