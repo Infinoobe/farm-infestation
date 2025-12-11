@@ -1,3 +1,4 @@
+using Interactable;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public float Speed = 5f;
     public float AttackRange = 1.0f;
-    [SerializeField] private float plantingRange = 3f;
+    [SerializeField] private float interactionRange = 1f;
     public Plant[] plantPrefabs;
     public Item[] neededSeeds;
     public Animator animator;
@@ -16,8 +17,9 @@ public class Player : MonoBehaviour, IDamagable
     
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
+    public Item SelectedPlantSeed => neededSeeds[currentPlantIndex];
     public bool IsDead => hitPoints <= 0;
-    
+
     public float invulnerableTimestamp = 0.0f;
 
     // Combat
@@ -50,17 +52,12 @@ public class Player : MonoBehaviour, IDamagable
         {
             if (GameState.Instance.IsDay())
             {
-                PlantOnNearestField();
+                Interact();
             }
             else
             {
                 Attack();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.F) && GameState.Instance.IsDay())
-        {
-            CollectNearestPlant();
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -125,70 +122,35 @@ public class Player : MonoBehaviour, IDamagable
             }
         }
     }
-
-    private void CollectNearestPlant()
+    
+    private void Interact()
     {
-        Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
-        Field nearest = null;
-        float minDistance = Mathf.Infinity;
-        Vector3 playerPos = transform.position;
-
-        foreach (Field field in allFields)
+        if (TryGetInteractable(out var nearest))
         {
-            if (!field.CanBeCollected()) continue;
-            float dist = Vector3.Distance(playerPos, field.transform.position);
-            if (dist < minDistance)
-            {
-                minDistance = dist;
-                nearest = field;
-            }
-        }
-
-        if (nearest != null && minDistance <= plantingRange)
-        {
-            animator.SetTrigger("Plant");
-            nearest.CollectPlant();
-        }
-        else
-        {
-            Debug.Log("No available fields to collect!");
+            Debug.Log($"Interact ({nearest.GetDescription()}) with {nearest}");
+            nearest.Interact(this);
         }
     }
 
-    private void PlantOnNearestField()
+    private bool TryGetInteractable(out IInteractable nearest)
     {
-        Field[] allFields = FindObjectsByType<Field>(FindObjectsSortMode.None);
-        Field nearest = null;
+        var interactionPosition = transform.position + transform.forward * AttackRange;
+        interactionPosition.y = 0;
         float minDistance = Mathf.Infinity;
-        Vector3 playerPos = transform.position;
-
-        foreach (Field field in allFields)
+        nearest = null;
+        foreach (var i in GameState.Instance.Interactables)
         {
-            if (!field.IsEmpty()) continue;
-            float dist = Vector3.Distance(playerPos, field.transform.position);
+            float dist = Vector3.Distance(interactionPosition, i.GetPosition());
             if (dist < minDistance)
             {
                 minDistance = dist;
-                nearest = field;
+                nearest = i;
             }
         }
 
-        if (nearest != null && minDistance <= plantingRange)
-        {
-            if (GameState.Instance.PullItem(neededSeeds[currentPlantIndex]))
-            {
-                animator.SetTrigger("Plant");
-                nearest.PlantSeed(plantPrefabs[currentPlantIndex]);
-            }
-            else
-            {
-                Debug.Log($"No item {neededSeeds[currentPlantIndex].name}.");
-            }
-        }
-        else
-        {
-            Debug.Log($"No available fields. Nearest is {minDistance}!");
-        }
+        if (minDistance > interactionRange) nearest = null;
+ 
+        return minDistance <= interactionRange;
     }
 
     // Cycles through Plants added in plantPrefabs list

@@ -1,16 +1,29 @@
-using NUnit.Framework.Constraints;
+using Interactable;
 using UnityEngine;
 
-public class Field : MonoBehaviour
+public class Field : MonoBehaviour, IInteractable
 {
     [SerializeField] private Plant currentPlant;
 
-    public void PlantSeed(Plant plantPrefab)
+    public void Start()
     {
-        if (currentPlant == null)
+        GameState.Instance.RegisterInteractable(this);
+    }
+
+    public void PlantSeed(Player p)
+    {
+        if (currentPlant != null)
         {
-            currentPlant = Instantiate(plantPrefab, transform.position, Quaternion.identity, transform);
+            return;
         }
+
+        if (!GameState.Instance.PullItem(p.SelectedPlantSeed))
+        {
+            return;
+        }
+
+        p.animator.SetTrigger("Plant");
+        currentPlant = Instantiate(p.SelectedPlant, transform.position, Quaternion.identity, transform);
     }
 
     public void CollectPlant()
@@ -29,4 +42,33 @@ public class Field : MonoBehaviour
         if (IsEmpty()) return false;
         return currentPlant.IsGrown;
     }
+
+    public string GetDescription()
+    {
+        if (currentPlant == null) return "Plant";
+        if (currentPlant.IsGrown) return "Collect";
+        return "XXX (Growing)";
+    }
+    
+    public void Interact(Player p)
+    {
+        if (currentPlant == null)
+        {
+            PlantSeed(p);
+            return;
+        }
+
+        if (CanBeCollected())
+        {
+            p.animator.SetTrigger("Plant");
+            CollectPlant();
+            return;
+        }
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
 }

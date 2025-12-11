@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
+using Interactable;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +23,8 @@ public class GameState : MonoBehaviour
     [SerializeField] public int zombiesToSpawn = 5;
     [SerializeField] public int zombieLimit = 3;
 
+
+    public List<IInteractable> Interactables = new ();
     private int perNightZombiesSpawned;
     private int perNightZombiesAlive;
 
@@ -60,6 +61,17 @@ public class GameState : MonoBehaviour
             AddItem(item, 10);
         }
     }
+
+    public void RegisterInteractable(IInteractable interactable)
+    {
+        Interactables.Add(interactable);
+    }
+
+    public void UnRegisterInteractable(IInteractable interactable)
+    {
+        Interactables.Remove(interactable);
+    }
+    
 
     public void GoToSleep()
     {

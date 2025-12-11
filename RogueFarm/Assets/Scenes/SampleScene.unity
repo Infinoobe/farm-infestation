@@ -4837,6 +4837,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  RefreshShop:
+    m_PersistentCalls:
+      m_Calls: []
   zombiesToSpawn: 5
   zombieLimit: 3
   Player: {fileID: 0}
@@ -6568,6 +6571,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2623429699538771466, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2761777952429639490, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404180777139486391, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9128095433754061845, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
