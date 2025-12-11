@@ -1,12 +1,17 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class MainUI : MonoBehaviour
     {
-        public TMP_Text zombiesCounter;
+        public TMP_Text bottomLeft;
+        public TMP_Text topRight;
+        public TMP_Text hpLabel;
+        public Image hpImage;
+
         public GameObject deadSplashScreen;
         public GameObject backpackPanel;
         public GameObject shopPanel;
@@ -19,20 +24,21 @@ namespace UI
 
         void Update()
         {
-            var uiText = $"";
-            
-            if (GameState.Instance.IsDay())
-            {
-                uiText += $"Money: {GameState.Instance.money}\n";
-            }
-
-            uiText += $"HP: {GameState.Instance.Player.hitPoints}";
+            topRight.text = $"{GameState.Instance.money} $";
 
             if (GameState.Instance.IsNight())
             {
-                uiText += $"\nZombies to kill: {GameState.Instance.GetZombiesToKill()}";
+                bottomLeft.text = $"Zombies to kill: {GameState.Instance.GetZombiesToKill()}";
             }
-            zombiesCounter.text = uiText;
+            else
+            {
+                bottomLeft.text = $"";
+            }
+            
+            hpLabel.text = $"HP: {GameState.Instance.Player.hitPoints}";
+
+            var barWidth = 600.0f * GameState.Instance.Player.hitPoints / GameState.Instance.Player.hitPointsMax;
+            hpImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth);
             
             deadSplashScreen.SetActive(GameState.Instance.Player.IsDead);
 
