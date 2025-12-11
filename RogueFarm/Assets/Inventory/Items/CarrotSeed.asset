@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CarrotSeed
   m_EditorClassIdentifier: 
   itemName: Carrot Seed
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -1521118008, guid: bc79039e5f4541c4f9f97b3013993162, type: 3}
   valueBuying: 2
   valueSelling: 1

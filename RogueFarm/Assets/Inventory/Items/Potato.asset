@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Potato
   m_EditorClassIdentifier: 
   itemName: Potato
-  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 1878661100, guid: 854a0203e2e9219468b626f7401b4b91, type: 3}
   valueBuying: 6
   valueSelling: 5

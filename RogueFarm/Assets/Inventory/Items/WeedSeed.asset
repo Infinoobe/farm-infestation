@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WeedSeed
   m_EditorClassIdentifier: 
   itemName: Weed Seed
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -358426464, guid: 0d3b7b5231f972845b5a37f3ac2a765a, type: 3}
   valueBuying: 10
   valueSelling: 5
