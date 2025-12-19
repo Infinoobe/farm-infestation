@@ -32,7 +32,7 @@ public class Zombie : MonoBehaviour, IDamagable
         // Agent.destination = Player.transform.position;
     }
 
-    public void DealDamage(int damageDealt)
+    public void TakeDamage(int damageDealt)
     {
         bloodPfx.Play();
         hitPoints -= damageDealt;
@@ -50,7 +50,7 @@ public class Zombie : MonoBehaviour, IDamagable
         {
             if ((enemy.transform.position - attackPosition).magnitude < attackRange)
             {
-                enemy.DealDamage(damage);
+                enemy.TakeDamage(damage);
             }
         }
     }

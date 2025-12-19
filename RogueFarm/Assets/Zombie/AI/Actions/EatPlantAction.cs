@@ -13,7 +13,7 @@ public partial class EatPlantAction : Action
 
     protected override Status OnStart()
     {
-        Plant.Value.DealDamage(10);
+        Plant.Value.TakeDamage(10);
         return Status.Success;
     }
     //

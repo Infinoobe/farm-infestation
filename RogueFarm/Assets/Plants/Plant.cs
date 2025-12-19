@@ -30,7 +30,7 @@ public class Plant : MonoBehaviour, IDamagable
         }
     }
 
-    public void DealDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health = Math.Max(0, health - damage);
         if (health <= 0) KillYourself();

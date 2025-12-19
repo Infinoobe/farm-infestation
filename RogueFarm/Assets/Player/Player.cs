@@ -88,7 +88,7 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    public void DealDamage(int damageDealt)
+    public void TakeDamage(int damageDealt)
     {
         if (IsDead) return;
         if (Time.time < invulnerableTimestamp) return;
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             if ((enemy.transform.position - attackPosition).magnitude < AttackRange)
             {
-                enemy.DealDamage(damage);
+                enemy.TakeDamage(damage);
             }
         }
     }
