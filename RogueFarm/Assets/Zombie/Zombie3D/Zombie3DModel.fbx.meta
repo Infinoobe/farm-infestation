@@ -3,7 +3,17 @@ guid: 193c337c6194f4a41aff77b4b2b4b8a5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: emireh_body_material
+    second: {fileID: 2100000, guid: 11aa40553789e63428028c650238f3fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: emireh_shoe_material
+    second: {fileID: 2100000, guid: 614985d94e5282b46898f9dea1dda1ab, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

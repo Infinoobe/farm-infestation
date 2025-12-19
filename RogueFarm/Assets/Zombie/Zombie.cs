@@ -1,4 +1,5 @@
 using System;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,7 @@ public class Zombie : MonoBehaviour, IDamagable
     private int hitPoints = 20;
     private int damage = 10;
     private float attackRange = 1.0f;
+    private bool IsDead = false;
     
     public void Start()
     {
@@ -32,7 +34,6 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void DealDamage(int damageDealt)
     {
-        animator.Play("Damage");
         bloodPfx.Play();
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
@@ -41,6 +42,7 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void DealAttackDamage()
     {
+        if (IsDead) return;
         var enemies = FindObjectsByType<Player>(FindObjectsSortMode.None);
         var attackPosition = transform.position + transform.forward * attackRange;
         //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
@@ -55,8 +57,15 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void KillYourself()
     {
+        if (IsDead) return;
+        IsDead = true;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<BehaviorGraphAgent>().enabled = false;
+        Agent.enabled = false;
+
         if (Spawner != null) Spawner.OnZombieDied(this);
-        Destroy(gameObject);
+        animator.Play("Death");
+        
     }
 
     public void KillYourselfFromDaylight()
