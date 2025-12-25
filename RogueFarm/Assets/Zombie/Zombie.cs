@@ -34,7 +34,10 @@ public class Zombie : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damageDealt)
     {
-        bloodPfx.Play();
+        if (bloodPfx != null)
+        {
+            bloodPfx.Play();
+        }
         hitPoints -= damageDealt;
         if (hitPoints <= 0)
             KillYourself();
