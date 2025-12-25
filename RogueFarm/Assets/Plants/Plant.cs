@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using TMPro;
+using UnityEngine.UI;
 
 public class Plant : MonoBehaviour, IDamagable
 {
@@ -10,6 +12,11 @@ public class Plant : MonoBehaviour, IDamagable
     [SerializeField] private GameObject grownPlant;
     [SerializeField] private int growthTime = 2;
     [SerializeField] private int health = 100;
+    [SerializeField] private int healthMax = 100;
+
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private Image hpBar;
+    [SerializeField] private TMP_Text hpLabel;
 
     public bool IsGrown => isGrown;
 
@@ -18,6 +25,7 @@ public class Plant : MonoBehaviour, IDamagable
         growingPlant.SetActive(!isGrown);
         grownPlant.SetActive(isGrown);
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
+        canvas.enabled = false;
     }
 
     private void HandleDayStarted()
@@ -33,6 +41,9 @@ public class Plant : MonoBehaviour, IDamagable
     public void TakeDamage(int damage)
     {
         health = Math.Max(0, health - damage);
+        canvas.enabled = true;
+        hpBar.fillAmount = ((float)health) / healthMax;
+        hpLabel.text = health + "/" + healthMax;
         if (health <= 0) KillYourself();
     }
 
