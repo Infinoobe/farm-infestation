@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b073a72ad947e643a479978a34bc6fc, type: 3}
+  m_Name: CarrotSkill
+  m_EditorClassIdentifier: 
+  skillName: Carrot Plant
+  skillIcon: {fileID: -1521118008, guid: bc79039e5f4541c4f9f97b3013993162, type: 3}
+  requiredItems:
+  - item: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+    amount: 3
+  - item: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}
+    amount: 2

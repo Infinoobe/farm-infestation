@@ -18,6 +18,7 @@ namespace UI
         public GameObject deadSplashScreen;
         public GameObject backpackPanel;
         public GameObject shopPanel;
+        public GameObject researchPanel;
 
         public void Awake()
         {
@@ -34,6 +35,7 @@ namespace UI
         {
             backpackPanel.SetActive(false);
             shopPanel.SetActive(false);
+            researchPanel.SetActive(false);
         }
 
         void Update()
@@ -70,6 +72,11 @@ namespace UI
         public void SwitchShop()
         {
             shopPanel.SetActive(!shopPanel.activeSelf);
+        }
+
+        public void SwitchResearch()
+        {
+            researchPanel.SetActive(!researchPanel.activeSelf);
         }
 
         public bool IsBackpackVisible()

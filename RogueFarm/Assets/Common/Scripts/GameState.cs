@@ -143,10 +143,51 @@ public class GameState : MonoBehaviour
 
     public bool PullItem(Item item, int amount = 1)
     {
-        if (inventory.GetAmount(item) == 0 
-            || inventory.GetAmount(item) < amount) return false;
+        if (item == moneyItem)
+        {
+            if (money == 0
+                || money < amount) return false;
+            money -= amount;
+        }
+        else
+        {
+            if (inventory.GetAmount(item) == 0
+              || inventory.GetAmount(item) < amount) return false;
 
-        inventory.RemoveItem(item, amount);
+            inventory.RemoveItem(item, amount);
+        }
+
+        return true;
+    }
+
+    public bool PullItems(Dictionary<Item, int> items)
+    {
+        foreach(var item in items)
+        {
+            if (item.Key == moneyItem)
+            {
+                if (money == 0
+                    || money < item.Value) return false;
+            }
+            else
+            {
+                if (inventory.GetAmount(item.Key) == 0
+                    || inventory.GetAmount(item.Key) < item.Value) return false;
+            }
+        }
+
+        foreach (var item in items)
+        {
+            if (item.Key == moneyItem)
+            {
+                money -= item.Value;
+            }
+            else
+            {
+                inventory.RemoveItem(item.Key, item.Value);
+            } 
+        }
+        
         return true;
     }
 
