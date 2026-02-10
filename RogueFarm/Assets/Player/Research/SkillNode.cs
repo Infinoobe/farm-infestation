@@ -2,15 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using JetBrains.Annotations;
+using UnityEngine.Events;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 
 public class SkillNode : MonoBehaviour
 {
+    public List<SkillNode> requiredSkillsToUnlock;
     public SkillSO skillSO;
     public Image skillIcon;
     public Button skillButton;
     public bool isUnlocked;
     public bool isResearched;
+
+    public UnityEvent<SkillNode> OnSkillResearched = new UnityEvent<SkillNode>();
 
     private void Start()
     {
@@ -23,6 +30,29 @@ public class SkillNode : MonoBehaviour
         {  
             UpdateUI();
         }
+    }
+
+    public bool TryUnlock()
+    {
+        if(!isUnlocked && CanUnlock())
+        {
+            isUnlocked = true;
+            UpdateUI();
+            return true;
+        }
+        return false;
+    }
+
+    public bool CanUnlock()
+    {
+        foreach(SkillNode skill in requiredSkillsToUnlock)
+        {
+            if(skill.isResearched == false)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void UpdateUI()
@@ -44,9 +74,9 @@ public class SkillNode : MonoBehaviour
         if (isUnlocked && !isResearched &&
             GameState.Instance.PullItems(skillSO.GetItemsDictionary()))
         {
-            Debug.Log("Researched " + skillSO.name);
             isResearched = true;
             UpdateUI();
+            OnSkillResearched.Invoke(this);
         }
         else
         {
