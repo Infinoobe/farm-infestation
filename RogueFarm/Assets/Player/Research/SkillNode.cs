@@ -10,6 +10,12 @@ public class SkillNode : MonoBehaviour
     public Image skillIcon;
     public Button skillButton;
     public bool isUnlocked;
+    public bool isResearched;
+
+    private void Start()
+    {
+        isResearched = false;
+    }
 
     private void OnValidate()
     {
@@ -23,13 +29,23 @@ public class SkillNode : MonoBehaviour
     {
         skillIcon.sprite = skillSO.skillIcon;
         skillButton.interactable = isUnlocked;
+        if (isResearched)
+        {
+            skillIcon.color = new Color(0, 255, 0);
+        }
+        else
+        {
+            skillIcon.color = new Color(255, 255, 255);
+        }
     }
 
     public void TryResearch()
     {
-        if (isUnlocked && GameState.Instance.PullItems(skillSO.GetItemsDictionary()))
+        if (isUnlocked && !isResearched &&
+            GameState.Instance.PullItems(skillSO.GetItemsDictionary()))
         {
             Debug.Log("Researched " + skillSO.name);
+            isResearched = true;
             UpdateUI();
         }
         else
