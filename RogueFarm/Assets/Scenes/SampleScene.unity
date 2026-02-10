@@ -5055,6 +5055,9 @@ MonoBehaviour:
   RefreshShop:
     m_PersistentCalls:
       m_Calls: []
+  AddItemToShop:
+    m_PersistentCalls:
+      m_Calls: []
   zombiesToSpawn: 5
   zombieLimit: 3
   Player: {fileID: 0}
@@ -6860,6 +6863,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4043158916362773213, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: itemsOnSale.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043158916362773213, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: 'itemsOnSale.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e02fa3d96058684408429518353c41c5, type: 2}
     - target: {fileID: 6794270059704497622, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: requiredSkillsToUnlock.Array.size
       value: 1
@@ -6900,6 +6911,8 @@ MonoBehaviour:
   skillNodes:
   - {fileID: 1841689424}
   - {fileID: 1215369984}
+  carrotSeedItem: {fileID: 11400000, guid: b3643d2c30a9ae0438aa7e1dee28be0f, type: 2}
+  weedSeedItem: {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
 --- !u!1 &1714270299
 GameObject:
   m_ObjectHideFlags: 0

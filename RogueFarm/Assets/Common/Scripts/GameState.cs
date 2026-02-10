@@ -18,6 +18,7 @@ public class GameState : MonoBehaviour
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
     [SerializeField] public UnityEvent OnNightStarted = new UnityEvent();
     [SerializeField] public UnityEvent RefreshShop = new UnityEvent();
+    [SerializeField] public UnityEvent<Item> AddItemToShop = new UnityEvent<Item>();
 
     // Zombie settings
     [SerializeField] public int zombiesToSpawn = 5;

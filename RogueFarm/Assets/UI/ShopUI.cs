@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +11,20 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private GameObject sellingLayout;
     [SerializeField] private GameObject buyingItemView;
     [SerializeField] private GameObject sellingItemView;
-    [SerializeField] private Item[] itemsOnSale;
+    [SerializeField] private List<Item> itemsOnSale;
+
+    public void AddItemOnSale(Item item)
+    {
+        if (itemsOnSale.Contains(item)) return;
+        itemsOnSale.Add(item);
+        RefreshView();
+    }
+
+    public void RemoveItemFromSale(Item item)
+    {
+        itemsOnSale.Remove(item);
+        RefreshView();
+    }
 
     private void RefreshView()
     {
@@ -68,5 +83,6 @@ public class ShopUI : MonoBehaviour
     {
         RefreshView();
         GameState.Instance.RefreshShop.AddListener(RefreshView);
+        GameState.Instance.AddItemToShop.AddListener(AddItemOnSale);
     }
 }
