@@ -1,9 +1,26 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using IngameDebugConsole;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     public Dictionary<Item, int> items = new Dictionary<Item, int>();
+    
+    [ConsoleMethod( "add_item", "Adds item to inventory" )]
+    public static void AddItemCheat( string item_name, int amount )
+    {
+        var items = Resources.FindObjectsOfTypeAll<Item>().ToList();
+        var item = items
+            .FirstOrDefault(x => string.Equals(x.name, item_name, StringComparison.InvariantCultureIgnoreCase));
+        if (item == null)
+        {
+            Debug.LogError( $"Item {item_name} not found" );
+            return;
+        }
+        GameState.Instance.AddItem( item, amount );
+    }
 
     public void AddItem(Item item, int amount = 1)
     {
