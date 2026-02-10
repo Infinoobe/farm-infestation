@@ -33,6 +33,8 @@ public class BackpackUI : MonoBehaviour
 
     private void ClearBackpackView()
     {
+        if (itemsList == null) return;
+        if (itemsList.transform == null) return;
         foreach (Transform child in itemsList.transform)
             Destroy(child.gameObject);
     }
