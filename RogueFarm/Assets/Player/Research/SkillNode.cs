@@ -6,9 +6,10 @@ using UnityEngine.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 
-public class SkillNode : MonoBehaviour
+public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public List<SkillNode> requiredSkillsToUnlock;
     public SkillSO skillSO;
@@ -18,6 +19,8 @@ public class SkillNode : MonoBehaviour
     public bool isResearched;
 
     public UnityEvent<SkillNode> OnSkillResearched = new UnityEvent<SkillNode>();
+    public UnityEvent<SkillNode> OnMouseEnterSkillNode = new UnityEvent<SkillNode>();
+    public UnityEvent<SkillNode> OnMouseExitSkillNode = new UnityEvent<SkillNode>();
 
     private void Start()
     {
@@ -76,11 +79,19 @@ public class SkillNode : MonoBehaviour
         {
             isResearched = true;
             UpdateUI();
-            OnSkillResearched.Invoke(this);
+            OnSkillResearched?.Invoke(this);
+            OnMouseExitSkillNode?.Invoke(this);
+            OnMouseEnterSkillNode?.Invoke(this);
         }
-        else
-        {
-            Debug.Log("Missing required items");
-        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnterSkillNode?.Invoke(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExitSkillNode?.Invoke(this);
     }
 }
