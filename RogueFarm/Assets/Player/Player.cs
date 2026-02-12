@@ -1,7 +1,9 @@
+using System.Numerics;
 using Interactable;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
+using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -108,11 +110,13 @@ public class Player : MonoBehaviour, IDamagable
 
     private void MoveAndRotate()
     {
+        const float FALL_VELOCITY = 500.0f;
         var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if (input.magnitude > 1.0)
             input = input.normalized;
         var velocity = input * Speed;
         Controller.Move(velocity * Time.deltaTime);
+        Controller.Move(Vector3.down * (FALL_VELOCITY * Time.deltaTime));
         animator.SetFloat("Speed", velocity.magnitude);
 
         if (input.magnitude > 0.01)
