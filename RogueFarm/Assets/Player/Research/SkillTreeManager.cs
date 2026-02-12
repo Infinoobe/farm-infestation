@@ -27,49 +27,48 @@ public class SkillTreeManager : MonoBehaviour
 
     private void OnMouseEnterSkillNode(SkillNode skillNode)
     {
-        if(currentSkillNodeGameobject != skillNode.gameObject)
+        if (currentSkillNodeGameobject == skillNode.gameObject) return;
+        
+        HideInfo();
+
+        currentSkillNodeGameobject = skillNode.gameObject;
+        skillInfoPanel.SetActive(true);
+        
+        if (skillNode.isResearched)
         {
-            HideInfo();
+            SetPopupHeight(82f);
+            AddPopupLine("Researched", Color.green);
+            return;
+        }
+        Dictionary<Item, int> requiredItems = skillNode.skillSO.GetItemsDictionary();
+        SetPopupHeight(82f * (requiredItems.Count + 1));
+        foreach (var (item, amount) in requiredItems)
+        {
+            AddPopupLine($"{amount} x {item.itemName}");
+        }
+        if (skillNode.isUnlocked)
+        {
+            AddPopupLine("Unlocked");
+        }
+        else
+        {
+            AddPopupLine("Locked", Color.red);
+        }
+    }
 
-            if (skillNode.isResearched)
-            {
-                RectTransform rect = skillInfoPanel.GetComponent<RectTransform>();
-                rect.sizeDelta = new Vector2(rect.sizeDelta.x, 82f);
+    private void SetPopupHeight(float height)
+    {
+        RectTransform rect = skillInfoPanel.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, height);
+    }
 
-                GameObject tmp = Instantiate(textPrefab, skillInfoPanel.transform);
-                tmp.GetComponent<TextMeshProUGUI>().text = "Researched";
-                tmp.GetComponent<TextMeshProUGUI>().color = new Color(0, 255, 0);
-            }
-            else
-            {
-                Dictionary<Item, int> requiredItems = skillNode.skillSO.GetItemsDictionary();
-                float height = (requiredItems.Count + 1) * 82f;
-                RectTransform rect = skillInfoPanel.GetComponent<RectTransform>();
-                rect.sizeDelta = new Vector2(rect.sizeDelta.x, height);
-                foreach (var (item, amount) in requiredItems)
-                {
-                    string itemInfo = $"{amount} x {item.itemName}";
-                    GameObject tmp = Instantiate(textPrefab, skillInfoPanel.transform);
-                    tmp.GetComponent<TextMeshProUGUI>().text = itemInfo;
-                }
-
-                GameObject summaryText = Instantiate(textPrefab, skillInfoPanel.transform);
-
-                if (skillNode.isUnlocked)
-                {
-                    summaryText.GetComponent<TextMeshProUGUI>().text = "Unlocked";
-                }
-                else
-                {
-                    summaryText.GetComponent<TextMeshProUGUI>().text = "Locked";
-                    summaryText.GetComponent<TextMeshProUGUI>().color = new Color(255, 0, 0);
-                }
-                
-            }
-
-            currentSkillNodeGameobject = skillNode.gameObject;
-            skillInfoPanel.SetActive(true);
-           
+    private void AddPopupLine(string text, Color? color = null)
+    {
+        GameObject tmp = Instantiate(textPrefab, skillInfoPanel.transform);
+        tmp.GetComponent<TextMeshProUGUI>().text = text;
+        if (color.HasValue)
+        {
+            tmp.GetComponent<TextMeshProUGUI>().color = color.Value;
         }
     }
 
