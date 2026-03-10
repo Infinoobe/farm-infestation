@@ -261,10 +261,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectItem: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}
   collectItemAmount: 1
-  growingPlant: {fileID: 8935430999328866836}
-  grownPlant: {fileID: 1920075777286433770}
   growthTime: 1
-  health: 100
+  collectTimes: 1
+  growthStages:
+  - {fileID: 8935430999328866836}
+  collectStages:
+  - {fileID: 1920075777286433770}
   healthMax: 100
   canvas: {fileID: 478337957143636438}
   hpBar: {fileID: 3330953158472619842}
@@ -569,6 +571,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1a1ea7c64a01830448968e7973fd9e36, type: 3}
       propertyPath: m_Name
       value: PlantPotato1stStage
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1a1ea7c64a01830448968e7973fd9e36, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

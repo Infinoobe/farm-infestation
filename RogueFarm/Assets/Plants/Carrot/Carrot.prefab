@@ -185,10 +185,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectItem: {fileID: 11400000, guid: 2e2ccfc944b31c84583eeaf23b6e5240, type: 2}
   collectItemAmount: 1
-  growingPlant: {fileID: 2271010485456845935}
-  grownPlant: {fileID: 5328269239436685222}
   growthTime: 2
-  health: 100
+  collectTimes: 1
+  growthStages:
+  - {fileID: 2271010485456845935}
+  - {fileID: 0}
+  collectStages:
+  - {fileID: 5328269239436685222}
   healthMax: 100
   canvas: {fileID: 3276250413522445456}
   hpBar: {fileID: 8565236259468262355}

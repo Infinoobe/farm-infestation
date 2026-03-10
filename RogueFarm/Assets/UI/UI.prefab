@@ -1020,6 +1020,7 @@ MonoBehaviour:
   sellingItemView: {fileID: 8587195904317596850, guid: 7fce3030ea9a5744c832bac605262e0d, type: 3}
   itemsOnSale:
   - {fileID: 11400000, guid: e02fa3d96058684408429518353c41c5, type: 2}
+  - {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
 --- !u!1 &4318834866366917627
 GameObject:
   m_ObjectHideFlags: 0

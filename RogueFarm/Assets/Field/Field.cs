@@ -12,15 +12,8 @@ public class Field : MonoBehaviour, IInteractable
 
     public void PlantSeed(Player p)
     {
-        if (currentPlant != null)
-        {
-            return;
-        }
-
-        if (!GameState.Instance.PullItem(p.SelectedPlantSeed))
-        {
-            return;
-        }
+        if (!IsEmpty()) return;
+        if (!GameState.Instance.PullItem(p.SelectedPlantSeed)) return;
 
         p.animator.SetTrigger("Plant");
         currentPlant = Instantiate(p.SelectedPlant, transform.position, Quaternion.identity, transform);
@@ -45,7 +38,7 @@ public class Field : MonoBehaviour, IInteractable
 
     public string GetDescription()
     {
-        if (currentPlant == null)
+        if (IsEmpty())
         {
             var selectedPlantSeed = GameState.Instance.Player.SelectedPlantSeed;
             var items = GameState.Instance.GetItems();
@@ -60,7 +53,9 @@ public class Field : MonoBehaviour, IInteractable
     
     public void Interact(Player p)
     {
-        if (currentPlant == null)
+        // Add checking current player item
+
+        if (IsEmpty())
         {
             PlantSeed(p);
             return;
