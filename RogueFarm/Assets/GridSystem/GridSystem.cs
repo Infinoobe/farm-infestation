@@ -31,10 +31,22 @@ public class GridSystem : MonoBehaviour
         }
     }
 
+    public void Deselect()
+    {
+        if (!currSelectedCell) return;
+        currSelectedCell.HideGizmo();
+        currSelectedCell = null;
+    }
+
     public void PointingAtPosition(Vector3 point)
     {
         (int x, int y) = WorldToGridPosition(point);
-        if (x < 0 || x >= width || y < 0 || y >= height) return;
+        if (x < 0 || x >= width || y < 0 || y >= height) 
+        {
+            if(currSelectedCell) currSelectedCell.HideGizmo();
+            currSelectedCell = null;
+            return;
+        }
 
         GridCell pointedCell = gridCells[x, y];
         if (currSelectedCell && pointedCell != currSelectedCell)

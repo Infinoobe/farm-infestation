@@ -20,6 +20,7 @@ public class Player : MonoBehaviour, IDamagable
     public PlayerAnimEvents playerAnimEvents;
     [SerializeField] private float rayLength = 3f;
     [SerializeField] private Transform rayStartingPoint;
+    private GridSystem currGridSystem;
 
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
@@ -43,6 +44,25 @@ public class Player : MonoBehaviour, IDamagable
         playerAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
     }
 
+    private void UpdateGridSelection()
+    {
+        Vector3 startPos = rayStartingPoint.position;
+        Vector3 direction = Vector3.down;
+        int layerMask = LayerMask.GetMask("GridGround");
+
+        if (Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
+        {
+            GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
+            target.PointingAtPosition(ground.point);
+            if (!currGridSystem || target == currGridSystem) return;
+            currGridSystem.Deselect();
+            currGridSystem = target;
+        }
+        else if (currGridSystem)
+        {
+            currGridSystem.Deselect();
+        }
+    }
 
     void Update()
     {
@@ -51,16 +71,7 @@ public class Player : MonoBehaviour, IDamagable
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Planting")) return;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Sword Attack")) return;
 
-        // Checking which grid cell is in front of player
-        Vector3 startPos = rayStartingPoint.position;
-        Vector3 direction = Vector3.down;
-        int layerMask = LayerMask.GetMask("GridGround");
-        if (Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
-        {
-            ground.collider.gameObject.GetComponent<GridSystem>().PointingAtPosition(ground.point);
-        }
-
-        Debug.DrawRay(startPos, direction * rayLength, Color.red);
+        UpdateGridSelection();        
 
         sword.SetActive(GameState.Instance.IsNight());
         MoveAndRotate();
