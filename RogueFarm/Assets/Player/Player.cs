@@ -54,8 +54,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
             target.PointingAtPosition(ground.point);
-            if (!currGridSystem || target == currGridSystem) return;
-            currGridSystem.Deselect();
+            if (currGridSystem && currGridSystem != target) currGridSystem.Deselect();
             currGridSystem = target;
         }
         else if (currGridSystem)
