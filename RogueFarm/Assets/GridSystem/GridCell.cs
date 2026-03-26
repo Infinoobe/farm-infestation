@@ -26,6 +26,7 @@ public class GridCell : MonoBehaviour
         currBuilding = Instantiate(buildingPrefab, gameObject.transform.position, Quaternion.identity);
     }
 
+
     public void HideGizmo()
     {
         if (IsEmpty()) return;
