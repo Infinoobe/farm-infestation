@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2815938415101422094}
   - component: {fileID: 9026991864857153993}
   - component: {fileID: 2137816861445507154}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GroundGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,3 +138,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3d90e12dc26c346bad1da1bf588acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellPrefab: {fileID: 4180583388404341857, guid: 43fcc1abf7b03cc4d820086f6f407c82, type: 3}
+  testBuild: {fileID: 387103512954216748, guid: e57515d4e4429dd42974d98337348dfd, type: 3}

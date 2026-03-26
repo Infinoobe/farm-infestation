@@ -3,6 +3,7 @@ using Interactable;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.UI.Image;
 using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour, IDamagable
@@ -17,7 +18,9 @@ public class Player : MonoBehaviour, IDamagable
     public Animator animator;
     public GameObject sword;
     public PlayerAnimEvents playerAnimEvents;
-    
+    [SerializeField] private float rayLength = 3f;
+    [SerializeField] private Transform rayStartingPoint;
+
     private int currentPlantIndex = 0;
     public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
     public Item SelectedPlantSeed => neededSeeds[currentPlantIndex];
@@ -47,7 +50,18 @@ public class Player : MonoBehaviour, IDamagable
         
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Planting")) return;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Sword Attack")) return;
-        
+
+        // Checking which grid cell is in front of player
+        Vector3 startPos = rayStartingPoint.position;
+        Vector3 direction = Vector3.down;
+        int layerMask = LayerMask.GetMask("GridGround");
+        if (Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
+        {
+            ground.collider.gameObject.GetComponent<GridSystem>().PointingAtPosition(ground.point);
+        }
+
+        Debug.DrawRay(startPos, direction * rayLength, Color.red);
+
         sword.SetActive(GameState.Instance.IsNight());
         MoveAndRotate();
 

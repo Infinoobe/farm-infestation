@@ -144,6 +144,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8683486520051685680}
+  - {fileID: 6481439652483190483}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6995272627084493882
@@ -172,6 +173,8 @@ MonoBehaviour:
   animator: {fileID: 4033709399600204765}
   sword: {fileID: 1510715506965206046}
   playerAnimEvents: {fileID: 6072969647759613369}
+  rayLength: 10
+  rayStartingPoint: {fileID: 6481439652483190483}
   invulnerableTimestamp: 0
   hitPoints: 100
   hitPointsMax: 100
@@ -262,6 +265,37 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!1 &3164485400918638134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6481439652483190483}
+  m_Layer: 0
+  m_Name: RaycastStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6481439652483190483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3164485400918638134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6325677826827988052}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &9154491511213113051
 PrefabInstance:
   m_ObjectHideFlags: 0

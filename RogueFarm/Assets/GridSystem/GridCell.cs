@@ -2,21 +2,34 @@ using UnityEngine;
 
 public class GridCell : MonoBehaviour
 {
-    [SerializeField] private Building currBuilding;
+    private GameObject currBuilding;
 
-    bool isEmpty()
+    public bool IsEmpty()
     {
         return currBuilding == null;
     }
 
-    void setBuilding()
+    public void SetBuilding()
     {
 
     }
 
-    void removeBuilding()
+    public void RemoveBuilding()
     {
         Destroy(currBuilding.gameObject);
+        currBuilding = null;
+    }
+
+    public void ShowGizmo(GameObject buildingPrefab)
+    {
+        if (!IsEmpty()) return;
+        currBuilding = Instantiate(buildingPrefab, gameObject.transform.position, Quaternion.identity);
+    }
+
+    public void HideGizmo()
+    {
+        if (IsEmpty()) return;
+        Destroy(currBuilding);
         currBuilding = null;
     }
 }
