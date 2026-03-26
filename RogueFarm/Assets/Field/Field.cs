@@ -1,7 +1,7 @@
 using Interactable;
 using UnityEngine;
 
-public class Field : MonoBehaviour, IInteractable
+public class Field : Building, IInteractable
 {
     [SerializeField] private Plant currentPlant;
 
