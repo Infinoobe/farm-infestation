@@ -9,15 +9,19 @@ public class GridCell : MonoBehaviour
         return currBuilding == null;
     }
 
-    public void SetBuilding()
+    public void SetBuilding(GameObject newBuilding)
     {
+        currBuilding = newBuilding;
+    }
 
+    public void UnSetBuilding()
+    {
+        currBuilding = null;
     }
 
     public void RemoveBuilding()
     {
-        Destroy(currBuilding.gameObject);
-        currBuilding = null;
+        currBuilding.GetComponent<Building>().RemoveBuilding();
     }
 
     public void ShowGizmo(GameObject buildingPrefab)

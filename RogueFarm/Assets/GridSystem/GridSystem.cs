@@ -38,6 +38,11 @@ public class GridSystem : MonoBehaviour
         currSelectedCell = null;
     }
 
+    public void PlaceBuilding()
+    {
+        
+    }
+
     public void PointingAtPosition(Vector3 point)
     {
         (int x, int y) = WorldToGridPosition(point);

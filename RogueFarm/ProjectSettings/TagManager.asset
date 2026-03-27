@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - plant
+  - Building
   layers:
   - Default
   - TransparentFX
@@ -16,10 +17,10 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - BuildingGizmo
   - GridGround
   - Plant
-  - 
+  - Building
   - 
   - 
   - 
