@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 730456030849988890}
   - component: {fileID: 1454731352526568281}
   m_Layer: 5
-  m_Name: PlantImage
+  m_Name: ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2089,7 +2089,7 @@ GameObject:
   - component: {fileID: 1875058248733081409}
   - component: {fileID: 8004366037309800794}
   m_Layer: 5
-  m_Name: SelectedPlant
+  m_Name: SelectedItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2128,8 +2128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e89f95ce141a7843878bb6873c1358a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlantLabel: {fileID: 6922965822253147126}
-  PlantImage: {fileID: 1454731352526568281}
+  ItemLabel: {fileID: 6922965822253147126}
+  ItemImage: {fileID: 1454731352526568281}
 --- !u!1 &4547987695716666005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4286,7 +4286,7 @@ GameObject:
   - component: {fileID: 5553504824338218605}
   - component: {fileID: 6922965822253147126}
   m_Layer: 5
-  m_Name: SelectedPlantText
+  m_Name: SelectedItemText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

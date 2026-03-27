@@ -63,14 +63,14 @@ public class GameState : MonoBehaviour
         Instance = this;
     }
 
-    void OnPlantChanged(Plant plant)
+    void OnSelectedItemChanged()
     {
         RefreshBackpack.Invoke();
     }
 
     void Start()
     {
-        Player.OnPlantChanged.AddListener(OnPlantChanged);
+        Player.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
 
         StartDay();
         AddItem(moneyItem, 10);

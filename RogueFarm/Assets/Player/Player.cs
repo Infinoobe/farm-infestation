@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+using System.Linq;
 using Interactable;
+using JetBrains.Annotations;
 using UI;
 using Unity.Mathematics;
 using UnityEngine;
@@ -13,8 +14,6 @@ public class Player : MonoBehaviour, IDamagable
     public float Speed = 5f;
     public float AttackRange = 1.0f;
     [SerializeField] private float interactionRange = 1f;
-    public List<Plant> plantPrefabs;
-    public List<Item> neededSeeds;
     public Animator animator;
     public GameObject sword;
     public PlayerAnimEvents playerAnimEvents;
@@ -22,9 +21,9 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] private Transform rayStartingPoint;
     private GridSystem currGridSystem;
 
-    private int currentPlantIndex = 0;
-    public Plant SelectedPlant => plantPrefabs[currentPlantIndex];
-    public Item SelectedPlantSeed => neededSeeds[currentPlantIndex];
+    [CanBeNull] public Item SelectedItem;
+    public UnityEvent OnSelectedItemChanged = new UnityEvent();
+
     public bool IsDead => hitPoints <= 0;
 
     public float invulnerableTimestamp = 0.0f;
@@ -37,8 +36,6 @@ public class Player : MonoBehaviour, IDamagable
     private Vector3 lastInput;
     private Vector3 velocity;
 
-    // Events
-    public UnityEvent<Plant> OnPlantChanged = new UnityEvent<Plant>();
 
     void Start()
     {
@@ -221,40 +218,32 @@ public class Player : MonoBehaviour, IDamagable
 
     private bool HasNoSeeds()
     {
-        var items = GameState.Instance.GetItems();
-        if (!items.TryGetValue(SelectedPlantSeed, out var count))
-            return true;
-        return count <= 0;
+        if (SelectedItem == null) return true;
+        if (SelectedItem.itemType != ItemType.SEED) return true;
+        return ! GameState.Instance.HasItems(SelectedItem);
     }
 
     // Cycles through Plants added in plantPrefabs list
     private void CyclePlants()
     {
-        currentPlantIndex++;
-        currentPlantIndex %= plantPrefabs.Count;
-        
-        int iter = 0;
-        while (HasNoSeeds() && iter < plantPrefabs.Count)
+        var availableSeeds = GameState.Instance.GetItems()
+            .Where(i => i.Key.itemType == ItemType.SEED && i.Value > 0).ToList();
+        if (availableSeeds.Count == 0)
         {
-            ++iter;
-            currentPlantIndex++;
-            currentPlantIndex %= plantPrefabs.Count;
+            return;
         }
 
-        if (iter == plantPrefabs.Count) currentPlantIndex = 0;
+        var selectedIdx = availableSeeds.FindIndex(x => x.Key == SelectedItem);
+        selectedIdx += 1;
+        selectedIdx %= availableSeeds.Count;
 
-        Debug.Log("Selected plant: " + SelectedPlant.name);
-        OnPlantChanged.Invoke(SelectedPlant);
+        SelectedItem = availableSeeds[selectedIdx].Key;
+        OnSelectedItemChanged.Invoke();
     }
 
-    public void SelectSeed(Item item)
+    public void SelectItem(Item item)
     {
-        var idx = neededSeeds.FindIndex(x => x == item);
-
-        if (idx == -1) return;
-        currentPlantIndex = idx;
-        Debug.Log("Selected plant: " + SelectedPlant.name);
-        OnPlantChanged.Invoke(SelectedPlant);
+        SelectedItem = item;
     }
 
 }

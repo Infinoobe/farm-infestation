@@ -18,4 +18,5 @@ public class Item : ScriptableObject
     public Sprite icon;
     public int valueBuying;
     public int valueSelling;
+    public GameObject plantPrefab;
 }

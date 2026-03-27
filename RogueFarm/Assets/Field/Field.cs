@@ -13,10 +13,28 @@ public class Field : Building, IInteractable
     public void PlantSeed(Player p)
     {
         if (!IsEmpty()) return;
-        if (!GameState.Instance.RemoveItem(p.SelectedPlantSeed)) return;
+        var item = GameState.Instance.Player.SelectedItem;
+        if (item == null || item.itemType != ItemType.SEED)
+        {
+            return;
+        }
+        if (!GameState.Instance.RemoveItem(item)) return;
 
         p.animator.SetTrigger("Plant");
-        currentPlant = Instantiate(p.SelectedPlant, transform.position, Quaternion.identity, transform);
+        if (item.plantPrefab == null)
+        {
+            Debug.LogError($"No plant set for seed {item.itemName} SO {item.name}");
+            return;
+        }
+
+        var go = Instantiate(item.plantPrefab, transform.position, Quaternion.identity, transform);
+        var plant = go.GetComponent<Plant>();
+        if (plant == null)
+        {
+            Debug.LogError($"Invalid plant set for seed {item.itemName} SO {item.name}");
+            return;
+        }
+        currentPlant = plant;
     }
 
     public void CollectPlant()
@@ -40,12 +58,15 @@ public class Field : Building, IInteractable
     {
         if (IsEmpty())
         {
-            var selectedPlantSeed = GameState.Instance.Player.SelectedPlantSeed;
-            var items = GameState.Instance.GetItems();
-            items.TryGetValue(selectedPlantSeed, out var count);
-            if (count > 0)
-                return $"Plant {selectedPlantSeed.itemName}";
-            return $"Do nothing (no {selectedPlantSeed.itemName})";
+            var item = GameState.Instance.Player.SelectedItem;
+            if (item == null || item.itemType != ItemType.SEED)
+            {
+                return $"Select Seed to plant";
+            }
+            
+            if (GameState.Instance.HasItems(item))
+                return $"Plant {item.itemName}";
+            return $"Do nothing (no {item.itemName})";
         }
         if (currentPlant.CanBeCollected) return "Collect";
         return "Do nothing (Plant Growing)";

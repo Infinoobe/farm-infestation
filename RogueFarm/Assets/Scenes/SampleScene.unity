@@ -3236,6 +3236,7 @@ MonoBehaviour:
   ItemsInShop:
   - {fileID: 11400000, guid: e02fa3d96058684408429518353c41c5, type: 2}
   - {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
+  - {fileID: 11400000, guid: 8a1e5c972b0f27941ad87949cfe3da2d, type: 2}
   OnDayStarted:
     m_PersistentCalls:
       m_Calls:
@@ -3353,7 +3354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000038146973
+      value: -0.000011444092
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
