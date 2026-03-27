@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6388154473258746058}
   m_Layer: 0
   m_Name: Field
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,8 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a03171f4628c0d40ad0b67f76a01979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeTargeted: 0
+  canBeDestroyed: 0
+  canBeWalkedOn: 0
+  health: 0
   currentPlant: {fileID: 0}
-  weedPrefabTest: {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
 --- !u!1 &9220500101535426443
 GameObject:
   m_ObjectHideFlags: 0
