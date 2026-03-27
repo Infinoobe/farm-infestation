@@ -6,7 +6,7 @@ public class Building : MonoBehaviour
     [SerializeField] private bool canBeDestroyed;
     [SerializeField] private bool canBeWalkedOn;
     [SerializeField] private int health;
-    private bool isPlaced;
+    private bool isPlaced = false;
     private GridCell[] occupiedCells;
 
     public bool CanBeTargeted => canBeTargeted;
@@ -16,6 +16,10 @@ public class Building : MonoBehaviour
     public void PlaceBuilding(GridCell[] onCells)
     {
         occupiedCells = onCells;
+        isPlaced = true;
+        gameObject.layer = LayerMask.NameToLayer("Building");
+        foreach (Transform child in gameObject.transform)
+            child.gameObject.layer = gameObject.layer;
     }
 
     public void RemoveBuilding()
