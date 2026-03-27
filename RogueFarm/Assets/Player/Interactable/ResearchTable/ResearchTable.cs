@@ -11,7 +11,7 @@ public class ResearchTable : MonoBehaviour, IInteractable
 
     public void Interact(Player p)
     {
-        MainUI.Instance.SwitchResearch();
+        MainUI.Instance.OpenResearch();
     }
 
     public Vector3 GetPosition()

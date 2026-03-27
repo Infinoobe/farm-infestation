@@ -12,7 +12,7 @@ public class Shop : MonoBehaviour, IInteractable
 
     public void Interact(Player p)
     {
-        MainUI.Instance.SwitchShop();
+        MainUI.Instance.OpenShop();
     }
 
     public Vector3 GetPosition()

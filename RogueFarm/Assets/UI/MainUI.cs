@@ -67,6 +67,8 @@ namespace UI
         public void ShowBackpack()
         {
             backpackPanel.SetActive(true);
+            shopPanel.SetActive(false);
+            researchPanel.SetActive(false);
         }
 
         public void HideBackpack()
@@ -74,19 +76,26 @@ namespace UI
             backpackPanel.SetActive(false);
         }
 
-        public void SwitchShop()
+        public void OpenShop()
         {
-            shopPanel.SetActive(!shopPanel.activeSelf);
+            shopPanel.SetActive(true);
+            backpackPanel.SetActive(false);
+            researchPanel.SetActive(false);
         }
 
-        public void SwitchResearch()
+        public void OpenResearch()
         {
-            researchPanel.SetActive(!researchPanel.activeSelf);
+            researchPanel.SetActive(true);
+            backpackPanel.SetActive(false);
+            shopPanel.SetActive(false);
         }
 
-        public bool IsBackpackVisible()
+        public void CloseAllPanels()
         {
-            return backpackPanel.activeSelf;
+            backpackPanel.SetActive(false);
+            researchPanel.SetActive(false);
+            shopPanel.SetActive(false);
         }
+
     }
 }

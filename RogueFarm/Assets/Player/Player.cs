@@ -105,20 +105,24 @@ public class Player : MonoBehaviour, IDamagable
         
         // debug:
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            CyclePlants();
+        }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameState.Instance.GoToSleep();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CyclePlants();
-        }
-        
-
         if (Input.GetKeyDown(KeyCode.L))
         {
-            MainUI.Instance.SwitchShop();
+            MainUI.Instance.OpenShop();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            MainUI.Instance.OpenResearch();
         }
     }
 
@@ -208,13 +212,28 @@ public class Player : MonoBehaviour, IDamagable
         return minDistance <= interactionRange;
     }
 
+
+    private bool HasNoSeeds()
+    {
+        var items = GameState.Instance.GetItems();
+        if (!items.TryGetValue(SelectedPlantSeed, out var count))
+            return true;
+        return count <= 0;
+    }
+
     // Cycles through Plants added in plantPrefabs list
     private void CyclePlants()
     {
         currentPlantIndex++;
-
-        if (currentPlantIndex >= plantPrefabs.Length)
-            currentPlantIndex = 0;
+        currentPlantIndex %= plantPrefabs.Length;
+        
+        int iter = 0;
+        while (HasNoSeeds() && iter < plantPrefabs.Length)
+        {
+            ++iter;
+            currentPlantIndex++;
+            currentPlantIndex %= plantPrefabs.Length;
+        }
 
         Debug.Log("Selected plant: " + SelectedPlant.name);
         OnPlantChanged.Invoke(SelectedPlant);
