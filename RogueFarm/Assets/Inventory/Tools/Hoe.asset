@@ -15,6 +15,7 @@ MonoBehaviour:
   itemType: 3
   canBeSold: 0
   itemName: Hoe
-  icon: {fileID: 0}
+  icon: {fileID: 1071053893, guid: 27b1be5caa4fd4e409e726a671b26cfa, type: 3}
   valueBuying: 2
   valueSelling: 0
+  plantPrefab: {fileID: 0}

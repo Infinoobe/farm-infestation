@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   canBeSold: 1
   itemName: Strawberry Seed
-  icon: {fileID: 0}
+  icon: {fileID: 1878661100, guid: f0e65901a2f329e42baed5f7b024bb88, type: 3}
   valueBuying: 5
   valueSelling: 3
   plantPrefab: {fileID: 125583469405854624, guid: 5456565020e5e5249bd906081ed42729, type: 3}

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Watercan
   m_EditorClassIdentifier: 
   itemType: 3
-  canBeSold: 0
+  canBeSold: 1
   itemName: Watercan
-  icon: {fileID: 0}
+  icon: {fileID: 450733695, guid: d4bb8ca2e5b2c8a47b6978f3575f315a, type: 3}
   valueBuying: 2
-  valueSelling: 0
+  valueSelling: 1
+  plantPrefab: {fileID: 0}

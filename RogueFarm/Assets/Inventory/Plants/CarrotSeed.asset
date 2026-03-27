@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   canBeSold: 1
   itemName: Carrot Seed
-  icon: {fileID: -1521118008, guid: bc79039e5f4541c4f9f97b3013993162, type: 3}
+  icon: {fileID: -1521118008, guid: 75db24eaf05f4274cb49215704d75d50, type: 3}
   valueBuying: 2
   valueSelling: 1
   plantPrefab: {fileID: 2703125554296294715, guid: fd428aa11f9dba249a4792413cbc51a8, type: 3}

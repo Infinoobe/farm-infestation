@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   canBeSold: 1
   itemName: Potato Seed
-  icon: {fileID: 1878661100, guid: 854a0203e2e9219468b626f7401b4b91, type: 3}
+  icon: {fileID: 1878661100, guid: e844d76cde255b642ad83eee462cf049, type: 3}
   valueBuying: 1
   valueSelling: 1
   plantPrefab: {fileID: 2703125554296294715, guid: a81b031299a76f84895fb70bea59e847, type: 3}

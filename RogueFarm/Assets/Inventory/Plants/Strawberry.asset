@@ -15,6 +15,7 @@ MonoBehaviour:
   itemType: 4
   canBeSold: 1
   itemName: Strawberry
-  icon: {fileID: 0}
+  icon: {fileID: 1878661100, guid: 285702f8c410e64489f414ccb28b00cd, type: 3}
   valueBuying: 15
   valueSelling: 9
+  plantPrefab: {fileID: 0}
