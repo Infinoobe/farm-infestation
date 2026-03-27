@@ -163,13 +163,15 @@ MonoBehaviour:
   AttackRange: 1
   interactionRange: 1
   plantPrefabs:
-  - {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
-  - {fileID: 5088195311929033051, guid: fd428aa11f9dba249a4792413cbc51a8, type: 3}
   - {fileID: 5088195311929033051, guid: a81b031299a76f84895fb70bea59e847, type: 3}
+  - {fileID: 5088195311929033051, guid: fd428aa11f9dba249a4792413cbc51a8, type: 3}
+  - {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
+  - {fileID: 5393942059564119705, guid: 5456565020e5e5249bd906081ed42729, type: 3}
   neededSeeds:
-  - {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
-  - {fileID: 11400000, guid: b3643d2c30a9ae0438aa7e1dee28be0f, type: 2}
   - {fileID: 11400000, guid: e02fa3d96058684408429518353c41c5, type: 2}
+  - {fileID: 11400000, guid: b3643d2c30a9ae0438aa7e1dee28be0f, type: 2}
+  - {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
+  - {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
   animator: {fileID: 4033709399600204765}
   sword: {fileID: 1510715506965206046}
   playerAnimEvents: {fileID: 6072969647759613369}

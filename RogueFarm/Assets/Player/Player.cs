@@ -234,6 +234,8 @@ public class Player : MonoBehaviour, IDamagable
             currentPlantIndex %= plantPrefabs.Count;
         }
 
+        if (iter == plantPrefabs.Count) currentPlantIndex = 0;
+
         Debug.Log("Selected plant: " + SelectedPlant.name);
         OnPlantChanged.Invoke(SelectedPlant);
     }

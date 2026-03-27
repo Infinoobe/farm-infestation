@@ -40,7 +40,7 @@ public class GridSystem : MonoBehaviour
 
     public void PlaceBuilding()
     {
-        
+        if (!currSelectedCell.IsEmpty()) return;
     }
 
     public void PointingAtPosition(Vector3 point)
