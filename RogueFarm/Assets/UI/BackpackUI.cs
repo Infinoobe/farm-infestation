@@ -12,6 +12,18 @@ public class BackpackUI : MonoBehaviour
     {
         if (GameState.Instance == null)
             return;
+        RefreshItems();
+    }
+
+    private void RefreshItems()
+    {
+
+        if (itemsList == null)
+        {
+            Debug.LogError("UI error, items list not initiated properly");
+            return;
+        }
+
         ClearBackpackView();
         Dictionary<Item, int> items = GameState.Instance.GetItems();
         foreach (var kvp in items)
@@ -29,6 +41,7 @@ public class BackpackUI : MonoBehaviour
             icon.sprite = item.icon;
             nameText.text = $"{item.itemName}: {amount}";
         }
+
     }
 
     private void ClearBackpackView()
