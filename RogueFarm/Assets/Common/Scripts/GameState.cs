@@ -20,6 +20,8 @@ public class GameState : MonoBehaviour
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
     [SerializeField] public UnityEvent OnNightStarted = new UnityEvent();
     [SerializeField] public UnityEvent RefreshShop = new UnityEvent();
+    [SerializeField] public UnityEvent RefreshBackpack = new UnityEvent();
+
 
     [Header("Enemies")]
     [SerializeField] public int zombiesToSpawn = 5;
@@ -57,12 +59,19 @@ public class GameState : MonoBehaviour
             Debug.LogWarning("Sir, we killed doppelganger!");
             return;
         }
-
+        
         Instance = this;
+    }
+
+    void OnPlantChanged(Plant plant)
+    {
+        RefreshBackpack.Invoke();
     }
 
     void Start()
     {
+        Player.OnPlantChanged.AddListener(OnPlantChanged);
+
         StartDay();
         AddItem(moneyItem, 10);
     }
@@ -155,6 +164,7 @@ public class GameState : MonoBehaviour
         }
 
         inventory.RemoveItem(item, amount);
+        RefreshBackpack.Invoke();
         return true;
     }
 
@@ -170,13 +180,14 @@ public class GameState : MonoBehaviour
         {
             inventory.RemoveItem(item.Key, item.Value);
         }
-        
+        RefreshBackpack.Invoke();
         return true;
     }
 
     public void AddItem(Item item, int amount = 1)
     {
         inventory.AddItem(item, amount);
+        RefreshBackpack.Invoke();
     }
 
     public void SellItem(Item item, int amount = 1)
@@ -185,6 +196,7 @@ public class GameState : MonoBehaviour
         {
             AddItem(moneyItem, amount*item.valueSelling);
             RefreshShop?.Invoke();
+            RefreshBackpack.Invoke();
         }
         else
         {
@@ -202,6 +214,7 @@ public class GameState : MonoBehaviour
         }
         AddItem(item, amount);
         RefreshShop?.Invoke();
+        RefreshBackpack.Invoke();
     }
 
     public void AddItemToShop(Item item)

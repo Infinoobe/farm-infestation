@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
 
 public class BackpackUI : MonoBehaviour
 {
     public GameObject itemsList;
     [SerializeField] private GameObject itemViewPrefab;
+
+    private void Start()
+    {
+        GameState.Instance.RefreshBackpack.AddListener(RefreshItems);
+    }
 
     private void OnEnable()
     {

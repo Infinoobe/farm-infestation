@@ -1,9 +1,8 @@
-using System.Numerics;
+using System.Collections.Generic;
 using Interactable;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.UI.Image;
 using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour, IDamagable
@@ -13,8 +12,8 @@ public class Player : MonoBehaviour, IDamagable
     public float Speed = 5f;
     public float AttackRange = 1.0f;
     [SerializeField] private float interactionRange = 1f;
-    public Plant[] plantPrefabs;
-    public Item[] neededSeeds;
+    public List<Plant> plantPrefabs;
+    public List<Item> neededSeeds;
     public Animator animator;
     public GameObject sword;
     public PlayerAnimEvents playerAnimEvents;
@@ -225,16 +224,26 @@ public class Player : MonoBehaviour, IDamagable
     private void CyclePlants()
     {
         currentPlantIndex++;
-        currentPlantIndex %= plantPrefabs.Length;
+        currentPlantIndex %= plantPrefabs.Count;
         
         int iter = 0;
-        while (HasNoSeeds() && iter < plantPrefabs.Length)
+        while (HasNoSeeds() && iter < plantPrefabs.Count)
         {
             ++iter;
             currentPlantIndex++;
-            currentPlantIndex %= plantPrefabs.Length;
+            currentPlantIndex %= plantPrefabs.Count;
         }
 
+        Debug.Log("Selected plant: " + SelectedPlant.name);
+        OnPlantChanged.Invoke(SelectedPlant);
+    }
+
+    public void SelectSeed(Item item)
+    {
+        var idx = neededSeeds.FindIndex(x => x == item);
+
+        if (idx == -1) return;
+        currentPlantIndex = idx;
         Debug.Log("Selected plant: " + SelectedPlant.name);
         OnPlantChanged.Invoke(SelectedPlant);
     }

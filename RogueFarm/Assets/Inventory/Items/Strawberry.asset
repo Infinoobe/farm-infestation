@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd0f908c289f5e4a803e91e32a4611a, type: 3}
   m_Name: Strawberry
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 4
+  canBeSold: 1
   itemName: Strawberry
   icon: {fileID: 0}
   valueBuying: 15
