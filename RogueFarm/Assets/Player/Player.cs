@@ -244,6 +244,7 @@ public class Player : MonoBehaviour, IDamagable
     public void SelectItem(Item item)
     {
         SelectedItem = item;
+        OnSelectedItemChanged.Invoke();
     }
 
 }
