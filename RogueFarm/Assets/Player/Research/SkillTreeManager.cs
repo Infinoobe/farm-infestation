@@ -40,19 +40,21 @@ public class SkillTreeManager : MonoBehaviour
             AddPopupLine("Researched", Color.green);
             return;
         }
+        
         Dictionary<Item, int> requiredItems = skillNode.skillSO.GetItemsDictionary();
         SetPopupHeight(82f * (requiredItems.Count + 1));
         foreach (var (item, amount) in requiredItems)
         {
-            AddPopupLine($"{amount} x {item.itemName}");
+            var color = GameState.Instance.HasItems(item, amount) ? Color.green : Color.red;
+            AddPopupLine($"{amount} x {item.itemName}", color);
         }
         if (skillNode.isUnlocked)
         {
-            AddPopupLine("Unlocked");
+            AddPopupLine("Available", Color.green);
         }
         else
         {
-            AddPopupLine("Locked", Color.red);
+            AddPopupLine("Requirements not met", Color.red);
         }
     }
 

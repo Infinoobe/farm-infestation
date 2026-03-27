@@ -1,11 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using JetBrains.Annotations;
 using UnityEngine.Events;
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.EventSystems;
 
 
@@ -14,6 +11,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public List<SkillNode> requiredSkillsToUnlock;
     public SkillSO skillSO;
     public Image skillIcon;
+    public TMP_Text skillCaption;
     public Button skillButton;
     public bool isUnlocked;
     public bool isResearched;
@@ -60,6 +58,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private void UpdateUI()
     {
+        skillCaption.text = skillSO.skillName;
         skillIcon.sprite = skillSO.skillIcon;
         skillButton.interactable = isUnlocked;
         if (isResearched)

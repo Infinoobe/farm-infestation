@@ -155,13 +155,14 @@ public class GameState : MonoBehaviour
         return zombiesToSpawn - perNightZombiesSpawned + perNightZombiesAlive;
     }
 
+    public bool HasItems(Item item, int amount = 1)
+    {
+        return inventory.GetAmount(item) >= amount;
+    }
+
     public bool RemoveItem(Item item, int amount = 1)
     {
-        if (inventory.GetAmount(item) == 0
-            || inventory.GetAmount(item) < amount)
-        {
-            return false;
-        }
+        if (!HasItems(item, amount)) return false;
 
         inventory.RemoveItem(item, amount);
         RefreshBackpack.Invoke();
@@ -172,8 +173,7 @@ public class GameState : MonoBehaviour
     {
         foreach(var item in items)
         {
-            if (inventory.GetAmount(item.Key) == 0
-                || inventory.GetAmount(item.Key) < item.Value) return false;
+            if (!HasItems(item.Key, item.Value)) return false;
         }
 
         foreach (var item in items)
@@ -194,7 +194,7 @@ public class GameState : MonoBehaviour
     {
         if(RemoveItem(item, amount))
         {
-            AddItem(moneyItem, amount*item.valueSelling);
+            AddItem(moneyItem, amount * item.valueSelling);
             RefreshShop?.Invoke();
             RefreshBackpack.Invoke();
         }
