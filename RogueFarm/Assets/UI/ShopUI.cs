@@ -13,6 +13,15 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private GameObject sellingItemView;
     [SerializeField] private List<Item> itemsOnSale;
 
+    
+    private void OnEnable()
+    {
+        if (GameState.Instance == null) return;
+        RefreshView();
+        GameState.Instance.RefreshShop.AddListener(RefreshView);
+        GameState.Instance.AddItemToShop.AddListener(AddItemOnSale);
+    }
+    
     public void AddItemOnSale(Item item)
     {
         if (itemsOnSale.Contains(item)) return;
@@ -79,10 +88,4 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        RefreshView();
-        GameState.Instance.RefreshShop.AddListener(RefreshView);
-        GameState.Instance.AddItemToShop.AddListener(AddItemOnSale);
-    }
 }
