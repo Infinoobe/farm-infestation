@@ -164,7 +164,7 @@ MonoBehaviour:
   collectTimes: 1
   growthStages:
   - {fileID: 2259608405657233351}
-  - {fileID: 0}
+  - {fileID: 2259608405657233351}
   - {fileID: 5439265123384567407}
   collectStages:
   - {fileID: 8212200025339119867}

@@ -28,7 +28,7 @@ public class InteractionPopup : MonoBehaviour
             localPoint.y += interactionBG.rectTransform.rect.height / 2;
             interactionBG.rectTransform.anchoredPosition = localPoint;
             
-            interactionLabel.text = $"Press E to {i.GetDescription()}";
+            interactionLabel.text = $"Click to {i.GetDescription()}";
         }
     }
 }

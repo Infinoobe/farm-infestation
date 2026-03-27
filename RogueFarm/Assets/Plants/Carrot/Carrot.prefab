@@ -189,7 +189,7 @@ MonoBehaviour:
   collectTimes: 1
   growthStages:
   - {fileID: 2271010485456845935}
-  - {fileID: 0}
+  - {fileID: 2271010485456845935}
   collectStages:
   - {fileID: 5328269239436685222}
   healthMax: 100

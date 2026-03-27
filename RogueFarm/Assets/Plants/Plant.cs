@@ -46,8 +46,8 @@ public class Plant : MonoBehaviour, IDamagable
     {
         var nextVisual = GetCurrentVisual();
         if (!nextVisual || nextVisual == currActiveVisualObject) return;
-        nextVisual.SetActive(true);
         currActiveVisualObject.SetActive(false);
+        nextVisual.SetActive(true);
         currActiveVisualObject = nextVisual;
     }
 
