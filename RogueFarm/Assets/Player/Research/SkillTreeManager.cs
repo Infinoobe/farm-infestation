@@ -129,10 +129,10 @@ public class SkillTreeManager : MonoBehaviour
         switch (skillName)
         {
             case "Carrot Plant":
-                GameState.Instance.AddItemToShop.Invoke(carrotSeedItem);
+                GameState.Instance.AddItemToShop(carrotSeedItem);
                 break;
             case "Weed Plant":
-                GameState.Instance.AddItemToShop.Invoke(weedSeedItem);
+                GameState.Instance.AddItemToShop(weedSeedItem);
                 break;
             default:
                 Debug.Log("Researched skill does nothing");

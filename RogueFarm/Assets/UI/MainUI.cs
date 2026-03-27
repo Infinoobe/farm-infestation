@@ -40,7 +40,7 @@ namespace UI
 
         void Update()
         {
-            topRight.text = $"{GameState.Instance.money} $";
+            topRight.text = $"{GameState.Instance.GetMoney()} $";
 
             if (GameState.Instance.IsNight())
             {

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd0f908c289f5e4a803e91e32a4611a, type: 3}
   m_Name: PotatoSeed
   m_EditorClassIdentifier: 
+  itemType: 1
   itemName: Potato Seed
   icon: {fileID: 1878661100, guid: 854a0203e2e9219468b626f7401b4b91, type: 3}
   valueBuying: 1

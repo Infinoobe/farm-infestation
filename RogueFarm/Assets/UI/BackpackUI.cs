@@ -34,12 +34,8 @@ public class BackpackUI : MonoBehaviour
             if (amount <= 0) continue;
 
             GameObject obj = Instantiate(itemViewPrefab, itemsList.transform);
-
-            Image icon = obj.transform.Find("ItemImage").GetComponent<Image>();
-            TMP_Text nameText = obj.transform.Find("ItemText").GetComponent<TMP_Text>();
-
-            icon.sprite = item.icon;
-            nameText.text = $"{item.itemName}: {amount}";
+            var itemUI = obj.GetComponent<BackpackItemUI>();
+            itemUI.SetItem(item, amount);
         }
 
     }

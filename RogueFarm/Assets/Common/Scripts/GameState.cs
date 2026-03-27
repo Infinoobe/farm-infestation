@@ -8,28 +8,30 @@ public class GameState : MonoBehaviour
     private GamePhase currGamePhase = GamePhase.None;
     private int currentDay = 0;
 
-    // Backpack
-    [SerializeField] Item[] startingItems;
-    [SerializeField] private Inventory inventory;
-    [SerializeField] public int money = 0;
-    [SerializeField] private Item moneyItem;
+    [Header("Items")]
+    [SerializeField] ItemsDatabaseSO itemsDatabase;
 
-    // Events
+    [SerializeField] private Inventory inventory;
+    [SerializeField] private Item moneyItem;
+    [SerializeField] public List<Item> ItemsInShop = new List<Item>();
+
+
+    [Header("Events")]
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
     [SerializeField] public UnityEvent OnNightStarted = new UnityEvent();
     [SerializeField] public UnityEvent RefreshShop = new UnityEvent();
-    [SerializeField] public UnityEvent<Item> AddItemToShop = new UnityEvent<Item>();
 
-    // Zombie settings
+    [Header("Enemies")]
     [SerializeField] public int zombiesToSpawn = 5;
     [SerializeField] public int zombieLimit = 3;
 
-
+    [Header("Interactables")]
     public List<IInteractable> Interactables = new ();
     private int perNightZombiesSpawned;
     private int perNightZombiesAlive;
 
     public static GameState Instance { get; private set; }
+    
     public GamePhase CurrentPhase => currGamePhase;
     public bool IsDay() { return currGamePhase == GamePhase.Day; }
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
@@ -39,6 +41,11 @@ public class GameState : MonoBehaviour
     public Dictionary<Item, int> GetItems()
     {
         return inventory.items;
+    }
+
+    public int GetMoney()
+    {
+        return inventory.GetAmount(moneyItem);
     }
 
     private void Awake()
@@ -57,10 +64,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         StartDay();
-        foreach (var item in startingItems)
-        {
-            AddItem(item, 10);
-        }
+        AddItem(moneyItem, 10);
     }
 
     public void RegisterInteractable(IInteractable interactable)
@@ -142,51 +146,29 @@ public class GameState : MonoBehaviour
         return zombiesToSpawn - perNightZombiesSpawned + perNightZombiesAlive;
     }
 
-    public bool PullItem(Item item, int amount = 1)
+    public bool RemoveItem(Item item, int amount = 1)
     {
-        if (item == moneyItem)
+        if (inventory.GetAmount(item) == 0
+            || inventory.GetAmount(item) < amount)
         {
-            if (money == 0
-                || money < amount) return false;
-            money -= amount;
-        }
-        else
-        {
-            if (inventory.GetAmount(item) == 0
-              || inventory.GetAmount(item) < amount) return false;
-
-            inventory.RemoveItem(item, amount);
+            return false;
         }
 
+        inventory.RemoveItem(item, amount);
         return true;
     }
 
-    public bool PullItems(Dictionary<Item, int> items)
+    public bool RemoveItems(Dictionary<Item, int> items)
     {
         foreach(var item in items)
         {
-            if (item.Key == moneyItem)
-            {
-                if (money == 0
-                    || money < item.Value) return false;
-            }
-            else
-            {
-                if (inventory.GetAmount(item.Key) == 0
-                    || inventory.GetAmount(item.Key) < item.Value) return false;
-            }
+            if (inventory.GetAmount(item.Key) == 0
+                || inventory.GetAmount(item.Key) < item.Value) return false;
         }
 
         foreach (var item in items)
         {
-            if (item.Key == moneyItem)
-            {
-                money -= item.Value;
-            }
-            else
-            {
-                inventory.RemoveItem(item.Key, item.Value);
-            } 
+            inventory.RemoveItem(item.Key, item.Value);
         }
         
         return true;
@@ -194,15 +176,12 @@ public class GameState : MonoBehaviour
 
     public void AddItem(Item item, int amount = 1)
     {
-        if (item == moneyItem)
-            money += amount;
-        else
-            inventory.AddItem(item, amount);
+        inventory.AddItem(item, amount);
     }
 
     public void SellItem(Item item, int amount = 1)
     {
-        if(PullItem(item, amount))
+        if(RemoveItem(item, amount))
         {
             AddItem(moneyItem, amount*item.valueSelling);
             RefreshShop?.Invoke();
@@ -215,16 +194,20 @@ public class GameState : MonoBehaviour
 
     public void BuyItem(Item item, int amount = 1)
     {
-        if (money >= item.valueBuying*amount)
-        {
-            money -= item.valueBuying * amount;
-            AddItem(item, amount);
-            RefreshShop?.Invoke();
-        }
-        else
+        var cost = item.valueBuying * amount;
+        if (!RemoveItem(moneyItem, cost))
         {
             Debug.Log("Not enough money");
+            return;
         }
+        AddItem(item, amount);
+        RefreshShop?.Invoke();
+    }
+
+    public void AddItemToShop(Item item)
+    {
+        ItemsInShop.Add(item);
+        RefreshShop.Invoke();
     }
 }
 

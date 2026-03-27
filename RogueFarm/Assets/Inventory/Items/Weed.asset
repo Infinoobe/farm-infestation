@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd0f908c289f5e4a803e91e32a4611a, type: 3}
   m_Name: Weed
   m_EditorClassIdentifier: 
+  itemType: 1
   itemName: Weed
   icon: {fileID: -358426464, guid: 0d3b7b5231f972845b5a37f3ac2a765a, type: 3}
   valueBuying: 200

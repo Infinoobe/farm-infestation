@@ -13,7 +13,7 @@ public class Field : Building, IInteractable
     public void PlantSeed(Player p)
     {
         if (!IsEmpty()) return;
-        if (!GameState.Instance.PullItem(p.SelectedPlantSeed)) return;
+        if (!GameState.Instance.RemoveItem(p.SelectedPlantSeed)) return;
 
         p.animator.SetTrigger("Plant");
         currentPlant = Instantiate(p.SelectedPlant, transform.position, Quaternion.identity, transform);

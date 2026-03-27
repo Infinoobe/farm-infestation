@@ -75,7 +75,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void TryResearch()
     {
         if (isUnlocked && !isResearched &&
-            GameState.Instance.PullItems(skillSO.GetItemsDictionary()))
+            GameState.Instance.RemoveItems(skillSO.GetItemsDictionary()))
         {
             isResearched = true;
             UpdateUI();
