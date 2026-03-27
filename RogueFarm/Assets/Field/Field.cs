@@ -33,7 +33,7 @@ public class Field : Building, IInteractable
     public bool CanBeCollected()
     {
         if (IsEmpty()) return false;
-        return currentPlant.IsGrown;
+        return currentPlant.CanBeCollected;
     }
 
     public string GetDescription()
@@ -47,7 +47,7 @@ public class Field : Building, IInteractable
                 return $"Plant {selectedPlantSeed.itemName}";
             return $"Do nothing (no {selectedPlantSeed.itemName})";
         }
-        if (currentPlant.IsGrown) return "Collect";
+        if (currentPlant.CanBeCollected) return "Collect";
         return "Do nothing (Plant Growing)";
     }
     

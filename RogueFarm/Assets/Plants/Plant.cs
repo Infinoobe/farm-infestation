@@ -2,11 +2,10 @@ using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.UI;
-using Interactable;
 
 public class Plant : MonoBehaviour, IDamagable
 {
-    protected bool isGrown = false;
+    private bool canBeCollected = false;
     [SerializeField] private Item collectItem;
     [SerializeField] private int collectItemAmount = 1;
     [SerializeField] private int growthTime = 2;
@@ -23,91 +22,48 @@ public class Plant : MonoBehaviour, IDamagable
     protected int currGrowthTime = 0;
     protected int currCollectTimes = 0;
     private GameObject currActiveVisualObject;
-    public bool IsGrown => isGrown;
+    public bool CanBeCollected => canBeCollected;
 
     public void Start()
     {
-        SetUpObjectVisual();
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
         canvas.enabled = false;
+
+        InitVisuals();
     }
 
-    private void TurnOffAllVisuals()
+
+    protected void InitVisuals()
     {
-        foreach (GameObject growthStage in growthStages)
-        {
-            if (!growthStage) continue;
-            growthStage.SetActive(false);
-        }
-        foreach (GameObject collectStage in collectStages)
-        {
-            if (!collectStage) continue;
-            collectStage.SetActive(false);
-        }
+        foreach (var v in collectStages) v.SetActive(false);
+        foreach (var v in growthStages) v.SetActive(false);
+
+        currActiveVisualObject = GetCurrentVisual();
+        currActiveVisualObject.SetActive(true);
     }
-
-    private GameObject FindValidVisualInArray(GameObject[] stagesArray, int startingIndex)
-    {
-        if (stagesArray == null || stagesArray.Length == 0)  return null;
-        startingIndex = Mathf.Min(startingIndex, stagesArray.Length - 1);
-
-        for (int i = startingIndex; i >= 0; i--)
-        {
-            if (stagesArray[i]) return stagesArray[i];
-        }
-
-        return null;
-    }
-
-    private GameObject CurrentVisualObject()
-    {
-        if (isGrown)
-        {
-            return FindValidVisualInArray(collectStages, currCollectTimes);
-        }
-        else
-        {
-            return FindValidVisualInArray(growthStages, currGrowthTime);
-        }
-    }
-
-    protected void SetUpObjectVisual()
-    {
-        TurnOffAllVisuals();
-        GameObject currVisualObject = CurrentVisualObject();
-
-        if (currVisualObject)
-        {
-            currActiveVisualObject = currVisualObject;
-            currVisualObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log($"WARNING: No visual model found [{collectItem.itemName}]");
-        }
-    }
-
+    
     protected void UpdateObjectVisual()
     {
-        GameObject nextVisual;
-        if (isGrown)
-        {
-            nextVisual = collectStages[currCollectTimes];
-        }
-        else
-        {
-            nextVisual = growthStages[currGrowthTime];
-        }
-
+        var nextVisual = GetCurrentVisual();
         if (!nextVisual || nextVisual == currActiveVisualObject) return;
-        currActiveVisualObject.SetActive(false);
         nextVisual.SetActive(true);
+        currActiveVisualObject.SetActive(false);
+        currActiveVisualObject = nextVisual;
+    }
+
+    private GameObject GetCurrentVisual()
+    {
+        //Debug.Log($"GetCurrentVisual [{canBeCollected}] <{(canBeCollected ? currCollectTimes : currGrowthTime)}>", this);
+        if (canBeCollected)
+        {
+            return collectStages[currCollectTimes];
+        }
+        return growthStages[currGrowthTime];
     }
 
     private void HandleDayStarted()
     {
         Grow();
-        UpdateObjectVisual();
     }
 
     public void TakeDamage(int damage)
@@ -127,31 +83,29 @@ public class Plant : MonoBehaviour, IDamagable
 
     public virtual void CollectItem()
     {
-        if (!isGrown) return;
+        if (!canBeCollected) return;
         GameState.Instance.AddItem(collectItem, collectItemAmount);
         currCollectTimes++;
         if(currCollectTimes >= collectTimes)
         {
             KillYourself();
         }
-        UpdateObjectVisual();
-    }
-
-    public virtual void Grow()
-    {
-        if (isGrown) return;
-        currGrowthTime++;
-        if (currGrowthTime >= growthTime)
+        else
         {
-            isGrown = true;
-            return;
+            canBeCollected = false;
+            UpdateObjectVisual();
         }
     }
 
-    //protected void FullyGrown()
-    //{
-    //    //if (isGrown) return;
-    //    isGrown = true;
-    //}
+    public void Grow()
+    {
+        if (canBeCollected) return;
+        currGrowthTime++;
+        if (currGrowthTime > 0 && currGrowthTime % growthTime == 0)
+        {
+            canBeCollected = true;
+        }
+        UpdateObjectVisual();
+    }
 
 }

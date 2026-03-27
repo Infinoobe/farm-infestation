@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Interactable;
 using UI;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using Vector3 = UnityEngine.Vector3;
@@ -136,6 +137,12 @@ public class Player : MonoBehaviour, IDamagable
         if (hitPoints <= 0)
             KillYourself();
     }
+    
+    public void Heal(int damageHealed)
+    {
+        hitPoints += damageHealed;
+        hitPoints = math.min(hitPoints, hitPointsMax);
+    }
 
     public void KillYourself()
     {
@@ -247,4 +254,5 @@ public class Player : MonoBehaviour, IDamagable
         Debug.Log("Selected plant: " + SelectedPlant.name);
         OnPlantChanged.Invoke(SelectedPlant);
     }
+
 }
