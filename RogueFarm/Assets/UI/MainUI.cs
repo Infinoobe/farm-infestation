@@ -64,9 +64,14 @@ namespace UI
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void SwitchBackpack()
+        public void ShowBackpack()
         {
-            backpackPanel.SetActive(!backpackPanel.activeSelf);
+            backpackPanel.SetActive(true);
+        }
+
+        public void HideBackpack()
+        {
+            backpackPanel.SetActive(false);
         }
 
         public void SwitchShop()

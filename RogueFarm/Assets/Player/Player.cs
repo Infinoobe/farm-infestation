@@ -34,6 +34,9 @@ public class Player : MonoBehaviour, IDamagable
     public int hitPointsMax = 100;
     private int damage = 10;
 
+    private Vector3 lastInput;
+    private Vector3 velocity;
+
     // Events
     public UnityEvent<Plant> OnPlantChanged = new UnityEvent<Plant>();
 
@@ -73,19 +76,34 @@ public class Player : MonoBehaviour, IDamagable
         UpdateGridSelection();        
 
         sword.SetActive(GameState.Instance.IsNight());
-        MoveAndRotate();
 
-        if (Input.GetKeyDown(KeyCode.E))
+        UpdateInput();
+        MoveAndRotate();
+    }
+
+    private void UpdateInput()
+    {
+        lastInput =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (lastInput.magnitude > 1.0)
+            lastInput = lastInput.normalized;
+        velocity = lastInput * Speed;
+
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown((0)))
         {
-            if (GameState.Instance.IsDay())
-            {
-                Interact();
-            }
-            else
-            {
-                Attack();
-            }
+            Interact();
         }
+        
+        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetMouseButtonDown(1))
+        {
+            MainUI.Instance.ShowBackpack();
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Tab)|| Input.GetMouseButtonUp(1))
+        {
+            MainUI.Instance.HideBackpack();
+        }
+        
+        // debug:
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -97,16 +115,6 @@ public class Player : MonoBehaviour, IDamagable
             CyclePlants();
         }
         
-        
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            MainUI.Instance.SwitchBackpack();
-        }
-
-        if (Input.GetKeyUp(KeyCode.Tab) && MainUI.Instance.IsBackpackVisible())
-        {
-            MainUI.Instance.SwitchBackpack();
-        }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -134,19 +142,16 @@ public class Player : MonoBehaviour, IDamagable
 
     private void MoveAndRotate()
     {
+        if (lastInput.magnitude > 0.01)
+        {
+            transform.LookAt(transform.position + lastInput);
+        }
+        
         const float FALL_VELOCITY = 500.0f;
-        var input =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        if (input.magnitude > 1.0)
-            input = input.normalized;
-        var velocity = input * Speed;
         Controller.Move(velocity * Time.deltaTime);
         Controller.Move(Vector3.down * (FALL_VELOCITY * Time.deltaTime));
         animator.SetFloat("Speed", velocity.magnitude);
 
-        if (input.magnitude > 0.01)
-        {
-            transform.LookAt(transform.position + input);
-        }
     }
 
     private void Attack()
@@ -170,6 +175,11 @@ public class Player : MonoBehaviour, IDamagable
     
     private void Interact()
     {
+        if (GameState.Instance.IsNight())
+        {
+            Attack();
+            return;
+        }
         if (TryGetInteractable(out var nearest))
         {
             Debug.Log($"Interact ({nearest.GetDescription()}) with {nearest}");
