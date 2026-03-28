@@ -70,10 +70,14 @@ public class GameState : MonoBehaviour
 
     void Start()
     {
-        Player.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
-
         StartDay();
         AddItem(moneyItem, 10);
+    }
+    
+    public void SetPlayer(Player player)
+    {
+        Player = player;
+        Player.OnSelectedItemChanged.AddListener(OnSelectedItemChanged);
     }
 
     public void RegisterInteractable(IInteractable interactable)
@@ -222,6 +226,7 @@ public class GameState : MonoBehaviour
         ItemsInShop.Add(item);
         RefreshShop.Invoke();
     }
+
 }
 
 public enum GamePhase

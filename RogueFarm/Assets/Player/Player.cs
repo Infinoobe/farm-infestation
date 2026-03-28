@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using IngameDebugConsole;
 using Interactable;
 using JetBrains.Annotations;
 using UI;
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour, IDamagable
     void Start()
     {
         Controller = GetComponent<CharacterController>();
-        GameState.Instance.Player = this;
+        GameState.Instance.SetPlayer(this);
         playerAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
     }
 
@@ -80,6 +82,12 @@ public class Player : MonoBehaviour, IDamagable
 
     private void UpdateInput()
     {
+        if (DebugLogManager.Instance.IsLogWindowVisible)
+        {
+            velocity = Vector3.zero;
+            return;
+        }
+
         lastInput =  new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if (lastInput.magnitude > 1.0)
             lastInput = lastInput.normalized;
