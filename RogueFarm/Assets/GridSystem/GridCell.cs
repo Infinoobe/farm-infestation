@@ -3,7 +3,6 @@ using UnityEngine;
 public class GridCell : MonoBehaviour
 {
     private GameObject currBuilding;
-    [SerializeField] private Material ghostMaterial;
 
     public bool IsEmpty()
     {
@@ -25,10 +24,4 @@ public class GridCell : MonoBehaviour
         currBuilding.GetComponent<Building>().RemoveBuilding();
     }
 
-    public void HideGizmo()
-    {
-        if (IsEmpty()) return;
-        Destroy(currBuilding);
-        currBuilding = null;
-    }
 }

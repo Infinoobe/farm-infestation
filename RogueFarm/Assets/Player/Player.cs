@@ -62,6 +62,14 @@ public class Player : MonoBehaviour, IDamagable
         else if (currGridSystem)
         {
             currGridSystem.DeleteGizmo();
+            currGridSystem = null;
+        }
+
+        if (!currGridSystem) return;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            currGridSystem.RotateGizmo();
         }
     }
 
@@ -195,7 +203,12 @@ public class Player : MonoBehaviour, IDamagable
             Attack();
             return;
         }
-        if (TryGetInteractable(out var nearest))
+
+        if(currGridSystem && currGridSystem.HasGizmo())
+        {
+            currGridSystem.PlaceBuilding();
+        }
+        else if (TryGetInteractable(out var nearest))
         {
             Debug.Log($"Interact ({nearest.GetDescription()}) with {nearest}");
             nearest.Interact(this);

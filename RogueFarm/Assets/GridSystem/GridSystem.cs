@@ -15,6 +15,11 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private Material ghostMaterialGood;
     [SerializeField] private Material ghostMaterialBad;
 
+    public bool HasGizmo()
+    {
+        return currGizmo != null;
+    }
+
     public void Start()
     {
         PlaneResizer pr = gameObject.GetComponent<PlaneResizer>();
@@ -38,6 +43,10 @@ public class GridSystem : MonoBehaviour
     {
         currGizmo = Instantiate(buildingPrefab, targetCell.transform.position, Quaternion.identity);
         currGizmo.GetComponent<Building>().isPlaced = false;
+
+        currGizmo.layer = LayerMask.NameToLayer("BuildingGizmo");
+        foreach (Transform child in currGizmo.transform)
+            child.gameObject.layer = currGizmo.layer;
 
         if (CanBuildingBePlaced()) SetGizmoMaterial(ghostMaterialGood);
         else SetGizmoMaterial(ghostMaterialBad);
@@ -63,7 +72,7 @@ public class GridSystem : MonoBehaviour
 
     private bool CanBuildingBePlaced()
     {
-        return true;    //TODO
+        return true;    //TODO, check currGridCell
     }
 
     public void DeleteGizmo()
@@ -88,7 +97,16 @@ public class GridSystem : MonoBehaviour
     public void PlaceBuilding()
     {
         if (!CanBuildingBePlaced()) return;
+        // TODO: Grab resources
+        GameObject newBuilding = Instantiate(buildingToMakePrefab, currSelectedCell.transform.position, currGizmo.transform.rotation);
+        newBuilding.transform.SetParent(gameObject.transform, true);
+        DeleteGizmo();
         // TODO
+    }
+
+    private GridCell[] GetOverlapingCells()
+    {
+        return null;
     }
 
     public void PointingAtPosition(Vector3 point)
