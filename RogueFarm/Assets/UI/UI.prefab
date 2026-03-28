@@ -1772,8 +1772,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Controls:\n\nWSAD\t- Move\nLMB / E\t- Interact / Attack\nRMB / Tab\t-
-    Backpack / Hide\r\nQ\t\t- Change plant\n\r\nDebug:\r\nP\t- Go to sleep\r\nO\t-
-    Reaserch\nL\t- Shop"
+    Backpack / Hide\r\nQ\t\t- Change plant\nR\t\t- Rotate Building\n\r\nDebug:\r\nP\t-
+    Go to sleep\r\nO\t- Reaserch\nL\t- Shop"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
