@@ -3,6 +3,7 @@ using UnityEngine;
 public class GridCell : MonoBehaviour
 {
     private GameObject currBuilding;
+    [SerializeField] private Material ghostMaterial;
 
     public bool IsEmpty()
     {
@@ -23,13 +24,6 @@ public class GridCell : MonoBehaviour
     {
         currBuilding.GetComponent<Building>().RemoveBuilding();
     }
-
-    public void ShowGizmo(GameObject buildingPrefab)
-    {
-        if (!IsEmpty()) return;
-        currBuilding = Instantiate(buildingPrefab, gameObject.transform.position, Quaternion.identity);
-    }
-
 
     public void HideGizmo()
     {

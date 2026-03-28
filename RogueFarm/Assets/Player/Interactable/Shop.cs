@@ -3,24 +3,19 @@ using Interactable;
 using UI;
 using UnityEngine;
 
-public class Shop : MonoBehaviour, IInteractable
+public class Shop : Building
 {
     public void Start()
     {
         GameState.Instance.RegisterInteractable(this);
     }
 
-    public void Interact(Player p)
+    override public void Interact(Player p)
     {
         MainUI.Instance.OpenShop();
     }
 
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
-    public string GetDescription()
+    override public string GetDescription()
     {
         return "Shop";
     }

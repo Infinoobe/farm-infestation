@@ -210,6 +210,7 @@ public class Player : MonoBehaviour, IDamagable
         nearest = null;
         foreach (var i in GameState.Instance.Interactables)
         {
+            if (!i.IsInteractionEnabled()) continue;
             float dist = Vector3.Distance(interactionPosition, i.GetPosition());
             if (dist < minDistance)
             {

@@ -1,7 +1,7 @@
 using Interactable;
 using UnityEngine;
 
-public class Field : Building, IInteractable
+public class Field : Building
 {
     [SerializeField] private Plant currentPlant;
 
@@ -54,7 +54,7 @@ public class Field : Building, IInteractable
         return currentPlant.CanBeCollected;
     }
 
-    public string GetDescription()
+    override public string GetDescription()
     {
         if (IsEmpty())
         {
@@ -72,7 +72,7 @@ public class Field : Building, IInteractable
         return "Do nothing (Plant Growing)";
     }
     
-    public void Interact(Player p)
+    override public void Interact(Player p)
     {
         // Add checking current player item
 
@@ -89,10 +89,4 @@ public class Field : Building, IInteractable
             return;
         }
     }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
 }

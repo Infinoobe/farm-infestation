@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 23426800671602678}
   - component: {fileID: 6388154473258746058}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Field
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a03171f4628c0d40ad0b67f76a01979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeTargeted: 0
-  canBeDestroyed: 0
-  canBeWalkedOn: 0
+  canBeTargeted: 1
+  canBeDestroyed: 1
+  canBeWalkedOn: 1
+  interactionEnabled: 1
   health: 0
   currentPlant: {fileID: 0}
 --- !u!1 &9220500101535426443
@@ -61,7 +62,7 @@ GameObject:
   - component: {fileID: 4973170169005562162}
   - component: {fileID: 2476661521177784823}
   - component: {fileID: 8228551156771882003}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

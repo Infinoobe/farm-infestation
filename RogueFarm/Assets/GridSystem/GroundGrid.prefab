@@ -139,4 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 4180583388404341857, guid: 43fcc1abf7b03cc4d820086f6f407c82, type: 3}
-  testBuild: {fileID: 387103512954216748, guid: e57515d4e4429dd42974d98337348dfd, type: 3}
+  buildingToMakePrefab: {fileID: 387103512954216748, guid: e57515d4e4429dd42974d98337348dfd, type: 3}
+  currGizmo: {fileID: 0}
+  ghostMaterialGood: {fileID: 2100000, guid: fd5ef94ababe50446a91391f88185142, type: 2}
+  ghostMaterialBad: {fileID: 2100000, guid: 97c44dee5e6bead4090cb4652e9e7c11, type: 2}
