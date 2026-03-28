@@ -1,6 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections.Generic;
 using static UnityEngine.UI.Image;
+using UnityEngine.UIElements;
+using System.Linq;
 
 public class GridSystem : MonoBehaviour
 {
@@ -9,7 +12,6 @@ public class GridSystem : MonoBehaviour
     private float gridCellSize;
     private int width, height;
     private Vector3 lowerLeftCorner;
-    private GridCell currSelectedCell;
     [SerializeField] private GameObject buildingToMakePrefab;
     private GameObject currGizmo;
     [SerializeField] private Material ghostMaterialGood;
@@ -48,6 +50,12 @@ public class GridSystem : MonoBehaviour
         foreach (Transform child in currGizmo.transform)
             child.gameObject.layer = currGizmo.layer;
 
+        UpdateGizmoMaterial();
+    }
+
+    private void UpdateGizmoMaterial ()
+    {
+        if (!currGizmo) return;
         if (CanBuildingBePlaced()) SetGizmoMaterial(ghostMaterialGood);
         else SetGizmoMaterial(ghostMaterialBad);
     }
@@ -72,7 +80,15 @@ public class GridSystem : MonoBehaviour
 
     private bool CanBuildingBePlaced()
     {
-        return true;    //TODO, check currGridCell
+        if (!currGizmo) return false;
+        List<GridCell> targetCells = GetOverlapingCells();
+        if (targetCells == null || targetCells.Count == 0) return false;
+        foreach(GridCell cell in targetCells)
+        {
+            if (!cell.IsEmpty()) return false;
+        }
+        //TODO enough resources?
+        return true;
     }
 
     public void DeleteGizmo()
@@ -97,16 +113,31 @@ public class GridSystem : MonoBehaviour
     public void PlaceBuilding()
     {
         if (!CanBuildingBePlaced()) return;
+
         // TODO: Grab resources
-        GameObject newBuilding = Instantiate(buildingToMakePrefab, currSelectedCell.transform.position, currGizmo.transform.rotation);
+        GameObject newBuilding = Instantiate(buildingToMakePrefab, currGizmo.transform.position, currGizmo.transform.rotation);
         newBuilding.transform.SetParent(gameObject.transform, true);
+        List<GridCell> targetCells = GetOverlapingCells();
+        foreach(GridCell cell in targetCells)
+        {
+            cell.SetBuilding(newBuilding);
+        }
         DeleteGizmo();
-        // TODO
     }
 
-    private GridCell[] GetOverlapingCells()
+    private List<GridCell> GetOverlapingCells()
     {
-        return null;
+        if (!currGizmo) return new List<GridCell>();
+        BuildingShapeUnit[] buildPoints = currGizmo.GetComponent<Building>().BuildingShapeUnits;
+        List<GridCell> targetCells = new List<GridCell>();
+        foreach(BuildingShapeUnit unit in buildPoints)
+        {
+            (int x, int y) = WorldToGridPosition(unit.gameObject.transform.position);
+            GridCell cell = GetGridCell(x, y);
+            if (!cell) return new List<GridCell>();
+            targetCells.Add(cell);
+        }
+        return targetCells;
     }
 
     public void PointingAtPosition(Vector3 point)
@@ -116,13 +147,15 @@ public class GridSystem : MonoBehaviour
         if (!targetCell)
         {
             DeleteGizmo();
-            currSelectedCell = null;
             return;
         }
 
-        if (currGizmo) MoveGizmoToCell(targetCell);
+        if (currGizmo) 
+        {
+            MoveGizmoToCell(targetCell);
+            UpdateGizmoMaterial();
+        }
         else CreateGizmo(buildingToMakePrefab, targetCell);
-        currSelectedCell = targetCell;
     }
 
     private (int x, int y) WorldToGridPosition(Vector3 worldPosition)

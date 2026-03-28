@@ -1,19 +1,28 @@
 using Interactable;
 using UnityEngine;
 
-public class Bed : Building
+public class Bed : MonoBehaviour, IInteractable
 {
+    [SerializeField] private bool interactionEnabled;
     void Start()
     {
         GameState.Instance.RegisterInteractable(this);
     }
-    
-    override public void Interact(Player p)
+
+    public bool IsInteractionEnabled() { return interactionEnabled; }
+    public void EnableInteraction() { interactionEnabled = true; }
+    public void DisableInteraction() { interactionEnabled = false; }
+
+    public void Interact(Player p)
     {
         GameState.Instance.GoToSleep();
     }
 
-    override public string GetDescription()
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+    public string GetDescription()
     {
         return "Sleep";
     }

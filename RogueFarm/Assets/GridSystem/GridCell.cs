@@ -21,7 +21,9 @@ public class GridCell : MonoBehaviour
 
     public void RemoveBuilding()
     {
-        currBuilding.GetComponent<Building>().RemoveBuilding();
+        if (!currBuilding) return;
+        Building currBuildingScript = currBuilding.GetComponent<Building>();
+        if (!currBuildingScript || currBuildingScript.CanBeDestroyed) return;
+        currBuildingScript.RemoveBuilding();
     }
-
 }
