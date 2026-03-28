@@ -3359,7 +3359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000038146973
+      value: -0.000011444092
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4701,12 +4701,6 @@ PrefabInstance:
     - target: {fileID: 2623429699538771466, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6287826427367753210, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
-      propertyPath: m_text
-      value: "Controls:\n\nWSAD\t- Move\nLMB / E\t- Interact / Attack\nRMB / Tab\t-
-        Backpack / Hide\r\nQ\t\t- Change plant\nR\t\t- Rotate Building\n\r\nDebug:\r\nP\t-
-        Go to sleep\r\nO\t- Reaserch\nL\t- Shop"
       objectReference: {fileID: 0}
     - target: {fileID: 9128095433754061845, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: m_Name
