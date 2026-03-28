@@ -834,7 +834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000022888184
+      value: -0.0000038146973
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1165,18 +1165,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundGrid
       objectReference: {fileID: 0}
-    - target: {fileID: 2137816861445507154, guid: 0077eaed446299e489913050f6e08140, type: 3}
-      propertyPath: ghostMaterialBad
-      value: 
-      objectReference: {fileID: 2100000, guid: 97c44dee5e6bead4090cb4652e9e7c11, type: 2}
-    - target: {fileID: 2137816861445507154, guid: 0077eaed446299e489913050f6e08140, type: 3}
-      propertyPath: ghostMaterialGood
-      value: 
-      objectReference: {fileID: 2100000, guid: fd5ef94ababe50446a91391f88185142, type: 2}
-    - target: {fileID: 2137816861445507154, guid: 0077eaed446299e489913050f6e08140, type: 3}
-      propertyPath: buildingToMakePrefab
-      value: 
-      objectReference: {fileID: 387103512954216748, guid: e57515d4e4429dd42974d98337348dfd, type: 3}
     - target: {fileID: 2875699547527874985, guid: 0077eaed446299e489913050f6e08140, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

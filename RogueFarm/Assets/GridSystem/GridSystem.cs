@@ -66,7 +66,7 @@ public class GridSystem : MonoBehaviour
         return true;    //TODO
     }
 
-    private void DeleteGizmo()
+    public void DeleteGizmo()
     {
         if (!currGizmo) return;
         Destroy(currGizmo);
@@ -83,13 +83,6 @@ public class GridSystem : MonoBehaviour
     {
         if (!currGizmo) return;
         currGizmo.transform.rotation *= Quaternion.Euler(0f, 90f, 0f);
-    }
-
-    public void Deselect()
-    {
-        if (!currSelectedCell) return;
-        currSelectedCell.HideGizmo();
-        currSelectedCell = null;
     }
 
     public void PlaceBuilding()

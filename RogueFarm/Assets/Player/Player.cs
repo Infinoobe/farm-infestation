@@ -56,12 +56,12 @@ public class Player : MonoBehaviour, IDamagable
         {
             GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
             target.PointingAtPosition(ground.point);
-            if (currGridSystem && currGridSystem != target) currGridSystem.Deselect();
+            if (currGridSystem && currGridSystem != target) currGridSystem.DeleteGizmo();
             currGridSystem = target;
         }
         else if (currGridSystem)
         {
-            currGridSystem.Deselect();
+            currGridSystem.DeleteGizmo();
         }
     }
 
