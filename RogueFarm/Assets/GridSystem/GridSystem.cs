@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using static UnityEngine.UI.Image;
 using UnityEngine.UIElements;
 using System.Linq;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GridSystem : MonoBehaviour
 {
@@ -47,10 +48,18 @@ public class GridSystem : MonoBehaviour
         currGizmo.GetComponent<Building>().isPlaced = false;
 
         currGizmo.layer = LayerMask.NameToLayer("BuildingGizmo");
-        foreach (Transform child in currGizmo.transform)
-            child.gameObject.layer = currGizmo.layer;
+        SetLayerRecursively(currGizmo, currGizmo.layer);
 
         UpdateGizmoMaterial();
+    }
+
+    private void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
     }
 
     private void UpdateGizmoMaterial ()

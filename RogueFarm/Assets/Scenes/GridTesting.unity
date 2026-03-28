@@ -795,6 +795,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8857240608272672620, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 99.04004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857240608272672620, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -29.699951
+      objectReference: {fileID: 0}
     - target: {fileID: 9128095433754061845, guid: 4554ad11bef908144b5aa17e06b3918e, type: 3}
       propertyPath: m_Name
       value: UI
@@ -834,7 +842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000022888184
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1165,6 +1173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundGrid
       objectReference: {fileID: 0}
+    - target: {fileID: 2137816861445507154, guid: 0077eaed446299e489913050f6e08140, type: 3}
+      propertyPath: buildingToMakePrefab
+      value: 
+      objectReference: {fileID: 5839119779071415317, guid: 3a22cca82e6c21d4ab99b27d4a9f64bb, type: 3}
     - target: {fileID: 2875699547527874985, guid: 0077eaed446299e489913050f6e08140, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
