@@ -52,7 +52,10 @@ public class Player : MonoBehaviour, IDamagable
         Vector3 direction = Vector3.down;
         int layerMask = LayerMask.GetMask("GridGround");
 
-        if (Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
+        bool isHoeEquiped = false;
+        if (SelectedItem != null && SelectedItem.itemName.Equals("Hoe")) isHoeEquiped = true;
+
+        if (isHoeEquiped && Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
         {
             GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
             target.PointingAtPosition(ground.point);

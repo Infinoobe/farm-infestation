@@ -13,6 +13,7 @@ public class GameState : MonoBehaviour
 
     [SerializeField] private Inventory inventory;
     [SerializeField] private Item moneyItem;
+    [SerializeField] private Item handItem;
     [SerializeField] public List<Item> ItemsInShop = new List<Item>();
 
 
@@ -33,7 +34,8 @@ public class GameState : MonoBehaviour
     private int perNightZombiesAlive;
 
     public static GameState Instance { get; private set; }
-    
+
+    public Item GetHandItem => handItem;
     public GamePhase CurrentPhase => currGamePhase;
     public bool IsDay() { return currGamePhase == GamePhase.Day; }
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
@@ -72,6 +74,7 @@ public class GameState : MonoBehaviour
     {
         StartDay();
         AddItem(moneyItem, 10);
+        AddItem(handItem, 1);
     }
     
     public void SetPlayer(Player player)
