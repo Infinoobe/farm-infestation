@@ -62,7 +62,7 @@ public class GridSystem : MonoBehaviour
         currGizmo.layer = LayerMask.NameToLayer("BuildingGizmo");
         SetLayerRecursively(currGizmo, currGizmo.layer);
 
-        UpdateGizmoMaterial();
+        UpdateGizmoMaterial(item);
     }
 
     private void SetLayerRecursively(GameObject obj, int layer)
@@ -74,10 +74,10 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private void UpdateGizmoMaterial ()
+    private void UpdateGizmoMaterial (Item item)
     {
         if (!currGizmo) return;
-        if (CanBuildingBePlaced()) SetGizmoMaterial(ghostMaterialGood);
+        if (CanBuildingBePlaced(item)) SetGizmoMaterial(ghostMaterialGood);
         else SetGizmoMaterial(ghostMaterialBad);
     }
 
@@ -99,7 +99,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private bool CanBuildingBePlaced()
+    private bool CanBuildingBePlaced(Item item)
     {
         if (!currGizmo) return false;
         List<GridCell> targetCells = GetOverlapingCells();
@@ -108,8 +108,7 @@ public class GridSystem : MonoBehaviour
         {
             if (!cell.IsEmpty()) return false;
         }
-        //TODO enough resources?
-        return true;
+        return GameState.Instance.HasItems(item);
     }
 
     public void DeleteGizmo()
@@ -135,9 +134,13 @@ public class GridSystem : MonoBehaviour
 
     public void PlaceBuilding(Item itemUsed)
     {
-        if (!CanBuildingBePlaced()) return;
+        if (!CanBuildingBePlaced(itemUsed)) return;
 
-        // TODO: Grab resources
+        if (itemUsed.itemType == ItemType.BUILDING)
+        {
+            GameState.Instance.RemoveItem(itemUsed);
+        }
+
         GameObject newBuilding = Instantiate(itemUsed.buildingPrefab, currGizmo.transform.position, currGizmo.transform.rotation);
         newBuilding.transform.SetParent(gameObject.transform, true);
         List<GridCell> targetCells = GetOverlapingCells();
@@ -146,6 +149,8 @@ public class GridSystem : MonoBehaviour
             cell.SetBuilding(newBuilding);
         }
         DeleteGizmo();
+        var b = newBuilding.GetComponent<Building>();
+        b.PlaceBuilding(targetCells);
     }
 
     private List<GridCell> GetOverlapingCells()
@@ -188,7 +193,7 @@ public class GridSystem : MonoBehaviour
         }
 
         MoveGizmoToCell(targetCell);
-        UpdateGizmoMaterial();
+        UpdateGizmoMaterial(selectedItem);
 
     }
 

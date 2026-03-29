@@ -1,6 +1,7 @@
 using Interactable;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Building : MonoBehaviour, IInteractable
@@ -12,7 +13,7 @@ public class Building : MonoBehaviour, IInteractable
     [SerializeField] private int health;
     [SerializeField] private BuildingShapeUnit[] buildingShapeUnits;
     public bool isPlaced = true;
-    private GridCell[] occupiedCells;
+    private List<GridCell> occupiedCells;
 
     public BuildingShapeUnit[] BuildingShapeUnits => buildingShapeUnits;
     public bool CanBeDestroyed => canBeDestroyed;
@@ -43,10 +44,12 @@ public class Building : MonoBehaviour, IInteractable
         return transform.position;
     }
 
-    public void PlaceBuilding(GridCell[] onCells)
+    public void PlaceBuilding(IEnumerable<GridCell> onCells)
     {
-        occupiedCells = onCells;
+        occupiedCells = onCells.ToList();
         isPlaced = true;
+        EnableInteraction();
+        GameState.Instance.RegisterInteractable(this);
     }
 
     public void RemoveBuilding()
@@ -55,6 +58,8 @@ public class Building : MonoBehaviour, IInteractable
         foreach(GridCell cell in occupiedCells){
             cell.UnSetBuilding();
         }
+        GameState.Instance.UnRegisterInteractable(this);
+
         // TODO: returning some resources
         DestroyBuilding();
     }

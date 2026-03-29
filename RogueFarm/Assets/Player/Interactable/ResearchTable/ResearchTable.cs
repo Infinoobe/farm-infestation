@@ -6,7 +6,6 @@ public class ResearchTable : Building
 {
     void Start()
     {
-        GameState.Instance.RegisterInteractable(this);
     }
 
     override public void Interact(Player p)
