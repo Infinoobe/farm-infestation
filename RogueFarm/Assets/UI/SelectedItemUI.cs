@@ -28,7 +28,11 @@ public class SelectedPlantUI : MonoBehaviour
 
         var items = GameState.Instance.GetItems();
         items.TryGetValue(item, out var count);
-        ItemLabel.text = $"{item.itemName} ({count})";
+        ItemLabel.text = item.itemName;
+        if (!item.unique)
+        {
+            ItemLabel.text += $" ({count})";
+        }
         ItemLabel.color = count > 0 ? Color.white : Color.red;
         
         ItemImage.sprite = item.icon;

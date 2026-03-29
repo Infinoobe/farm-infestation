@@ -14,7 +14,11 @@ public class BackpackItemUI : MonoBehaviour,  IPointerEnterHandler
         TMP_Text nameText = transform.Find("ItemText").GetComponent<TMP_Text>();
 
         icon.sprite = itemSo.icon;
-        nameText.text = $"{itemSo.itemName}: {amount}";
+        nameText.text = itemSo.itemName;
+        if (!itemSo.unique)
+        {
+            nameText.text += $": {amount}";
+        }
 
         var img = GetComponent<Image>();
         if (itemSo.itemType == ItemType.SEED)

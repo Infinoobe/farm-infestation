@@ -38,6 +38,10 @@ public class ShopUI : MonoBehaviour
     {
         foreach(ItemSO item in GameState.Instance.ItemsInShop)
         {
+            if (item.unique && GameState.Instance.HasItems(item))
+            {
+                continue;
+            }
             GameObject obj = Instantiate(buyingItemView, buyingLayout.transform);
             Image icon = obj.transform.Find("ItemImage").GetComponent<Image>();
             TMP_Text nameText = obj.transform.Find("ItemText").GetComponent<TMP_Text>();

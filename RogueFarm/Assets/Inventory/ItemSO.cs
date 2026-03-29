@@ -15,6 +15,7 @@ public class ItemSO : ScriptableObject
 {
     public ItemType itemType;
     public bool canBeSold = true;
+    public bool unique;
     public string itemName;
     public Sprite icon;
     public int valueBuying;

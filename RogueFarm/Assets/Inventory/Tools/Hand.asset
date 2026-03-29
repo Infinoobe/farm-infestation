@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 3
   canBeSold: 0
+  unique: 1
   itemName: Hand
   icon: {fileID: -368340157, guid: adfe4bfd58545b948bf0b149b287e2de, type: 3}
   valueBuying: 0
   valueSelling: 0
   plantPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 0}

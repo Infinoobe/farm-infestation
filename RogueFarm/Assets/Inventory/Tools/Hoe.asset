@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 3
   canBeSold: 0
+  unique: 1
   itemName: Hoe
   icon: {fileID: 1071053893, guid: 27b1be5caa4fd4e409e726a671b26cfa, type: 3}
   valueBuying: 2
