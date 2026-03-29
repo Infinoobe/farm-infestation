@@ -1,10 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
-using static UnityEngine.UI.Image;
-using UnityEngine.UIElements;
-using System.Linq;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GridSystem : MonoBehaviour
 {
