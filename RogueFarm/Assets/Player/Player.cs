@@ -52,13 +52,12 @@ public class Player : MonoBehaviour, IDamagable
         Vector3 direction = Vector3.down;
         int layerMask = LayerMask.GetMask("GridGround");
 
-        bool isHoeEquiped = false;
-        if (SelectedItem != null && SelectedItem.itemName.Equals("Hoe")) isHoeEquiped = true;
+        bool itemNeedsGrid = DoesItemNeedGrid();
 
-        if (isHoeEquiped && Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
+        if (itemNeedsGrid && Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
         {
             GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
-            target.PointingAtPosition(ground.point);
+            target.PointingAtPosition(ground.point, SelectedItem);
             if (currGridSystem && currGridSystem != target) currGridSystem.DeleteGizmo();
             currGridSystem = target;
         }
@@ -70,10 +69,22 @@ public class Player : MonoBehaviour, IDamagable
 
         if (!currGridSystem) return;
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.mouseScrollDelta.y > 0 )
         {
             currGridSystem.RotateGizmo();
+        } else if (Input.mouseScrollDelta.y < 0)
+        {
+            currGridSystem.RotateGizmo(true);
+
         }
+    }
+
+    public bool DoesItemNeedGrid()
+    {
+        if (SelectedItem == null) return false;
+        if (SelectedItem.itemName.Equals("Hoe")) return true;
+        if (SelectedItem.itemType == ItemType.BUILDING) return true;
+        return false;
     }
 
     void Update()
@@ -198,7 +209,13 @@ public class Player : MonoBehaviour, IDamagable
             }
         }
     }
+
+    public bool CanInteract()
+    {
+        return currGridSystem == null || !currGridSystem.HasGizmo();
+    }
     
+
     private void Interact()
     {
         if (GameState.Instance.IsNight())
@@ -209,7 +226,7 @@ public class Player : MonoBehaviour, IDamagable
 
         if(currGridSystem && currGridSystem.HasGizmo())
         {
-            currGridSystem.PlaceBuilding();
+            currGridSystem.PlaceBuilding(SelectedItem);
         }
         else if (TryGetInteractable(out var nearest))
         {

@@ -25,7 +25,7 @@ public class BackpackItemUI : MonoBehaviour,  IPointerEnterHandler
                 nameText.color = Color.black;
             }
         }
-        if (item.itemType == ItemType.TOOL)
+        if (item.itemType == ItemType.TOOL || item.itemType == ItemType.BUILDING)
         {
             img.color = new Color(0.3f,0.3f,0.3f);
             if (item == GameState.Instance.Player.SelectedItem)
@@ -40,7 +40,7 @@ public class BackpackItemUI : MonoBehaviour,  IPointerEnterHandler
     {
         //Debug.Log($"Select seed: {item.itemName} -- {item.itemType} -- {GameState.Instance.Player.SelectedPlantSeed.itemName}");
 
-        if (item.itemType == ItemType.SEED || item.itemType == ItemType.TOOL)
+        if (item.itemType == ItemType.SEED || item.itemType == ItemType.TOOL || item.itemType == ItemType.BUILDING)
         {
             if (GameState.Instance.Player.SelectedItem != item)
             {

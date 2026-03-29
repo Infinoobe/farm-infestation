@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcd0f908c289f5e4a803e91e32a4611a, type: 3}
-  m_Name: Hoe
+  m_Name: ReaserchTable
   m_EditorClassIdentifier: 
-  itemType: 3
-  canBeSold: 0
-  itemName: Hoe
-  icon: {fileID: 1071053893, guid: 27b1be5caa4fd4e409e726a671b26cfa, type: 3}
-  valueBuying: 2
-  valueSelling: 0
+  itemType: 5
+  canBeSold: 1
+  itemName: Reaserch Table
+  icon: {fileID: 1071053893, guid: 30ae6e0d64301ac44901a7226ec0ad15, type: 3}
+  valueBuying: 3
+  valueSelling: 3
   plantPrefab: {fileID: 0}
-  buildingPrefab: {fileID: 387103512954216748, guid: e57515d4e4429dd42974d98337348dfd, type: 3}
+  buildingPrefab: {fileID: 5839119779071415317, guid: 3a22cca82e6c21d4ab99b27d4a9f64bb, type: 3}

@@ -13,11 +13,12 @@ public class GridSystem : MonoBehaviour
     private float gridCellSize;
     private int width, height;
     private Vector3 lowerLeftCorner;
-    [SerializeField] private GameObject buildingToMakePrefab;
     private GameObject currGizmo;
     [SerializeField] private Material ghostMaterialGood;
     [SerializeField] private Material ghostMaterialBad;
 
+    private Item lastSelectedItem;
+    
     public bool HasGizmo()
     {
         return currGizmo != null;
@@ -42,10 +43,21 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private void CreateGizmo(GameObject buildingPrefab, GridCell targetCell)
+    private void CreateGizmo(Item item, GridCell targetCell)
     {
+        var buildingPrefab = item.buildingPrefab;
+        if (buildingPrefab == null)
+        {
+            Debug.LogError($"Item {item.name} : Missing building prefab on.");
+        }
+
         currGizmo = Instantiate(buildingPrefab, targetCell.transform.position, Quaternion.identity);
-        currGizmo.GetComponent<Building>().isPlaced = false;
+        var b = currGizmo.GetComponent<Building>();
+        if (b == null)
+        {
+            Debug.LogError($"Item {item.name} : buildingPrefab {buildingPrefab.name} is not a Building.");
+        }
+        b.isPlaced = false;
 
         currGizmo.layer = LayerMask.NameToLayer("BuildingGizmo");
         SetLayerRecursively(currGizmo, currGizmo.layer);
@@ -113,18 +125,20 @@ public class GridSystem : MonoBehaviour
         currGizmo.transform.position = targetCell.transform.position;
     }
 
-    public void RotateGizmo()
+    public void RotateGizmo(bool rotateCounterclockwise = false)
     {
         if (!currGizmo) return;
-        currGizmo.transform.rotation *= Quaternion.Euler(0f, 90f, 0f);
+        var angle = 90;
+        if (rotateCounterclockwise) angle *= -1;
+        currGizmo.transform.rotation *= Quaternion.Euler(0f, angle, 0f);
     }
 
-    public void PlaceBuilding()
+    public void PlaceBuilding(Item itemUsed)
     {
         if (!CanBuildingBePlaced()) return;
 
         // TODO: Grab resources
-        GameObject newBuilding = Instantiate(buildingToMakePrefab, currGizmo.transform.position, currGizmo.transform.rotation);
+        GameObject newBuilding = Instantiate(itemUsed.buildingPrefab, currGizmo.transform.position, currGizmo.transform.rotation);
         newBuilding.transform.SetParent(gameObject.transform, true);
         List<GridCell> targetCells = GetOverlapingCells();
         foreach(GridCell cell in targetCells)
@@ -149,7 +163,7 @@ public class GridSystem : MonoBehaviour
         return targetCells;
     }
 
-    public void PointingAtPosition(Vector3 point)
+    public void PointingAtPosition(Vector3 point, Item selectedItem)
     {
         (int x, int y) = WorldToGridPosition(point);
         GridCell targetCell = GetGridCell(x, y);
@@ -158,13 +172,24 @@ public class GridSystem : MonoBehaviour
             DeleteGizmo();
             return;
         }
-
-        if (currGizmo) 
+        if (currGizmo == null) 
         {
-            MoveGizmoToCell(targetCell);
-            UpdateGizmoMaterial();
+            CreateGizmo(selectedItem, targetCell);
+            lastSelectedItem = selectedItem;
+            return;
         }
-        else CreateGizmo(buildingToMakePrefab, targetCell);
+
+        if (lastSelectedItem != selectedItem)
+        {
+            DeleteGizmo();
+            CreateGizmo(selectedItem, targetCell);
+            lastSelectedItem = selectedItem;
+            return;
+        }
+
+        MoveGizmoToCell(targetCell);
+        UpdateGizmoMaterial();
+
     }
 
     private (int x, int y) WorldToGridPosition(Vector3 worldPosition)

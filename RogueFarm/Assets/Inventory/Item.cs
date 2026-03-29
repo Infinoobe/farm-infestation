@@ -7,6 +7,7 @@ public enum ItemType
     CURRENCY,
     TOOL,
     RESOURCE,
+    BUILDING,
 }
 
 [CreateAssetMenu(fileName = "NewItem")]
@@ -19,4 +20,5 @@ public class Item : ScriptableObject
     public int valueBuying;
     public int valueSelling;
     public GameObject plantPrefab;
+    public GameObject buildingPrefab;
 }
