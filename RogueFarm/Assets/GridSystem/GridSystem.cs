@@ -17,7 +17,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private Material ghostMaterialGood;
     [SerializeField] private Material ghostMaterialBad;
 
-    private Item lastSelectedItem;
+    private ItemSO lastSelectedItemSo;
     
     public bool HasGizmo()
     {
@@ -43,26 +43,26 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private void CreateGizmo(Item item, GridCell targetCell)
+    private void CreateGizmo(ItemSO itemSo, GridCell targetCell)
     {
-        var buildingPrefab = item.buildingPrefab;
+        var buildingPrefab = itemSo.buildingPrefab;
         if (buildingPrefab == null)
         {
-            Debug.LogError($"Item {item.name} : Missing building prefab on.");
+            Debug.LogError($"Item {itemSo.name} : Missing building prefab on.");
         }
 
         currGizmo = Instantiate(buildingPrefab, targetCell.transform.position, Quaternion.identity);
         var b = currGizmo.GetComponent<Building>();
         if (b == null)
         {
-            Debug.LogError($"Item {item.name} : buildingPrefab {buildingPrefab.name} is not a Building.");
+            Debug.LogError($"Item {itemSo.name} : buildingPrefab {buildingPrefab.name} is not a Building.");
         }
         b.isPlaced = false;
 
         currGizmo.layer = LayerMask.NameToLayer("BuildingGizmo");
         SetLayerRecursively(currGizmo, currGizmo.layer);
 
-        UpdateGizmoMaterial(item);
+        UpdateGizmoMaterial(itemSo);
     }
 
     private void SetLayerRecursively(GameObject obj, int layer)
@@ -74,10 +74,10 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private void UpdateGizmoMaterial (Item item)
+    private void UpdateGizmoMaterial (ItemSO itemSo)
     {
         if (!currGizmo) return;
-        if (CanBuildingBePlaced(item)) SetGizmoMaterial(ghostMaterialGood);
+        if (CanBuildingBePlaced(itemSo)) SetGizmoMaterial(ghostMaterialGood);
         else SetGizmoMaterial(ghostMaterialBad);
     }
 
@@ -99,7 +99,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    private bool CanBuildingBePlaced(Item item)
+    private bool CanBuildingBePlaced(ItemSO itemSo)
     {
         if (!currGizmo) return false;
         List<GridCell> targetCells = GetOverlapingCells();
@@ -108,7 +108,7 @@ public class GridSystem : MonoBehaviour
         {
             if (!cell.IsEmpty()) return false;
         }
-        return GameState.Instance.HasItems(item);
+        return GameState.Instance.HasItems(itemSo);
     }
 
     public void DeleteGizmo()
@@ -132,16 +132,16 @@ public class GridSystem : MonoBehaviour
         currGizmo.transform.rotation *= Quaternion.Euler(0f, angle, 0f);
     }
 
-    public void PlaceBuilding(Item itemUsed)
+    public void PlaceBuilding(ItemSO itemSoUsed)
     {
-        if (!CanBuildingBePlaced(itemUsed)) return;
+        if (!CanBuildingBePlaced(itemSoUsed)) return;
 
-        if (itemUsed.itemType == ItemType.BUILDING)
+        if (itemSoUsed.itemType == ItemType.BUILDING)
         {
-            GameState.Instance.RemoveItem(itemUsed);
+            GameState.Instance.RemoveItem(itemSoUsed);
         }
 
-        GameObject newBuilding = Instantiate(itemUsed.buildingPrefab, currGizmo.transform.position, currGizmo.transform.rotation);
+        GameObject newBuilding = Instantiate(itemSoUsed.buildingPrefab, currGizmo.transform.position, currGizmo.transform.rotation);
         newBuilding.transform.SetParent(gameObject.transform, true);
         List<GridCell> targetCells = GetOverlapingCells();
         foreach(GridCell cell in targetCells)
@@ -168,7 +168,7 @@ public class GridSystem : MonoBehaviour
         return targetCells;
     }
 
-    public void PointingAtPosition(Vector3 point, Item selectedItem)
+    public void PointingAtPosition(Vector3 point, ItemSO selectedItemSo)
     {
         (int x, int y) = WorldToGridPosition(point);
         GridCell targetCell = GetGridCell(x, y);
@@ -179,21 +179,21 @@ public class GridSystem : MonoBehaviour
         }
         if (currGizmo == null) 
         {
-            CreateGizmo(selectedItem, targetCell);
-            lastSelectedItem = selectedItem;
+            CreateGizmo(selectedItemSo, targetCell);
+            lastSelectedItemSo = selectedItemSo;
             return;
         }
 
-        if (lastSelectedItem != selectedItem)
+        if (lastSelectedItemSo != selectedItemSo)
         {
             DeleteGizmo();
-            CreateGizmo(selectedItem, targetCell);
-            lastSelectedItem = selectedItem;
+            CreateGizmo(selectedItemSo, targetCell);
+            lastSelectedItemSo = selectedItemSo;
             return;
         }
 
         MoveGizmoToCell(targetCell);
-        UpdateGizmoMaterial(selectedItem);
+        UpdateGizmoMaterial(selectedItemSo);
 
     }
 

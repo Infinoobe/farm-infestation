@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class SkillTreeManager : MonoBehaviour
 {
     public SkillNode[] skillNodes;
-    public Item carrotSeedItem;
-    public Item weedSeedItem;
+    [FormerlySerializedAs("carrotSeedItem")] public ItemSO carrotSeedItemSo;
+    [FormerlySerializedAs("weedSeedItem")] public ItemSO weedSeedItemSo;
     public GameObject researchPanel;
     public GameObject skillInfoPanel;
     private GameObject currentSkillNodeGameobject;
@@ -41,7 +42,7 @@ public class SkillTreeManager : MonoBehaviour
             return;
         }
         
-        Dictionary<Item, int> requiredItems = skillNode.skillSO.GetItemsDictionary();
+        Dictionary<ItemSO, int> requiredItems = skillNode.skillSO.GetItemsDictionary();
         SetPopupHeight(82f * (requiredItems.Count + 1));
         foreach (var (item, amount) in requiredItems)
         {
@@ -131,10 +132,10 @@ public class SkillTreeManager : MonoBehaviour
         switch (skillName)
         {
             case "Carrot Plant":
-                GameState.Instance.AddItemToShop(carrotSeedItem);
+                GameState.Instance.AddItemToShop(carrotSeedItemSo);
                 break;
             case "Weed Plant":
-                GameState.Instance.AddItemToShop(weedSeedItem);
+                GameState.Instance.AddItemToShop(weedSeedItemSo);
                 break;
             default:
                 Debug.Log("Researched skill does nothing");

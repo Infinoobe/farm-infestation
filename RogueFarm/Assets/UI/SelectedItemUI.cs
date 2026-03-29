@@ -16,9 +16,9 @@ public class SelectedPlantUI : MonoBehaviour
             return;
         }
 
-        var item = GameState.Instance.Player.SelectedItem;
+        var item = GameState.Instance.Player.selectedItemSo;
 
-        if (item == null || item == GameState.Instance.GetHandItem)
+        if (item == null || item == GameState.Instance.GetHandItemSo)
         {
             ItemLabel.text = $"No item selected";
             ItemImage.color = Color.clear;

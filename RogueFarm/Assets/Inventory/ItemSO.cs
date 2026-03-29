@@ -10,8 +10,8 @@ public enum ItemType
     BUILDING,
 }
 
-[CreateAssetMenu(fileName = "NewItem")]
-public class Item : ScriptableObject
+[CreateAssetMenu(fileName = "NewItem SO")]
+public class ItemSO : ScriptableObject
 {
     public ItemType itemType;
     public bool canBeSold = true;

@@ -1,12 +1,13 @@
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Plant : MonoBehaviour, IDamagable
 {
     private bool canBeCollected = false;
-    [SerializeField] private Item collectItem;
+    [FormerlySerializedAs("collectItem")] [SerializeField] private ItemSO collectItemSo;
     [SerializeField] private int collectItemAmount = 1;
     [SerializeField] private int growthTime = 2;
     [SerializeField] private int collectTimes = 1;
@@ -84,7 +85,7 @@ public class Plant : MonoBehaviour, IDamagable
     public virtual void CollectItem()
     {
         if (!canBeCollected) return;
-        GameState.Instance.AddItem(collectItem, collectItemAmount);
+        GameState.Instance.AddItem(collectItemSo, collectItemAmount);
         currCollectTimes++;
         if(currCollectTimes >= collectTimes)
         {

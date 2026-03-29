@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Interactable;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class GameState : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class GameState : MonoBehaviour
     [SerializeField] ItemsDatabaseSO itemsDatabase;
 
     [SerializeField] private Inventory inventory;
-    [SerializeField] private Item moneyItem;
-    [SerializeField] private Item handItem;
-    [SerializeField] public List<Item> ItemsInShop = new List<Item>();
+    [FormerlySerializedAs("moneyItem")] [SerializeField] private ItemSO moneyItemSo;
+    [FormerlySerializedAs("handItem")] [SerializeField] private ItemSO handItemSo;
+    [SerializeField] public List<ItemSO> ItemsInShop = new List<ItemSO>();
 
 
     [Header("Events")]
@@ -35,21 +36,21 @@ public class GameState : MonoBehaviour
 
     public static GameState Instance { get; private set; }
 
-    public Item GetHandItem => handItem;
+    public ItemSO GetHandItemSo => handItemSo;
     public GamePhase CurrentPhase => currGamePhase;
     public bool IsDay() { return currGamePhase == GamePhase.Day; }
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
     public int CurrentDay => currentDay;
     public Player Player;
 
-    public Dictionary<Item, int> GetItems()
+    public Dictionary<ItemSO, int> GetItems()
     {
         return inventory.items;
     }
 
     public int GetMoney()
     {
-        return inventory.GetAmount(moneyItem);
+        return inventory.GetAmount(moneyItemSo);
     }
 
     private void Awake()
@@ -73,8 +74,8 @@ public class GameState : MonoBehaviour
     void Start()
     {
         StartDay();
-        AddItem(moneyItem, 10);
-        AddItem(handItem, 1);
+        AddItem(moneyItemSo, 10);
+        AddItem(handItemSo, 1);
     }
     
     public void SetPlayer(Player player)
@@ -162,21 +163,21 @@ public class GameState : MonoBehaviour
         return zombiesToSpawn - perNightZombiesSpawned + perNightZombiesAlive;
     }
 
-    public bool HasItems(Item item, int amount = 1)
+    public bool HasItems(ItemSO itemSo, int amount = 1)
     {
-        return inventory.GetAmount(item) >= amount;
+        return inventory.GetAmount(itemSo) >= amount;
     }
 
-    public bool RemoveItem(Item item, int amount = 1)
+    public bool RemoveItem(ItemSO itemSo, int amount = 1)
     {
-        if (!HasItems(item, amount)) return false;
+        if (!HasItems(itemSo, amount)) return false;
 
-        inventory.RemoveItem(item, amount);
+        inventory.RemoveItem(itemSo, amount);
         RefreshBackpack.Invoke();
         return true;
     }
 
-    public bool RemoveItems(Dictionary<Item, int> items)
+    public bool RemoveItems(Dictionary<ItemSO, int> items)
     {
         foreach(var item in items)
         {
@@ -191,17 +192,17 @@ public class GameState : MonoBehaviour
         return true;
     }
 
-    public void AddItem(Item item, int amount = 1)
+    public void AddItem(ItemSO itemSo, int amount = 1)
     {
-        inventory.AddItem(item, amount);
+        inventory.AddItem(itemSo, amount);
         RefreshBackpack.Invoke();
     }
 
-    public void SellItem(Item item, int amount = 1)
+    public void SellItem(ItemSO itemSo, int amount = 1)
     {
-        if(RemoveItem(item, amount))
+        if(RemoveItem(itemSo, amount))
         {
-            AddItem(moneyItem, amount * item.valueSelling);
+            AddItem(moneyItemSo, amount * itemSo.valueSelling);
             RefreshShop?.Invoke();
             RefreshBackpack.Invoke();
         }
@@ -211,22 +212,22 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public void BuyItem(Item item, int amount = 1)
+    public void BuyItem(ItemSO itemSo, int amount = 1)
     {
-        var cost = item.valueBuying * amount;
-        if (!RemoveItem(moneyItem, cost))
+        var cost = itemSo.valueBuying * amount;
+        if (!RemoveItem(moneyItemSo, cost))
         {
             Debug.Log("Not enough money");
             return;
         }
-        AddItem(item, amount);
+        AddItem(itemSo, amount);
         RefreshShop?.Invoke();
         RefreshBackpack.Invoke();
     }
 
-    public void AddItemToShop(Item item)
+    public void AddItemToShop(ItemSO itemSo)
     {
-        ItemsInShop.Add(item);
+        ItemsInShop.Add(itemSo);
         RefreshShop.Invoke();
     }
 

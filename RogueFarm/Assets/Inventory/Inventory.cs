@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public Dictionary<Item, int> items = new Dictionary<Item, int>();
+    public Dictionary<ItemSO, int> items = new Dictionary<ItemSO, int>();
     
     [ConsoleMethod( "add_item", "Adds item to inventory" )]
     public static void AddItemCheat( string item_name, int amount )
     {
-        var items = Resources.FindObjectsOfTypeAll<Item>().ToList();
+        var items = Resources.FindObjectsOfTypeAll<ItemSO>().ToList();
         var item = items
             .FirstOrDefault(x => string.Equals(x.name, item_name, StringComparison.InvariantCultureIgnoreCase));
         if (item == null)
@@ -22,30 +22,30 @@ public class Inventory : MonoBehaviour
         GameState.Instance.AddItem( item, amount );
     }
 
-    public void AddItem(Item item, int amount = 1)
+    public void AddItem(ItemSO itemSo, int amount = 1)
     {
-        if (items.ContainsKey(item))
+        if (items.ContainsKey(itemSo))
         {
-            items[item] += amount;
+            items[itemSo] += amount;
         }
         else
         {
-            items[item] = amount;
+            items[itemSo] = amount;
         }
     }
 
-    public void RemoveItem(Item item, int amount = 1)
+    public void RemoveItem(ItemSO itemSo, int amount = 1)
     {
-        if (items.ContainsKey(item))
+        if (items.ContainsKey(itemSo))
         {
-            items[item] -= amount;
-            if (items[item] <= 0)
-                items.Remove(item);
+            items[itemSo] -= amount;
+            if (items[itemSo] <= 0)
+                items.Remove(itemSo);
         }
     }
 
-    public int GetAmount(Item item)
+    public int GetAmount(ItemSO itemSo)
     {
-        return items.TryGetValue(item, out int amount) ? amount : 0;
+        return items.TryGetValue(itemSo, out int amount) ? amount : 0;
     }
 }

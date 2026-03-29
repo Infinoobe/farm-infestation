@@ -7,6 +7,7 @@ using UI;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour, IDamagable
@@ -23,7 +24,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] private Transform rayStartingPoint;
     private GridSystem currGridSystem;
 
-    [CanBeNull] public Item SelectedItem;
+    [FormerlySerializedAs("SelectedItem")] [CanBeNull] public ItemSO selectedItemSo;
     public UnityEvent OnSelectedItemChanged = new UnityEvent();
 
     public bool IsDead => hitPoints <= 0;
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour, IDamagable
         if (itemNeedsGrid && Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
         {
             GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
-            target.PointingAtPosition(ground.point, SelectedItem);
+            target.PointingAtPosition(ground.point, selectedItemSo);
             if (currGridSystem && currGridSystem != target) currGridSystem.DeleteGizmo();
             currGridSystem = target;
         }
@@ -81,9 +82,9 @@ public class Player : MonoBehaviour, IDamagable
 
     public bool DoesItemNeedGrid()
     {
-        if (SelectedItem == null) return false;
-        if (SelectedItem.itemName.Equals("Hoe")) return true;
-        if (SelectedItem.itemType == ItemType.BUILDING) return true;
+        if (selectedItemSo == null) return false;
+        if (selectedItemSo.itemName.Equals("Hoe")) return true;
+        if (selectedItemSo.itemType == ItemType.BUILDING) return true;
         return false;
     }
 
@@ -226,7 +227,7 @@ public class Player : MonoBehaviour, IDamagable
 
         if(currGridSystem && currGridSystem.HasGizmo())
         {
-            currGridSystem.PlaceBuilding(SelectedItem);
+            currGridSystem.PlaceBuilding(selectedItemSo);
         }
         else if (TryGetInteractable(out var nearest))
         {
@@ -260,9 +261,9 @@ public class Player : MonoBehaviour, IDamagable
 
     private bool HasNoSeeds()
     {
-        if (SelectedItem == null) return true;
-        if (SelectedItem.itemType != ItemType.SEED) return true;
-        return ! GameState.Instance.HasItems(SelectedItem);
+        if (selectedItemSo == null) return true;
+        if (selectedItemSo.itemType != ItemType.SEED) return true;
+        return ! GameState.Instance.HasItems(selectedItemSo);
     }
 
     // Cycles through Plants added in plantPrefabs list
@@ -275,17 +276,17 @@ public class Player : MonoBehaviour, IDamagable
             return;
         }
 
-        var selectedIdx = availableSeeds.FindIndex(x => x.Key == SelectedItem);
+        var selectedIdx = availableSeeds.FindIndex(x => x.Key == selectedItemSo);
         selectedIdx += 1;
         selectedIdx %= availableSeeds.Count;
 
-        SelectedItem = availableSeeds[selectedIdx].Key;
+        selectedItemSo = availableSeeds[selectedIdx].Key;
         OnSelectedItemChanged.Invoke();
     }
 
-    public void SelectItem(Item item)
+    public void SelectItem(ItemSO itemSo)
     {
-        SelectedItem = item;
+        selectedItemSo = itemSo;
         OnSelectedItemChanged.Invoke();
     }
 

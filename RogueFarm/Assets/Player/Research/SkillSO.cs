@@ -8,25 +8,25 @@ public class SkillSO : ScriptableObject
     public string skillName;
     public Sprite skillIcon;
     public List<ItemAmount> requiredItems = new List<ItemAmount>();
-    private Dictionary<Item, int> itemsDictionary;
+    private Dictionary<ItemSO, int> itemsDictionary;
 
     public void InitializeDictionary()
     {
-        itemsDictionary = new Dictionary<Item, int>();
+        itemsDictionary = new Dictionary<ItemSO, int>();
 
         foreach (var entry in requiredItems)
         {
-            if (entry == null || entry.item == null)
+            if (entry == null || entry.itemSo == null)
                 continue;
 
-            if (itemsDictionary.ContainsKey(entry.item))
-                itemsDictionary[entry.item] += entry.amount;
+            if (itemsDictionary.ContainsKey(entry.itemSo))
+                itemsDictionary[entry.itemSo] += entry.amount;
             else
-                itemsDictionary.Add(entry.item, entry.amount);
+                itemsDictionary.Add(entry.itemSo, entry.amount);
         }
     }
 
-    public Dictionary<Item, int> GetItemsDictionary()
+    public Dictionary<ItemSO, int> GetItemsDictionary()
     {
         if (itemsDictionary == null)
             InitializeDictionary();
@@ -34,19 +34,19 @@ public class SkillSO : ScriptableObject
         return itemsDictionary;
     }
 
-    public int GetCost(Item item)
+    public int GetCost(ItemSO itemSo)
     {
         var dict = GetItemsDictionary();
 
-        if (dict.TryGetValue(item, out int amount))
+        if (dict.TryGetValue(itemSo, out int amount))
             return amount;
 
         return 0;
     }
 
-    public bool RequiresItem(Item item)
+    public bool RequiresItem(ItemSO itemSo)
     {
-        return GetItemsDictionary().ContainsKey(item);
+        return GetItemsDictionary().ContainsKey(itemSo);
     }
 
     private void OnEnable()

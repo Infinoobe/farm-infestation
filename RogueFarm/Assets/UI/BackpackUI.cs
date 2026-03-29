@@ -29,17 +29,17 @@ public class BackpackUI : MonoBehaviour
         }
 
         ClearBackpackView();
-        Dictionary<Item, int> items = GameState.Instance.GetItems();
+        Dictionary<ItemSO, int> items = GameState.Instance.GetItems();
         foreach (var kvp in items)
         {
-            Item item = kvp.Key;
+            ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
 
             if (amount <= 0) continue;
 
             GameObject obj = Instantiate(itemViewPrefab, itemsList.transform);
             var itemUI = obj.GetComponent<BackpackItemUI>();
-            itemUI.SetItem(item, amount);
+            itemUI.SetItem(itemSo, amount);
         }
 
     }

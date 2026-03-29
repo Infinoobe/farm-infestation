@@ -13,7 +13,7 @@ public class Field : Building
     public void PlantSeed(Player p)
     {
         if (!IsEmpty()) return;
-        var item = GameState.Instance.Player.SelectedItem;
+        var item = GameState.Instance.Player.selectedItemSo;
         if (item == null || item.itemType != ItemType.SEED)
         {
             return;
@@ -58,7 +58,7 @@ public class Field : Building
     {
         if (IsEmpty())
         {
-            var item = GameState.Instance.Player.SelectedItem;
+            var item = GameState.Instance.Player.selectedItemSo;
             if (item == null || item.itemType != ItemType.SEED)
             {
                 return $"Select Seed to plant";

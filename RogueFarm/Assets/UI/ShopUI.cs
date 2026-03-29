@@ -36,7 +36,7 @@ public class ShopUI : MonoBehaviour
 
     private void CreateBuyingLayout()
     {
-        foreach(Item item in GameState.Instance.ItemsInShop)
+        foreach(ItemSO item in GameState.Instance.ItemsInShop)
         {
             GameObject obj = Instantiate(buyingItemView, buyingLayout.transform);
             Image icon = obj.transform.Find("ItemImage").GetComponent<Image>();
@@ -52,13 +52,13 @@ public class ShopUI : MonoBehaviour
     {
         if (GameState.Instance == null)
             return;
-        Dictionary<Item, int> items = GameState.Instance.GetItems();
+        Dictionary<ItemSO, int> items = GameState.Instance.GetItems();
         foreach (var kvp in items)
         {
-            Item item = kvp.Key;
+            ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
 
-            if (item.canBeSold == false ) continue;
+            if (itemSo.canBeSold == false ) continue;
             if (amount <= 0) continue;
 
             GameObject obj = Instantiate(sellingItemView, sellingLayout.transform);
@@ -66,10 +66,10 @@ public class ShopUI : MonoBehaviour
             Image icon = obj.transform.Find("ItemImage").GetComponent<Image>();
             TMP_Text nameText = obj.transform.Find("ItemText").GetComponent<TMP_Text>();
 
-            icon.sprite = item.icon;
-            nameText.text = $"{item.itemName}: {amount} ({item.valueSelling}$)";
+            icon.sprite = itemSo.icon;
+            nameText.text = $"{itemSo.itemName}: {amount} ({itemSo.valueSelling}$)";
             Button button = obj.GetComponentInChildren<Button>();
-            button.onClick.AddListener(() => GameState.Instance.SellItem(item, 1));
+            button.onClick.AddListener(() => GameState.Instance.SellItem(itemSo, 1));
         }
     }
 
