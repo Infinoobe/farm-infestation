@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,6 +25,20 @@ public class Wendigo : MonoBehaviour, IDamagable
         Agent = GetComponent<NavMeshAgent>();
         Player = FindAnyObjectByType<Player>();
         zombieAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
+        
+        StartCoroutine(RemoveMeAfterTesting());
+
+    }
+    
+    private IEnumerator RemoveMeAfterTesting()
+    {
+        // TODO: Remove after testing
+        yield return new WaitForSeconds(0.3f);
+        Debug.LogWarning("Wendigo force night");
+        if (GameState.Instance.IsDay())
+        {
+            GameState.Instance.GoToSleep();
+        }
     }
 
     public void Update()

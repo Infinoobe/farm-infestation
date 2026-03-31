@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5057016242409556090}
-  - component: {fileID: 5054486581908269291}
+  - component: {fileID: 7376015447192902606}
   - component: {fileID: 4845045088047878043}
   - component: {fileID: 5606071795611371149}
   - component: {fileID: 4315780658008736613}
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 8343885351241404849}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5054486581908269291
+--- !u!114 &7376015447192902606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,10 +45,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6715690679636976095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f89a2f5cfe509742939a5e7ee3aefb2, type: 3}
+  m_Script: {fileID: 11500000, guid: d02824aff9274b25b0beaf2836aecd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawner: {fileID: 0}
   animator: {fileID: 6340487942560455909}
   zombieAnimEvents: {fileID: 804792010826952796}
   bloodPfx: {fileID: 8739386402423000652}

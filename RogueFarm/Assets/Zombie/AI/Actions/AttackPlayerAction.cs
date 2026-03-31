@@ -13,7 +13,20 @@ public partial class AttackPlayerAction : Action
 
     protected override Status OnStart()
     {
-        Self.Value.GetComponent<Zombie>().animator.Play("Attack");
+        var z = Self.Value.GetComponent<Zombie>();
+        if (z != null)
+        {
+            z.animator.Play("Attack");
+        }
+        else
+        {
+            var w = Self.Value.GetComponent<Wendigo>();
+            if (w != null)
+            {
+                w.animator.Play("Attack");
+            }
+        }
+
         return Status.Success;
     }
 
