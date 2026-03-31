@@ -3067,8 +3067,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsDatabase: {fileID: 11400000, guid: 0d8c79e7619d833429cd7ea80616a721, type: 2}
   inventory: {fileID: 1146254559}
-  moneyItem: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
-  handItem: {fileID: 11400000, guid: bb001825cc14c874986a6d9aba4c8ae7, type: 2}
+  moneyItemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+  handItemSo: {fileID: 11400000, guid: bb001825cc14c874986a6d9aba4c8ae7, type: 2}
   ItemsInShop:
   - {fileID: 11400000, guid: e02fa3d96058684408429518353c41c5, type: 2}
   - {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
@@ -3191,7 +3191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000011444092
+      value: -0.000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
