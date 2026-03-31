@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 4
   canBeSold: 1
+  unique: 0
   itemName: Carrot
   icon: {fileID: -1521118008, guid: bc79039e5f4541c4f9f97b3013993162, type: 3}
-  valueBuying: 9
-  valueSelling: 8
+  valueBuying: 20
+  valueSelling: 15
+  plantPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 0}

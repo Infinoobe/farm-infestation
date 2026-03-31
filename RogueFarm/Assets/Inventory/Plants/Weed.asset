@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 4
   canBeSold: 1
+  unique: 0
   itemName: Weed
   icon: {fileID: -358426464, guid: 0d3b7b5231f972845b5a37f3ac2a765a, type: 3}
-  valueBuying: 200
-  valueSelling: 100
+  valueBuying: 40
+  valueSelling: 30
+  plantPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 0}

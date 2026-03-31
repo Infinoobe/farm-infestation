@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: Carrot Plant
   skillIcon: {fileID: -1521118008, guid: bc79039e5f4541c4f9f97b3013993162, type: 3}
   requiredItems:
-  - item: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
-    amount: 3
-  - item: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}
+  - itemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+    amount: 10
+  - itemSo: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}
     amount: 2
