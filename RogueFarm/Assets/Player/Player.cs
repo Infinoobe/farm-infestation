@@ -22,7 +22,7 @@ public class Player : MonoBehaviour, IDamagable
     public PlayerAnimEvents playerAnimEvents;
     [SerializeField] private float rayLength = 3f;
     [SerializeField] private Transform rayStartingPoint;
-    private GridSystem currGridSystem;
+    private GridSystemRuntime currGridSystem;
 
     [FormerlySerializedAs("SelectedItem")] [CanBeNull] public ItemSO selectedItemSo;
     public UnityEvent OnSelectedItemChanged = new UnityEvent();
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour, IDamagable
 
         if (itemNeedsGrid && Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
         {
-            GridSystem target = ground.collider.gameObject.GetComponent<GridSystem>();
+            GridSystemRuntime target = ground.collider.gameObject.GetComponent<GridSystemRuntime>();
             target.PointingAtPosition(ground.point, selectedItemSo);
             if (currGridSystem && currGridSystem != target) currGridSystem.DeleteGizmo();
             currGridSystem = target;
