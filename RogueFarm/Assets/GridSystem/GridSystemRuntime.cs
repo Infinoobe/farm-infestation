@@ -147,10 +147,8 @@ public class GridSystemRuntime : MonoBehaviour
         return targetCells;
     }
 
-    public void PointingAtPosition(Vector3 point, ItemSO selectedItemSo)
+    public void PointingAtPosition(Vector3 point, GridCell targetCell, ItemSO selectedItemSo)
     {
-        (int x, int y) = grid.WorldToGridPosition(point);
-        GridCell targetCell = grid.GetGridCell(x, y);
         if (!targetCell)
         {
             DeleteGizmo();

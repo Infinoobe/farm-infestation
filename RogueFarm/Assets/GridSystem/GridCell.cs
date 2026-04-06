@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GridCell : MonoBehaviour
 {
+    public GridSystemRuntime myGrid;
     private GameObject currBuilding;
 
     public bool IsEmpty()

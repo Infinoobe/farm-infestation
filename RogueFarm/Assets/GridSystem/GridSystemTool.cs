@@ -19,6 +19,7 @@ public class GridSystemTool : MonoBehaviour
             GridCell cell = child.GetComponent<GridCell>();
             (int x, int y) = WorldToGridPosition(cell.gameObject.transform.position);
             gridCells[x, y] = cell;
+            cell.myGrid = gameObject.GetComponent<GridSystemRuntime>();
         }
     }
 
@@ -30,7 +31,7 @@ public class GridSystemTool : MonoBehaviour
             return;
         }
 
-        transform.localScale = new Vector3(width / 10f * gridCellSize, 1f, height / 10f * gridCellSize);
+        //transform.localScale = new Vector3(width / 10f * gridCellSize, 1f, height / 10f * gridCellSize);
 
         lowerLeftCorner = transform.position - new Vector3(width, 0, height) * 0.5f * gridCellSize;
 
@@ -55,6 +56,8 @@ public class GridSystemTool : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 gridCells[x, y] = Instantiate(gridCellPrefab, GridToWorldPosition(x, y), Quaternion.identity, gameObject.transform).GetComponent<GridCell>();
+                gridCells[x, y].gameObject.transform.localScale *= gridCellSize;
+                gridCells[x, y].myGrid = gameObject.GetComponent<GridSystemRuntime>();
             }
         }
     }

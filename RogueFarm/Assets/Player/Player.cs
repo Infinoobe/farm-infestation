@@ -57,10 +57,11 @@ public class Player : MonoBehaviour, IDamagable
 
         if (itemNeedsGrid && Physics.Raycast(startPos, direction, out RaycastHit ground, rayLength, layerMask))
         {
-            GridSystemRuntime target = ground.collider.gameObject.GetComponent<GridSystemRuntime>();
-            target.PointingAtPosition(ground.point, selectedItemSo);
-            if (currGridSystem && currGridSystem != target) currGridSystem.DeleteGizmo();
-            currGridSystem = target;
+            GridCell target = ground.collider.gameObject.GetComponentInParent<GridCell>();
+            GridSystemRuntime grid = target.myGrid;
+            grid.PointingAtPosition(ground.point, target, selectedItemSo);
+            if (currGridSystem && currGridSystem != grid) currGridSystem.DeleteGizmo();
+            currGridSystem = grid;
         }
         else if (currGridSystem)
         {
