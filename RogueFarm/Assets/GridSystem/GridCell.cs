@@ -27,6 +27,7 @@ public class GridCell : MonoBehaviour
         treeSeedsInRange -= 1;
         if (treeSeedsInRange > 0) return;
         grassModel.GetComponent<MeshRenderer>().material = deadGrass;
+        // TODO if curr building is field -> destroy?
     }
 
     public bool IsEmpty()
