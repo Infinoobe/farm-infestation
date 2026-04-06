@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class GridSystemRuntime : MonoBehaviour
 {
-    private GridSystemTool grid;
+    public GridSystemTool grid;
     private GameObject currGizmo;
     [SerializeField] private Material ghostMaterialGood;
     [SerializeField] private Material ghostMaterialBad;
@@ -85,7 +85,9 @@ public class GridSystemRuntime : MonoBehaviour
         foreach(GridCell cell in targetCells)
         {
             if (!cell.IsEmpty()) return false;
+            if (itemSo.itemName.Equals("Hoe") && cell.treeSeedsInRange <= 0) return false;
         }
+
         return GameState.Instance.HasItems(itemSo);
     }
 

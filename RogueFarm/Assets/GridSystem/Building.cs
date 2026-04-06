@@ -11,15 +11,18 @@ public class Building : MonoBehaviour, IInteractable
     [SerializeField] private bool canBeWalkedOn;
     [SerializeField] private bool interactionEnabled;
     [SerializeField] private int health;
+    [SerializeField] protected int range;
     [SerializeField] private BuildingShapeUnit[] buildingShapeUnits;
     public bool isPlaced = true;
-    private List<GridCell> occupiedCells;
+    protected List<GridCell> occupiedCells;
 
     public BuildingShapeUnit[] BuildingShapeUnits => buildingShapeUnits;
     public bool CanBeDestroyed => canBeDestroyed;
     public bool CanBeTargeted => canBeTargeted;
     public bool CanBeWalkedOn => canBeWalkedOn;
     public int CurrHealth => health;
+    public int Range => range;
+
 
     public bool IsInteractionEnabled() 
     {
@@ -44,7 +47,7 @@ public class Building : MonoBehaviour, IInteractable
         return transform.position;
     }
 
-    public void PlaceBuilding(IEnumerable<GridCell> onCells)
+    virtual public void PlaceBuilding(IEnumerable<GridCell> onCells)
     {
         occupiedCells = onCells.ToList();
         isPlaced = true;
@@ -64,7 +67,7 @@ public class Building : MonoBehaviour, IInteractable
         DestroyBuilding();
     }
 
-    public void DestroyBuilding()
+    virtual public void DestroyBuilding()
     {
         Destroy(gameObject);
     }

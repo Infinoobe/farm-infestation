@@ -45,7 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b914bf99e63ea9f41a2aa51dc74481e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grassModel: {fileID: 4249604208808788499}
+  greenGrass: {fileID: 2100000, guid: e00e1ba41b9a9ae49af68ab39bb2ccfe, type: 2}
+  deadGrass: {fileID: 2100000, guid: d887baba438e7934e84a38af74141ba2, type: 2}
   myGrid: {fileID: 0}
+  isGrassAlive: 0
 --- !u!1 &4249604208808788499
 GameObject:
   m_ObjectHideFlags: 0
