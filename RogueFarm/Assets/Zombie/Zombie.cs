@@ -8,7 +8,7 @@ public class Zombie : MonoBehaviour, IDamagable
     private NavMeshAgent Agent;
     private Player Player;
 
-    public ZombieSpawner Spawner;
+    public IZombieSpawner Spawner;
     public Animator animator;
     public ZombieAnimEvents zombieAnimEvents;
 

@@ -1,10 +1,11 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
-public class Wendigo : MonoBehaviour, IDamagable
+public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
 {
     private NavMeshAgent Agent;
     private Player Player;
@@ -14,11 +15,22 @@ public class Wendigo : MonoBehaviour, IDamagable
 
     public ParticleSystem bloodPfx;
     
+    public List<GameObject> patrolPath = new ();
+    public int patrolIndex = 0;
+    
+    public GameObject ZombiePrefab;
+
+    public Image HpBar;
+    
     // Combat
+    private int maxHitPoints = 300;
+    
     private int hitPoints = 300;
     private int damage = 10;
     private float attackRange = 1.0f;
     private bool IsDead = false;
+    
+    int zombieCount;
     
     public void Start()
     {
@@ -27,9 +39,10 @@ public class Wendigo : MonoBehaviour, IDamagable
         zombieAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
         
         StartCoroutine(RemoveMeAfterTesting());
-
+        
+        GetComponent<BehaviorGraphAgent>().enabled = false;
     }
-    
+
     private IEnumerator RemoveMeAfterTesting()
     {
         // TODO: Remove after testing
@@ -39,11 +52,44 @@ public class Wendigo : MonoBehaviour, IDamagable
         {
             GameState.Instance.GoToSleep();
         }
+        while (!IsDead)
+        {
+            Agent.SetDestination(patrolPath[patrolIndex].transform.position);
+            while (Agent.pathPending)
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+            while (Agent.pathStatus != NavMeshPathStatus.PathComplete || Agent.remainingDistance > 1)
+            {
+                Debug.Log($"Point: {patrolPath[patrolIndex].name} Distance: {Agent.remainingDistance} Status {Agent.pathStatus}");
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            SpawnZobie();
+
+            patrolIndex += 1;
+            patrolIndex %= patrolPath.Count;
+            Debug.Log($"Next point: {patrolPath[patrolIndex].name}");
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    public void SpawnZobie()
+    {
+        if (zombieCount > 10)
+            return;
+
+        var zGo = Instantiate(ZombiePrefab, transform.position, Quaternion.identity);
+        var z = zGo.GetComponent<Zombie>();
+        z.Spawner = this;
+        ++zombieCount;
     }
 
     public void Update()
     {
-        // Agent.destination = Player.transform.position;
+        
+        var barWidth = 200.0f * hitPoints/ maxHitPoints;
+        HpBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth);
     }
 
     public void TakeDamage(int damageDealt)
@@ -86,5 +132,10 @@ public class Wendigo : MonoBehaviour, IDamagable
     public int getDamage()
     {
         return damage;
+    }
+
+    public void OnZombieDied(Zombie z)
+    {
+        --zombieCount;
     }
 }

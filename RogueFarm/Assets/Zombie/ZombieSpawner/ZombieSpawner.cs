@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ZombieSpawner : MonoBehaviour
+public interface IZombieSpawner
+{
+    public void OnZombieDied(Zombie z);
+}
+
+public class ZombieSpawner : MonoBehaviour, IZombieSpawner
 {
     [SerializeField] private Zombie zombieType;
     [SerializeField] private float zombieTime = 1f;

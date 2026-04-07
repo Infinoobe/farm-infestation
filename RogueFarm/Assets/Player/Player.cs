@@ -210,6 +210,15 @@ public class Player : MonoBehaviour, IDamagable
                 enemy.TakeDamage(damage);
             }
         }
+        var boss = FindObjectsByType<Wendigo>(FindObjectsSortMode.None);
+        //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
+        foreach (var enemy in boss)
+        {
+            if ((enemy.transform.position - attackPosition).magnitude < AttackRange)
+            {
+                enemy.TakeDamage(damage);
+            }
+        }
     }
 
     public bool CanInteract()
