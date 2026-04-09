@@ -20,7 +20,7 @@ public class ZombieAnimStateMachineBehaviour : StateMachineBehaviour
     {
         if (stateInfo.IsName("Death"))
         {
-            Destroy(animator.transform.parent.gameObject);
+            Destroy(animator.transform.parent.parent.gameObject);
         }
     }
 
