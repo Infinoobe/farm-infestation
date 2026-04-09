@@ -25,14 +25,8 @@ public class GameState : MonoBehaviour
     [SerializeField] public UnityEvent RefreshBackpack = new UnityEvent();
 
 
-    [Header("Enemies")]
-    [SerializeField] public int zombiesToSpawn = 5;
-    [SerializeField] public int zombieLimit = 3;
-
     [Header("Interactables")]
     public List<IInteractable> Interactables = new ();
-    private int perNightZombiesSpawned;
-    private int perNightZombiesAlive;
 
     public static GameState Instance { get; private set; }
 
@@ -42,6 +36,7 @@ public class GameState : MonoBehaviour
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
     public int CurrentDay => currentDay;
     public Player Player;
+    public int ZombiesToKill;
 
     public Dictionary<ItemSO, int> GetItems()
     {
@@ -123,45 +118,9 @@ public class GameState : MonoBehaviour
     {
         Debug.Log("Starting night");
         currGamePhase = GamePhase.Night;
-        perNightZombiesSpawned = 0;
-        perNightZombiesAlive = 0;
         OnNightStarted.Invoke();
     }
 
-    public void ZombieSpawned()
-    {
-        ++perNightZombiesSpawned;
-        ++perNightZombiesAlive;
-        
-        Debug.Log($"Zombie Spawned! Zombies left: {zombiesToSpawn - perNightZombiesSpawned}" );
-    }
-    
-    public void ZombieDied()
-    {
-        --perNightZombiesAlive;
-        Debug.Log($"Zombie Dead! Zombies left: { perNightZombiesAlive}");
-        if (perNightZombiesAlive == 0 && !CanSpawnZombieThisNight())
-        {
-            Invoke(nameof(StartDay), 0.0f); // don't change while despawning zombie
-        }
-    }
-    
-
-    public bool CanSpawnZombieNow()
-    {
-        return CanSpawnZombieThisNight() && perNightZombiesAlive < zombieLimit;
-    }
-
-    public bool CanSpawnZombieThisNight()
-    {
-        return perNightZombiesSpawned < zombiesToSpawn;
-    }
-
-    public int GetZombiesToKill()
-    {
-        if (!IsNight()) return 0;
-        return zombiesToSpawn - perNightZombiesSpawned + perNightZombiesAlive;
-    }
 
     public bool HasItems(ItemSO itemSo, int amount = 1)
     {
@@ -231,6 +190,16 @@ public class GameState : MonoBehaviour
         RefreshShop.Invoke();
     }
 
+    public void DelayedStartDay()
+    {
+        Invoke(nameof(StartDay), 0.0f); // don't change while despawning zombie
+    }
+    
+    public int GetZombiesToKill()
+    {
+        if (!IsNight()) return 0;
+        return ZombiesToKill;
+    }
 }
 
 public enum GamePhase
