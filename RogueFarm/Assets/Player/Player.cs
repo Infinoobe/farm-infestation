@@ -34,7 +34,7 @@ public class Player : MonoBehaviour, IDamagable
     // Combat
     public int hitPoints = 100;
     public int hitPointsMax = 100;
-    private int damage = 10;
+    [SerializeField] private int damage = 10;
 
     private Vector3 lastInput;
     private Vector3 velocity;

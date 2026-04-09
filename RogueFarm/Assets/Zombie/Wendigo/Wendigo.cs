@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Behavior;
@@ -31,6 +32,7 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
     private bool IsDead = false;
     
     int zombieCount;
+    private List<Zombie> zombies = new List<Zombie>();
     
     public void Start()
     {
@@ -52,16 +54,16 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
         {
             GameState.Instance.GoToSleep();
         }
-        while (!IsDead)
+        while (!IsDead && Agent != null)
         {
             Agent.SetDestination(patrolPath[patrolIndex].transform.position);
-            while (Agent.pathPending)
+            while (!IsDead && Agent != null && Agent.pathPending)
             {
                 yield return new WaitForSeconds(0.3f);
             }
-            while (Agent.pathStatus != NavMeshPathStatus.PathComplete || Agent.remainingDistance > 1)
+            while (!IsDead && Agent!= null && Agent.enabled && (Agent.pathStatus != NavMeshPathStatus.PathComplete || Agent.remainingDistance > 1))
             {
-                Debug.Log($"Point: {patrolPath[patrolIndex].name} Distance: {Agent.remainingDistance} Status {Agent.pathStatus}");
+                Debug.Log($"Point: {patrolPath[patrolIndex].name} Distance: {Agent.remainingDistance} Status {Agent.pathStatus} IsDead {IsDead}");
                 yield return new WaitForSeconds(0.3f);
             }
 
@@ -72,6 +74,25 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
             Debug.Log($"Next point: {patrolPath[patrolIndex].name}");
             yield return new WaitForSeconds(0.3f);
         }
+
+        KillZombies();
+        StartDay();
+    }
+
+    private void KillZombies()
+    {
+        foreach (var z in zombies)
+        {
+            if (z != null)
+            {
+                z.KillYourselfFromDaylight();
+            }
+        }
+    }
+
+    private void StartDay()
+    {
+        GameState.Instance.DelayedStartDay();
     }
 
     public void SpawnZobie()
@@ -81,6 +102,7 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
 
         var zGo = Instantiate(ZombiePrefab, transform.position, Quaternion.identity);
         var z = zGo.GetComponent<Zombie>();
+        zombies.Add(z);
         z.Spawner = this;
         ++zombieCount;
     }

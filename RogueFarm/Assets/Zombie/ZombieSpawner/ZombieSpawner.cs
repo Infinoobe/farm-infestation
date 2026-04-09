@@ -23,6 +23,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
     [SerializeField] private float zombieTime = 1f;
     private List<Zombie> myZombies = new ();
     private Coroutine spawnCoroutine;
+    private Wendigo bossAlive;
 
     void Start()
     {
@@ -55,15 +56,21 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         var day = GameState.Instance.CurrentDay;
         if (day == 5)
         {
-            Vector3 pos = transform.position + new Vector3(0, 1, 0);
-            var z = Instantiate(wendigoPrefab, pos, Quaternion.identity, transform);
-            z.GetComponent<Wendigo>().patrolPath = wendigoPath;
+            SpawnWendigo();
             return;
         }
 
         zombiesToSpawn = 1 + GameState.Instance.CurrentDay * 3;
         GameState.Instance.ZombiesToKill = zombiesToSpawn;
         spawnCoroutine = StartCoroutine(SpawnZombiesCoroutine());
+    }
+
+    private void SpawnWendigo()
+    {
+        Vector3 pos = transform.position + new Vector3(0, 1, 0);
+        var z = Instantiate(wendigoPrefab, pos, Quaternion.identity, transform);
+        bossAlive = z.GetComponent<Wendigo>();
+        bossAlive.patrolPath = wendigoPath;
     }
 
     private IEnumerator SpawnZombiesCoroutine()
