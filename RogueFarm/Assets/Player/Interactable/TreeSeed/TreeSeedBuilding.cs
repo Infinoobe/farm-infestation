@@ -14,7 +14,8 @@ public class TreeSeedBuilding : Building
         {
             for(int j = y - range; j < y + range + 1; j++)
             {
-                mainCell.myGrid.grid.GetGridCell(i, j).AddTreeSeedInRange();
+                GridCell cell = mainCell.myGrid.grid.GetGridCell(i, j);
+                if(cell) cell.AddTreeSeedInRange();
             }
         }
     }
