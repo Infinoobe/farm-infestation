@@ -15,9 +15,9 @@ public class Zombie : MonoBehaviour, IDamagable
     public ParticleSystem bloodPfx;
     
     // Combat
-    private int hitPoints = 20;
-    private int damage = 10;
-    private float attackRange = 1.0f;
+    [SerializeField] private int hitPoints = 20;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float attackRange = 1.0f;
     private bool IsDead = false;
     
     public void Start()
