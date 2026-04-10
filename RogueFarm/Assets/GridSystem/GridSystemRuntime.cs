@@ -15,11 +15,6 @@ public class GridSystemRuntime : MonoBehaviour
         return currGizmo != null;
     }
 
-    public void Start()
-    {
-        grid = gameObject.GetComponent<GridSystemTool>();
-    }
-
     private void CreateGizmo(ItemSO itemSo, GridCell targetCell)
     {
         var buildingPrefab = itemSo.buildingPrefab;
@@ -112,7 +107,7 @@ public class GridSystemRuntime : MonoBehaviour
         currGizmo.transform.rotation *= Quaternion.Euler(0f, angle, 0f);
     }
 
-    public void PlaceBuilding(ItemSO itemSoUsed)
+    public void PlaceBuilding(ItemSO itemSoUsed, bool skipMaterials=false)
     {
         if (!CanBuildingBePlaced(itemSoUsed)) return;
 
@@ -134,10 +129,11 @@ public class GridSystemRuntime : MonoBehaviour
         b.PlaceBuilding(targetCells);
     }
 
-    private List<GridCell> GetOverlapingCells()
+    public List<GridCell> GetOverlapingCells(GameObject buildingObject=null)
     {
-        if (!currGizmo) return new List<GridCell>();
-        BuildingShapeUnit[] buildPoints = currGizmo.GetComponent<Building>().BuildingShapeUnits;
+        if (!buildingObject) buildingObject = currGizmo;
+        if (!buildingObject) return new List<GridCell>();
+        BuildingShapeUnit[] buildPoints = buildingObject.GetComponent<Building>().BuildingShapeUnits;
         List<GridCell> targetCells = new List<GridCell>();
         foreach(BuildingShapeUnit unit in buildPoints)
         {

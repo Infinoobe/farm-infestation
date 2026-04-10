@@ -7,7 +7,7 @@ public class GridCell : MonoBehaviour
     public Material deadGrass;
     public GridSystemRuntime myGrid;
     public int treeSeedsInRange = 0;
-    private GameObject currBuilding;
+    public GameObject currBuilding;
 
     private void Start()
     {

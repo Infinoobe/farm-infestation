@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ResearchTable : Building
 {
-    void Start()
-    {
-    }
 
     override public void Interact(Player p)
     {

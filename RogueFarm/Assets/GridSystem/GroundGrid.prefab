@@ -58,6 +58,7 @@ MonoBehaviour:
   width: 30
   height: 27
   gridCellPrefab: {fileID: 4180583388404341857, guid: 43fcc1abf7b03cc4d820086f6f407c82, type: 3}
+  buildingToPlaceEditor: {fileID: 11400000, guid: 728bfae0d4d949042912a8ae2e5ce584, type: 2}
 --- !u!114 &6691243775301388871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,5 +71,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d070ceca5f8678c4ca8329648b6bd80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 9026991864857153993}
   ghostMaterialGood: {fileID: 2100000, guid: fd5ef94ababe50446a91391f88185142, type: 2}
   ghostMaterialBad: {fileID: 2100000, guid: 97c44dee5e6bead4090cb4652e9e7c11, type: 2}

@@ -9,6 +9,8 @@ public class GridSystemTool : MonoBehaviour
     public GameObject gridCellPrefab;
     public GridCell[,] gridCells;
     private Vector3 lowerLeftCorner;
+    [SerializeField] ItemSO buildingToPlaceEditor;
+
 
     void Awake()
     {

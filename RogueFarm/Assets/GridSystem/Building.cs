@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Building : MonoBehaviour, IInteractable
 {
@@ -23,6 +24,56 @@ public class Building : MonoBehaviour, IInteractable
     public int CurrHealth => health;
     public int Range => range;
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitOnGrid();
+    }
+
+    private void InitOnGrid()
+    {
+        if (occupiedCells != null && occupiedCells.Count != 0 && isPlaced) return;
+        else Debug.Log($"Building {gameObject.name} is on grid");
+        // Placing on grid
+        int layerMask = LayerMask.GetMask("GridGround");
+        Vector3 startPos = gameObject.transform.position + new Vector3(0f, 3f, 0f);
+        if (Physics.Raycast(startPos, Vector3.down, out RaycastHit ground, 5, layerMask))
+        {
+            GridCell target = ground.collider.gameObject.GetComponentInParent<GridCell>();
+            GridSystemRuntime grid = target.myGrid;
+
+            gameObject.transform.localScale *= grid.grid.gridCellSize;
+            gameObject.transform.SetParent(grid.transform, true);
+            gameObject.transform.position = target.transform.position;
+            // Assume rotation is valid
+            List<GridCell> targetCells = grid.GetOverlapingCells(gameObject);
+            
+            foreach (GridCell cell in targetCells)
+            {
+                if (cell.currBuilding)
+                {
+                    Debug.Log($"Building {gameObject.name} cannot be put on grid");
+                    return;
+                }
+                cell.SetBuilding(gameObject);
+            }
+
+            PlaceBuilding(targetCells);
+        }
+        else
+        {
+            Debug.Log("No grid detected");
+        }
+    }
 
     public bool IsInteractionEnabled() 
     {
