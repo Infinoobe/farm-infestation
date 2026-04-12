@@ -18,6 +18,13 @@ public class Zombie : MonoBehaviour, IDamagable
     [SerializeField] private int hitPoints = 20;
     [SerializeField] private int damage = 10;
     [SerializeField] private float attackRange = 1.0f;
+    [SerializeField] private bool isRanged = false;
+
+    // Projectile in case if isRanged == true
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private float projectileSpeed = 10f;
+
     private bool IsDead = false;
     
     public void Start()
@@ -47,13 +54,36 @@ public class Zombie : MonoBehaviour, IDamagable
     {
         if (IsDead) return;
         var enemies = FindObjectsByType<Player>(FindObjectsSortMode.None);
-        var attackPosition = transform.position + transform.forward * attackRange;
-        //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
-        foreach (var enemy in enemies)
+
+        // Melee
+        if (!isRanged)
         {
-            if ((enemy.transform.position - attackPosition).magnitude < attackRange)
+            var attackPosition = transform.position + transform.forward * attackRange;
+            //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
+            foreach (var enemy in enemies)
             {
-                enemy.TakeDamage(damage);
+                if ((enemy.transform.position - attackPosition).magnitude < attackRange)
+                {
+                    enemy.TakeDamage(damage);
+                }
+            }
+        }
+        else // Ranged
+        {
+            foreach (var enemy in enemies)
+            {
+                Vector3 direction = (enemy.transform.position - projectileSpawnPoint.position).normalized;
+                GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+
+                Debug.Log(projectileSpawnPoint);
+                Debug.DrawRay(projectileSpawnPoint.position, Vector3.up, Color.green, 2f);
+
+                Rigidbody rb = projectile.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = direction * projectileSpeed;
+                }
+                projectile.transform.forward = direction;
             }
         }
     }

@@ -48,10 +48,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f89a2f5cfe509742939a5e7ee3aefb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawner: {fileID: 0}
   animator: {fileID: 6340487942560455909}
   zombieAnimEvents: {fileID: 804792010826952796}
   bloodPfx: {fileID: 8739386402423000652}
+  hitPoints: 20
+  damage: 10
+  attackRange: 1
+  isRanged: 0
+  projectilePrefab: {fileID: 5891438703924947996, guid: 99d7691f2e090974c8f9d628a9f578a0, type: 3}
+  projectileSpawnPoint: {fileID: 5057016242409556090}
+  projectileSpeed: 10
 --- !u!114 &4845045088047878043
 MonoBehaviour:
   m_ObjectHideFlags: 0
