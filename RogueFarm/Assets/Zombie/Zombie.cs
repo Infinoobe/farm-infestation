@@ -32,6 +32,11 @@ public class Zombie : MonoBehaviour, IDamagable
         Agent = GetComponent<NavMeshAgent>();
         Player = FindAnyObjectByType<Player>();
         zombieAnimEvents.AnimDealDamage.AddListener(DealAttackDamage);
+        
+        var aiTree = GetComponent<BehaviorGraphAgent>();
+        aiTree.BlackboardReference.SetVariableValue("AttackRange", attackRange);
+        aiTree.BlackboardReference.SetVariableValue("PursueRange", attackRange+3);
+        
     }
 
     public void Update()
