@@ -16,6 +16,9 @@ public partial class AttackPlayerAction : Action
         var z = Self.Value.GetComponent<Zombie>();
         if (z != null)
         {
+            var target = Player.Value.transform.position;
+            target.y = z.transform.position.y;
+            z.transform.LookAt(target);
             z.animator.Play("Attack");
         }
         else
