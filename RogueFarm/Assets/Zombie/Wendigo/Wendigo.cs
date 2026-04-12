@@ -43,6 +43,7 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
         StartCoroutine(RemoveMeAfterTesting());
         
         GetComponent<BehaviorGraphAgent>().enabled = false;
+        animator.SetFloat("WalkAnimMult", 2.0f);
     }
 
     private IEnumerator RemoveMeAfterTesting()
