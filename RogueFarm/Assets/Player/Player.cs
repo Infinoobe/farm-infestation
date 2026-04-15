@@ -38,6 +38,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private Vector3 lastInput;
     private Vector3 velocity;
+    private float timeSinceAttackPressed = 999.0f;
 
 
     void Start()
@@ -91,10 +92,27 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
+        animator.SetBool("attackActive", timeSinceAttackPressed < 0.2f );
+        timeSinceAttackPressed += Time.deltaTime;
+        
         if (IsDead) return;
         
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Planting")) return;
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Sword Attack")) return;
+        var currentAnimation = animator.GetCurrentAnimatorStateInfo(0);
+        if (currentAnimation.IsName("Planting")) return;
+        if (currentAnimation.IsName("Sword Attack") 
+            || currentAnimation.IsName("Sword Attack 2")
+            || currentAnimation.IsName("Sword Attack 3"))
+        {
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown((0)))
+            {
+                Attack();
+            }
+
+            var v = transform.forward * Speed * 0.5f;
+            Controller.Move(v * Time.deltaTime);
+
+            return;
+        }
 
         UpdateGridSelection();        
 
@@ -195,17 +213,29 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Attack()
     {
-        animator.SetTrigger("Attack");
+        timeSinceAttackPressed = 0.0f;
     }
 
     public void DealAttackDamage()
     {
         var enemies = FindObjectsByType<Zombie>(FindObjectsSortMode.None);
         var attackPosition = transform.position + transform.forward * AttackRange;
+ 
+        var position = attackPosition;
+        var range = AttackRange;
+        var dmg = damage;
+        var currentAnimation = animator.GetCurrentAnimatorStateInfo(0);
+        if (currentAnimation.IsName("Sword Attack 3"))
+        {
+            position = transform.position;
+            range = 2.5f * AttackRange;
+            dmg = (int)(2.5 * damage);
+        }
+
         //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
         foreach (var enemy in enemies)
         {
-            if ((enemy.transform.position - attackPosition).magnitude < AttackRange)
+            if ((enemy.transform.position - position).magnitude < range)
             {
                 enemy.TakeDamage(damage);
             }
@@ -214,7 +244,7 @@ public class Player : MonoBehaviour, IDamagable
         //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
         foreach (var enemy in boss)
         {
-            if ((enemy.transform.position - attackPosition).magnitude < AttackRange)
+            if ((enemy.transform.position - position).magnitude < range)
             {
                 enemy.TakeDamage(damage);
             }
