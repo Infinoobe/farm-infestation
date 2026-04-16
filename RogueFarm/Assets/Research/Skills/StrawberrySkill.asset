@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b073a72ad947e643a479978a34bc6fc, type: 3}
   m_Name: StrawberrySkill
   m_EditorClassIdentifier: 
-  skillName: Strawberry plant
+  skillName: Strawberry Plant
   skillIcon: {fileID: 0}
   requiredItems:
   - itemSo: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}

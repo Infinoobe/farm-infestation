@@ -6506,9 +6506,11 @@ MonoBehaviour:
   - {fileID: 3094719485429955416}
   carrotSeedItemSo: {fileID: 11400000, guid: b3643d2c30a9ae0438aa7e1dee28be0f, type: 2}
   weedSeedItemSo: {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
+  strawberrySeedItemSo: {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
   researchPanel: {fileID: 723983103086836685}
   skillInfoPanel: {fileID: 7581336397614158317}
   textPrefab: {fileID: 2298558931417233342, guid: ba60ca4857e195240a3ec5d4caa325c8, type: 3}
+  linePrefab: {fileID: 4953093250982589014, guid: 7c97583091ec1f6488f27f448ee43527, type: 3}
 --- !u!1 &9171212904559604152
 GameObject:
   m_ObjectHideFlags: 0
@@ -7043,7 +7045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4715226984014846174, guid: 892dbe09ab828ad4e936a82affdc7165, type: 3}
       propertyPath: m_text
-      value: Strawberry plant
+      value: Strawberry Plant
       objectReference: {fileID: 0}
     - target: {fileID: 6082336503255024026, guid: 892dbe09ab828ad4e936a82affdc7165, type: 3}
       propertyPath: m_Interactable

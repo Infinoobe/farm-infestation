@@ -10,6 +10,7 @@ public class SkillTreeManager : MonoBehaviour
     public SkillNode[] skillNodes;
     [FormerlySerializedAs("carrotSeedItem")] public ItemSO carrotSeedItemSo;
     [FormerlySerializedAs("weedSeedItem")] public ItemSO weedSeedItemSo;
+    [FormerlySerializedAs("strawberrySeedItem")] public ItemSO strawberrySeedItemSo;
     public GameObject researchPanel;
     public GameObject skillInfoPanel;
     private GameObject currentSkillNodeGameobject;
@@ -179,6 +180,27 @@ public class SkillTreeManager : MonoBehaviour
                 break;
             case "Weed Plant":
                 GameState.Instance.AddItemToShop(weedSeedItemSo);
+                break;
+            case "Strawberry Plant":
+                GameState.Instance.AddItemToShop(strawberrySeedItemSo);
+                break;
+            case "Damage Boost I":
+                //TODO
+                break;
+            case "Damage Boost II":
+                //TODO
+                break;
+            case "Max Health Boost I":
+                //TODO
+                break;
+            case "Max Health Boost II":
+                //TODO
+                break;
+            case "Regeneration I":
+                //TODO
+                break;
+            case "Regeneration II":
+                //TODO
                 break;
             default:
                 Debug.Log("Researched skill does nothing");
