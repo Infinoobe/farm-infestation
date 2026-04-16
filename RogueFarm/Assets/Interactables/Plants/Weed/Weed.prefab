@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1721172787303166632}
   - component: {fileID: 3076485463509550132}
   - component: {fileID: 2948857728390846141}
-  - component: {fileID: 6163897044915188565}
   m_Layer: 12
   m_Name: 'Growing Model 0 '
   m_TagString: Untagged
@@ -87,29 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6163897044915188565
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259608405657233351}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &2703125554296294715
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc9cc1c998951744af61f5459d41be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectItem: {fileID: 11400000, guid: 488a5750bc01a5946b2efceff8af4b46, type: 2}
+  collectItemSo: {fileID: 11400000, guid: 488a5750bc01a5946b2efceff8af4b46, type: 2}
   collectItemAmount: 1
   growthTime: 3
   collectTimes: 1
@@ -285,7 +261,6 @@ GameObject:
   - component: {fileID: 4666886284381802222}
   - component: {fileID: 5939489111590630803}
   - component: {fileID: 3705931890953349846}
-  - component: {fileID: 4227390459581488018}
   m_Layer: 12
   m_Name: Leaf (2)
   m_TagString: Untagged
@@ -361,29 +336,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4227390459581488018
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4808851546067871320}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &5439265123384567407
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +347,6 @@ GameObject:
   - component: {fileID: 5145233278884394438}
   - component: {fileID: 4038641562685721386}
   - component: {fileID: 8956856364932332834}
-  - component: {fileID: 6246786477305090387}
   m_Layer: 12
   m_Name: Growing Model 2
   m_TagString: Untagged
@@ -471,29 +422,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6246786477305090387
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5439265123384567407}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &6823467315321415351
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +509,6 @@ GameObject:
   - component: {fileID: 3917524664540030985}
   - component: {fileID: 3253834195467914726}
   - component: {fileID: 5357052546770978442}
-  - component: {fileID: 2256364505462064353}
   m_Layer: 12
   m_Name: Leaf
   m_TagString: Untagged
@@ -657,29 +584,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2256364505462064353
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7398559793959002726}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &7925225369613832008
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,7 +595,6 @@ GameObject:
   - component: {fileID: 563913245854650680}
   - component: {fileID: 8272997603127984930}
   - component: {fileID: 9130231094482883121}
-  - component: {fileID: 6997147717577986260}
   m_Layer: 12
   m_Name: Leaf (3)
   m_TagString: Untagged
@@ -767,29 +670,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6997147717577986260
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7925225369613832008}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8091075209700417315
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,7 +827,6 @@ GameObject:
   - component: {fileID: 5524686379518143319}
   - component: {fileID: 2685408179155426118}
   - component: {fileID: 4774138432099088912}
-  - component: {fileID: 1146368173620849559}
   m_Layer: 12
   m_Name: Leaf (1)
   m_TagString: Untagged
@@ -1023,29 +902,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1146368173620849559
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8299462326233494929}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8500324749878879553
 GameObject:
   m_ObjectHideFlags: 0
