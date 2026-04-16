@@ -188,7 +188,7 @@ public class Player : MonoBehaviour, IDamagable
     public void Heal(int damageHealed)
     {
         hitPoints += damageHealed;
-        hitPoints = math.min(hitPoints, hitPointsMax);
+        hitPoints = math.min(hitPoints, hitPointsMax + GameState.Instance.MaxHealthBonusValue());
     }
 
     public void KillYourself()
@@ -223,13 +223,13 @@ public class Player : MonoBehaviour, IDamagable
  
         var position = attackPosition;
         var range = AttackRange;
-        var dmg = damage;
+        var dmg = damage + GameState.Instance.DamageBonusValue();
         var currentAnimation = animator.GetCurrentAnimatorStateInfo(0);
         if (currentAnimation.IsName("Sword Attack 3"))
         {
             position = transform.position;
             range = 2.5f * AttackRange;
-            dmg = (int)(2.5 * damage);
+            dmg = (int)(2.5 * dmg);
         }
 
         //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
@@ -237,7 +237,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             if ((enemy.transform.position - position).magnitude < range)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(dmg);
             }
         }
         var boss = FindObjectsByType<Wendigo>(FindObjectsSortMode.None);
@@ -246,7 +246,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             if ((enemy.transform.position - position).magnitude < range)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(dmg);
             }
         }
     }

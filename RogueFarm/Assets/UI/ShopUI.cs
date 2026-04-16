@@ -64,6 +64,7 @@ public class ShopUI : MonoBehaviour
 
             if (itemSo.canBeSold == false ) continue;
             if (amount <= 0) continue;
+            if (itemSo.itemType == ItemType.UPGRADE) continue;
 
             GameObject obj = Instantiate(sellingItemView, sellingLayout.transform);
 

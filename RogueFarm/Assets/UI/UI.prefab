@@ -6507,6 +6507,11 @@ MonoBehaviour:
   carrotSeedItemSo: {fileID: 11400000, guid: b3643d2c30a9ae0438aa7e1dee28be0f, type: 2}
   weedSeedItemSo: {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
   strawberrySeedItemSo: {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
+  damageBonusItemSo: {fileID: 11400000, guid: a838f2f29f300cc46b1cfc978399e692, type: 2}
+  maxHealthBonus1ItemSo: {fileID: 11400000, guid: 148167edd50943c4f8d3b23479ff3982, type: 2}
+  maxHealthBonus2ItemSo: {fileID: 11400000, guid: a4ad07c2f7d4f514c86bbc4b2854c652, type: 2}
+  regenerationBonus1ItemSo: {fileID: 11400000, guid: 36a97fe018f2ce54cb6c1c936a031b5f, type: 2}
+  regenerationBonus2ItemSo: {fileID: 11400000, guid: d846fac55bfc1be4db62c2624ef433f4, type: 2}
   researchPanel: {fileID: 723983103086836685}
   skillInfoPanel: {fileID: 7581336397614158317}
   textPrefab: {fileID: 2298558931417233342, guid: ba60ca4857e195240a3ec5d4caa325c8, type: 3}

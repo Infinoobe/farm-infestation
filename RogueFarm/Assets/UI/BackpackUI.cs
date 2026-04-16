@@ -35,7 +35,7 @@ public class BackpackUI : MonoBehaviour
             ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
 
-            if (amount <= 0) continue;
+            if (amount <= 0 || itemSo.itemType == ItemType.UPGRADE) continue;
 
             GameObject obj = Instantiate(itemViewPrefab, itemsList.transform);
             var itemUI = obj.GetComponent<BackpackItemUI>();

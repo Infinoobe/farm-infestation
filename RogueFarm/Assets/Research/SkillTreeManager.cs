@@ -11,6 +11,11 @@ public class SkillTreeManager : MonoBehaviour
     [FormerlySerializedAs("carrotSeedItem")] public ItemSO carrotSeedItemSo;
     [FormerlySerializedAs("weedSeedItem")] public ItemSO weedSeedItemSo;
     [FormerlySerializedAs("strawberrySeedItem")] public ItemSO strawberrySeedItemSo;
+    [FormerlySerializedAs("damageBonus")] public ItemSO damageBonusItemSo;
+    [FormerlySerializedAs("maxHealthBonus1")] public ItemSO maxHealthBonus1ItemSo;
+    [FormerlySerializedAs("maxHealthBonus2")] public ItemSO maxHealthBonus2ItemSo;
+    [FormerlySerializedAs("regenerationBonus1")] public ItemSO regenerationBonus1ItemSo;
+    [FormerlySerializedAs("regenerationBonus2")] public ItemSO regenerationBonus2ItemSo;
     public GameObject researchPanel;
     public GameObject skillInfoPanel;
     private GameObject currentSkillNodeGameobject;
@@ -185,22 +190,24 @@ public class SkillTreeManager : MonoBehaviour
                 GameState.Instance.AddItemToShop(strawberrySeedItemSo);
                 break;
             case "Damage Boost I":
-                //TODO
+                GameState.Instance.AddItem(damageBonusItemSo);
                 break;
             case "Damage Boost II":
-                //TODO
+                GameState.Instance.AddItem(damageBonusItemSo);
                 break;
             case "Max Health Boost I":
-                //TODO
+                GameState.Instance.AddItem(maxHealthBonus1ItemSo);
+                GameState.Instance.Player.Heal(maxHealthBonus1ItemSo.maxHealthBonus);
                 break;
             case "Max Health Boost II":
-                //TODO
+                GameState.Instance.AddItem(maxHealthBonus2ItemSo);
+                GameState.Instance.Player.Heal(maxHealthBonus2ItemSo.maxHealthBonus);
                 break;
             case "Regeneration I":
-                //TODO
+                GameState.Instance.AddItem(regenerationBonus1ItemSo);
                 break;
             case "Regeneration II":
-                //TODO
+                GameState.Instance.AddItem(regenerationBonus2ItemSo);
                 break;
             default:
                 Debug.Log("Researched skill does nothing");

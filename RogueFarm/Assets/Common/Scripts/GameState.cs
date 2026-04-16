@@ -117,10 +117,58 @@ public class GameState : MonoBehaviour
     private void StartNight()
     {
         Debug.Log("Starting night");
+        Player.Heal(SleepHealValue());
         currGamePhase = GamePhase.Night;
         OnNightStarted.Invoke();
     }
 
+    private int SleepHealValue()
+    {
+        int healValue = 0;
+        Dictionary<ItemSO, int> items = GetItems();
+        foreach (var kvp in items)
+        {
+            ItemSO itemSo = kvp.Key;
+            int amount = kvp.Value;
+
+            if (amount <= 0 || itemSo.itemType != ItemType.UPGRADE) continue;
+
+            healValue += itemSo.regenerationBonus * amount;
+        }
+        return healValue;
+    }
+
+    public int DamageBonusValue()
+    {
+        int damageValue = 0;
+        Dictionary<ItemSO, int> items = GetItems();
+        foreach (var kvp in items)
+        {
+            ItemSO itemSo = kvp.Key;
+            int amount = kvp.Value;
+
+            if (amount <= 0 || itemSo.itemType != ItemType.UPGRADE) continue;
+
+            damageValue += itemSo.damageBonus * amount;
+        }
+        return damageValue;
+    }
+
+    public int MaxHealthBonusValue()
+    {
+        int maxHealthBonus = 0;
+        Dictionary<ItemSO, int> items = GetItems();
+        foreach (var kvp in items)
+        {
+            ItemSO itemSo = kvp.Key;
+            int amount = kvp.Value;
+
+            if (amount <= 0 || itemSo.itemType != ItemType.UPGRADE) continue;
+
+            maxHealthBonus += itemSo.maxHealthBonus * amount;
+        }
+        return maxHealthBonus;
+    }
 
     public bool HasItems(ItemSO itemSo, int amount = 1)
     {

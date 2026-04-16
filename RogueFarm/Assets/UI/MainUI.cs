@@ -53,7 +53,7 @@ namespace UI
             
             hpLabel.text = $"HP: {GameState.Instance.Player.hitPoints}";
 
-            var barWidth = 600.0f * GameState.Instance.Player.hitPoints / GameState.Instance.Player.hitPointsMax;
+            var barWidth = 600.0f * GameState.Instance.Player.hitPoints / (GameState.Instance.Player.hitPointsMax + GameState.Instance.MaxHealthBonusValue());
             hpImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth);
             
             deadSplashScreen.SetActive(GameState.Instance.Player.IsDead);

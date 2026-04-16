@@ -8,6 +8,7 @@ public enum ItemType
     TOOL,
     RESOURCE,
     BUILDING,
+    UPGRADE
 }
 
 [CreateAssetMenu(fileName = "NewItem SO")]
@@ -22,4 +23,7 @@ public class ItemSO : ScriptableObject
     public int valueSelling;
     public GameObject plantPrefab;
     public GameObject buildingPrefab;
+    public int damageBonus;
+    public int maxHealthBonus;
+    public int regenerationBonus;
 }
