@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(GridSystemTool))]
-public class GridSystemToolEditor : Editor
+public class GridSystemToolEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
@@ -14,6 +14,7 @@ public class GridSystemToolEditor : Editor
         {
             grid.GenerateGrid();
         }
+
         if (GUILayout.Button("Clear Grid"))
         {
             grid.ClearGridCells();
