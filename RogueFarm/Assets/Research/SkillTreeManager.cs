@@ -14,6 +14,7 @@ public class SkillTreeManager : MonoBehaviour
     public GameObject skillInfoPanel;
     private GameObject currentSkillNodeGameobject;
     public GameObject textPrefab;
+    public GameObject linePrefab;
 
     private void Start()
     {
@@ -22,8 +23,50 @@ public class SkillTreeManager : MonoBehaviour
             skillNode.OnSkillResearched.AddListener(SkillResearched);
             skillNode.OnMouseEnterSkillNode.AddListener(OnMouseEnterSkillNode);
             skillNode.OnMouseExitSkillNode.AddListener(OnMouseExitSkillNode);
+
+            if (skillNode.requiredSkillsToUnlock == null || skillNode.requiredSkillsToUnlock.Count == 0) continue;
+            RectTransform panel = researchPanel.GetComponent<RectTransform>();
+            RectTransform a = skillNode.GetComponent<RectTransform>();
+            foreach (SkillNode prevSkill in skillNode.requiredSkillsToUnlock)
+            {
+                RectTransform b = prevSkill.GetComponent<RectTransform>();   
+
+                RectTransform line = Instantiate(linePrefab, panel).GetComponent<RectTransform>();
+
+                DrawLine(panel, a, b, line);
+            }
         }
         HideInfo();
+    }
+
+    void DrawLine(RectTransform panel, RectTransform a, RectTransform b, RectTransform line)
+    {
+        Vector2 localA;
+        Vector2 localB;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            panel,
+            RectTransformUtility.WorldToScreenPoint(null, a.position),
+            null,
+            out localA
+        );
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            panel,
+            RectTransformUtility.WorldToScreenPoint(null, b.position),
+            null,
+            out localB
+        );
+
+        Vector2 direction = localB - localA;
+        float distance = direction.magnitude;
+
+        line.anchoredPosition = localA + direction * 0.5f;
+        line.sizeDelta = new Vector2(distance, 2f);
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        line.localRotation = Quaternion.Euler(0, 0, angle);
+        line.SetAsFirstSibling();
     }
 
     private void OnMouseEnterSkillNode(SkillNode skillNode)
