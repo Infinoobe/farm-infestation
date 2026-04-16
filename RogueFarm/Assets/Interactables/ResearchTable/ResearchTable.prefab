@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3083687844603596151}
   - component: {fileID: 7171785217839885638}
   - component: {fileID: 1993538473665752218}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: TableMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3420933789496627861}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -121,7 +121,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6103132904344556958}
   - component: {fileID: 7783221671509689937}
-  m_Layer: 0
+  - component: {fileID: 8641274132182742601}
+  m_Layer: 13
   m_Name: ResearchTable
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -161,10 +162,27 @@ MonoBehaviour:
   canBeWalkedOn: 0
   interactionEnabled: 0
   health: 0
+  range: 0
   buildingShapeUnits:
   - {fileID: 873140921327269606}
   - {fileID: 5161329763757382611}
   isPlaced: 1
+--- !u!208 &8641274132182742601
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839119779071415317}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0.5}
+  m_TimeToStationary: 0.5
 --- !u!1 &6713425529241056605
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +195,7 @@ GameObject:
   - component: {fileID: 4215203425738287713}
   - component: {fileID: 7768752833468099860}
   - component: {fileID: 6583085589288667294}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,6 +303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingShapeUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 4542344569113018677, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
@@ -295,7 +317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalPosition.z
@@ -362,6 +384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingShapeUnit (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4542344569113018677, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
@@ -372,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalPosition.z

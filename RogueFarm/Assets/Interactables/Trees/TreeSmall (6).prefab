@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1244692166398071740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3651031963655746006}
+  m_Layer: 13
+  m_Name: TreeModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3651031963655746006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244692166398071740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3479631365945927543}
+  - {fileID: 8443224564586860079}
+  m_Father: {fileID: 1229263904984757970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3466167311127513371
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +45,7 @@ GameObject:
   - component: {fileID: 113455016737233092}
   - component: {fileID: 414422161247508579}
   - component: {fileID: 1561339133223983650}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,12 +60,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3466167311127513371}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1.3611859, y: 3.0282, z: 1.438892}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1229263904984757970}
+  m_Father: {fileID: 3651031963655746006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &113455016737233092
 MeshFilter:
@@ -120,7 +153,7 @@ GameObject:
   - component: {fileID: 6967580240425626772}
   - component: {fileID: 8620035371920076259}
   - component: {fileID: 1786901220286970800}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,12 +168,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7643395392107042669}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.51590294, y: 3.0282, z: 0.49745607}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1229263904984757970}
+  m_Father: {fileID: 3651031963655746006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6967580240425626772
 MeshFilter:
@@ -226,7 +259,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1229263904984757970}
   - component: {fileID: 7924139608427829878}
-  m_Layer: 0
+  - component: {fileID: 7169086529816528376}
+  m_Layer: 13
   m_Name: TreeSmall (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,8 +281,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8326538387941189626}
-  - {fileID: 3479631365945927543}
-  - {fileID: 8443224564586860079}
+  - {fileID: 3651031963655746006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7924139608427829878
@@ -272,6 +305,23 @@ MonoBehaviour:
   buildingShapeUnits:
   - {fileID: 3801964064590177344}
   isPlaced: 1
+  treeModel: {fileID: 1244692166398071740}
+--- !u!208 &7169086529816528376
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8999387306861460727}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 0.5, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &4052489122249732621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283,6 +333,10 @@ PrefabInstance:
     - target: {fileID: 4542344569113018677, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_Name
       value: BuildingShapeUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4542344569113018677, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
       propertyPath: m_LocalPosition.x
