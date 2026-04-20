@@ -51,10 +51,15 @@ MonoBehaviour:
   canBeWalkedOn: 1
   interactionEnabled: 1
   health: 0
+  range: 0
   buildingShapeUnits:
   - {fileID: 3906964668660230315}
   isPlaced: 1
   currentPlant: {fileID: 0}
+  mesh: {fileID: 8228551156771882003}
+  dryDirt: {fileID: 2100000, guid: fb52f37c71427824eb51b0e68c1517dd, type: 2}
+  wetDirt: {fileID: 2100000, guid: 73052c2fc639ca14ab9e02ddbe702598, type: 2}
+  isWatered: 0
 --- !u!1 &9220500101535426443
 GameObject:
   m_ObjectHideFlags: 0

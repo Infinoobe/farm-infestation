@@ -4,10 +4,40 @@ using UnityEngine;
 public class Field : Building
 {
     [SerializeField] private Plant currentPlant;
+    [SerializeField] private MeshRenderer mesh;
+    [SerializeField] private Material dryDirt;
+    [SerializeField] private Material wetDirt;
+    public bool isWatered;
 
     public void Start()
     {
+        GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
+        GameState.Instance.OnNightStarted.AddListener(HandleNightStarted);
         GameState.Instance.RegisterInteractable(this);
+        isWatered = false;
+        SetMaterial();
+    }
+
+    private void SetMaterial()
+    {
+        if (isWatered) mesh.material = wetDirt;
+        else mesh.material = dryDirt;
+    }
+
+    public void WaterField()
+    {
+        isWatered = true;
+        SetMaterial();
+    }
+
+    private void HandleDayStarted()
+    {
+        isWatered = false;
+    }
+
+    private void HandleNightStarted()
+    {
+        if (currentPlant) currentPlant.isWatered = isWatered;
     }
 
     public void PlantSeed(Player p)
@@ -69,6 +99,14 @@ public class Field : Building
             return $"Do nothing (no {item.itemName})";
         }
         if (currentPlant.CanBeCollected) return "Collect";
+        if (!isWatered && GameState.Instance.Player.selectedItemSo.itemName.Equals("Watercan"))
+        {
+            return "Water field";
+        }
+        else if(!isWatered)
+        {
+            return "Water field (Needs watercan)";
+        }
         return "Do nothing (Plant Growing)";
     }
     
@@ -86,6 +124,12 @@ public class Field : Building
         {
             p.animator.SetTrigger("Plant");
             CollectPlant();
+            return;
+        }
+
+        if (!isWatered && GameState.Instance.Player.selectedItemSo.itemName.Equals("Watercan"))
+        {
+            WaterField();
             return;
         }
     }

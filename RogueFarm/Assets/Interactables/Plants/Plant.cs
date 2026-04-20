@@ -18,7 +18,7 @@ public class Plant : MonoBehaviour, IDamagable
     [SerializeField] private Canvas canvas;
     [SerializeField] private Image hpBar;
     [SerializeField] private TMP_Text hpLabel;
-
+    public bool isWatered;
     protected int health = 100;
     protected int currGrowthTime = 0;
     protected int currCollectTimes = 0;
@@ -29,6 +29,7 @@ public class Plant : MonoBehaviour, IDamagable
     {
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
         canvas.enabled = false;
+        isWatered = false;
 
         InitVisuals();
     }
@@ -64,7 +65,8 @@ public class Plant : MonoBehaviour, IDamagable
 
     private void HandleDayStarted()
     {
-        Grow();
+        if (isWatered) Grow();
+        isWatered = false;
     }
 
     public void TakeDamage(int damage)
