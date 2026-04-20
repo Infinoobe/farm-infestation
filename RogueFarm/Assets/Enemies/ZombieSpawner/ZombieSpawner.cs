@@ -19,6 +19,11 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
     private int perNightZombiesAlive;
     private int zombiesToSpawn;
     
+    [SerializeField] private List<Zombie> stage1 = new ();
+    [SerializeField] private List<Zombie> stage2 = new ();
+    [SerializeField] private List<Zombie> stage3 = new ();
+    [SerializeField] private List<Zombie> stage4 = new ();
+
     private int zombieLimit = 10;
     
     [SerializeField] private float zombieTime = 1f;
@@ -61,7 +66,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
             return;
         }
 
-        zombiesToSpawn = 1 + GameState.Instance.CurrentDay * 3;
+        zombiesToSpawn = GameState.Instance.CurrentDay * 4;
         GameState.Instance.ZombiesToKill = zombiesToSpawn;
         spawnCoroutine = StartCoroutine(SpawnZombiesCoroutine());
     }
@@ -89,11 +94,30 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
 
     private void SpawnZombie()
     {
-        var prefab = zombiePrefab;
-        if (GameState.Instance.CurrentDay > 3 && Random.value < 0.3f)
+        // var prefab = zombiePrefab;
+        // if (GameState.Instance.CurrentDay > 3 && Random.value < 0.3f)
+        // {
+        //     prefab = zombieTankPrefab;
+        // }
+        var prefab = new Zombie();
+        var currentDay = GameState.Instance.CurrentDay;
+        if (currentDay == 1)
+            prefab = stage1[perNightZombiesSpawned];
+        else if (currentDay == 2)
+            prefab = stage2[perNightZombiesSpawned];
+        else if (currentDay == 3)
+            prefab = stage3[perNightZombiesSpawned];
+        else if (currentDay == 4)
+            prefab = stage3[perNightZombiesSpawned];
+        else
         {
-            prefab = zombieTankPrefab;
+            prefab = zombiePrefab;
+            if (Random.value < 0.3f)
+                prefab = zombieTankPrefab;
+            else if (Random.value < 0.4f)
+                prefab = zombieRangedPrefab;
         }
+
         Vector3 pos = transform.position + new Vector3(0, 1, 0);
         var z = Instantiate(prefab, pos, Quaternion.identity, transform);
         z.Spawner = this;
