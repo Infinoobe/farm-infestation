@@ -33,6 +33,7 @@ public class Field : Building
     private void HandleDayStarted()
     {
         isWatered = false;
+        SetMaterial();
     }
 
     private void HandleNightStarted()
