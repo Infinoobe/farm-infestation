@@ -115,6 +115,8 @@ public class Field : Building
     {
         // Add checking current player item
 
+        base.Interact(p);
+
         if (IsEmpty())
         {
             PlantSeed(p);
@@ -128,7 +130,7 @@ public class Field : Building
             return;
         }
 
-        if (!isWatered && GameState.Instance.Player.selectedItemSo.itemName.Equals("Watercan"))
+        if (!isWatered && p.selectedItemSo.itemName.Equals("Watercan"))
         {
             WaterField();
             return;

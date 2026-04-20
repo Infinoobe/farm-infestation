@@ -157,10 +157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233121b9384b23f478a1e33361ba4d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeTargeted: 0
-  canBeDestroyed: 0
+  canBeTargeted: 1
+  canBeDestroyed: 1
   canBeWalkedOn: 0
-  interactionEnabled: 0
+  interactionEnabled: 1
+  canBePickedUp: 1
   health: 0
   range: 0
   buildingShapeUnits:

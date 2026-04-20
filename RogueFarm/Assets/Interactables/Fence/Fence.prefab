@@ -151,7 +151,8 @@ MonoBehaviour:
   canBeTargeted: 1
   canBeDestroyed: 1
   canBeWalkedOn: 0
-  interactionEnabled: 0
+  interactionEnabled: 1
+  canBePickedUp: 1
   health: 100
   range: 0
   buildingShapeUnits:

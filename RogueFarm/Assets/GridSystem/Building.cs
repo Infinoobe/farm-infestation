@@ -11,6 +11,7 @@ public class Building : MonoBehaviour, IInteractable
     [SerializeField] private bool canBeDestroyed;
     [SerializeField] private bool canBeWalkedOn;
     [SerializeField] private bool interactionEnabled;
+    [SerializeField] private bool canBePickedUp;
     [SerializeField] private int health;
     [SerializeField] protected int range;
     [SerializeField] private BuildingShapeUnit[] buildingShapeUnits;
@@ -21,6 +22,7 @@ public class Building : MonoBehaviour, IInteractable
     public bool CanBeDestroyed => canBeDestroyed;
     public bool CanBeTargeted => canBeTargeted;
     public bool CanBeWalkedOn => canBeWalkedOn;
+    public bool CanBePickedUp => canBePickedUp;
     public int CurrHealth => health;
     public int Range => range;
 
@@ -85,12 +87,14 @@ public class Building : MonoBehaviour, IInteractable
 
     virtual public string GetDescription()
     {
-        return "Do nothing (building)";
+        if (canBePickedUp) return "Destroy (Axe)";
+        else return "Do nothing (building)";
     }
 
     virtual public void Interact(Player p)
     {
-        return;
+        if (!canBePickedUp) return;
+        if (p.selectedItemSo.name.Equals("Axe")) RemoveBuilding();
     }
 
     public Vector3 GetPosition()
