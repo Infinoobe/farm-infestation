@@ -11,6 +11,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
 {
     [SerializeField] private Zombie zombiePrefab;
     [SerializeField] private Zombie zombieTankPrefab;
+    [SerializeField] private Zombie zombieRangedPrefab;
     [SerializeField] private GameObject wendigoPrefab;
     [SerializeField] private List<GameObject> wendigoPath;
 
