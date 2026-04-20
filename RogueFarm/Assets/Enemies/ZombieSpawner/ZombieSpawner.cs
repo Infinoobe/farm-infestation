@@ -1,10 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public interface IZombieSpawner
 {
     public void OnZombieDied(Zombie z);
+}
+
+[Serializable]
+public class DayInfo
+{
+    public List<Zombie> zombies = new List<Zombie>();
 }
 
 public class ZombieSpawner : MonoBehaviour, IZombieSpawner
@@ -18,12 +26,11 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
     private int perNightZombiesSpawned;
     private int perNightZombiesAlive;
     private int zombiesToSpawn;
-    
-    [SerializeField] private List<Zombie> stage1 = new ();
-    [SerializeField] private List<Zombie> stage2 = new ();
-    [SerializeField] private List<Zombie> stage3 = new ();
-    [SerializeField] private List<Zombie> stage4 = new ();
 
+    public List<Zombie> spawnToday;
+
+    [SerializeField] private List<DayInfo> daysSpawn = new ();
+    
     private int zombieLimit = 10;
     
     [SerializeField] private float zombieTime = 1f;
@@ -60,13 +67,33 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         perNightZombiesSpawned = 0;
         perNightZombiesAlive = 0;
         var day = GameState.Instance.CurrentDay;
-        if (day == 5)
+        day -= 1;
+        if (day < daysSpawn.Count)
         {
+            spawnToday = daysSpawn[day].zombies;
+        }
+        else if (day == 5)
+        {
+            spawnToday = new();
             SpawnWendigo();
             return;
         }
+        else
+        {
+            zombiesToSpawn = day * 4;
+            spawnToday = new List<Zombie>();
+            for (var i = 0; i < zombiesToSpawn; i++)
+            {
+                var prefab = zombiePrefab;
+                if (Random.value < 0.3f)
+                    prefab = zombieTankPrefab;
+                else if (Random.value < 0.4f)
+                    prefab = zombieRangedPrefab;
 
-        zombiesToSpawn = GameState.Instance.CurrentDay * 4;
+                spawnToday.Add(prefab);
+            }
+        }
+        zombiesToSpawn = spawnToday.Count;
         GameState.Instance.ZombiesToKill = zombiesToSpawn;
         spawnCoroutine = StartCoroutine(SpawnZombiesCoroutine());
     }
@@ -94,29 +121,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
 
     private void SpawnZombie()
     {
-        // var prefab = zombiePrefab;
-        // if (GameState.Instance.CurrentDay > 3 && Random.value < 0.3f)
-        // {
-        //     prefab = zombieTankPrefab;
-        // }
-        var prefab = new Zombie();
-        var currentDay = GameState.Instance.CurrentDay;
-        if (currentDay == 1)
-            prefab = stage1[perNightZombiesSpawned];
-        else if (currentDay == 2)
-            prefab = stage2[perNightZombiesSpawned];
-        else if (currentDay == 3)
-            prefab = stage3[perNightZombiesSpawned];
-        else if (currentDay == 4)
-            prefab = stage3[perNightZombiesSpawned];
-        else
-        {
-            prefab = zombiePrefab;
-            if (Random.value < 0.3f)
-                prefab = zombieTankPrefab;
-            else if (Random.value < 0.4f)
-                prefab = zombieRangedPrefab;
-        }
+        var prefab = spawnToday[perNightZombiesSpawned];
 
         Vector3 pos = transform.position + new Vector3(0, 1, 0);
         var z = Instantiate(prefab, pos, Quaternion.identity, transform);
