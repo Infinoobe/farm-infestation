@@ -17,31 +17,43 @@ public class DayInfo
 
 public class ZombieSpawner : MonoBehaviour, IZombieSpawner
 {
+    public int startNightForDebug = 0;
+
     [SerializeField] private Zombie zombiePrefab;
     [SerializeField] private Zombie zombieTankPrefab;
     [SerializeField] private Zombie zombieRangedPrefab;
+
+    [SerializeField] private int zombieLimit = 10;
+    [SerializeField] private float zombieSpawnTime = 1f;
+    
+    [SerializeField] private List<DayInfo> daysSpawn = new ();
+    
     [SerializeField] private GameObject wendigoPrefab;
     [SerializeField] private List<GameObject> wendigoPath;
+    
+    [SerializeField] private int zombiesPerDayAfterBoss = 4;
+
+    [SerializeField] private float basicProbabilityAfterBoss = 0.7f*0.6f;
+    [SerializeField] private float tankProbabilityAfterBoss = 0.3f;
+    [SerializeField] private float shooterProbabilityAfterBoss = 0.7f*0.4f;
+    private float probabilityTotal;
+
 
     private int perNightZombiesSpawned;
     private int perNightZombiesAlive;
     private int zombiesToSpawn;
-
-    public List<Zombie> spawnToday;
-
-    [SerializeField] private List<DayInfo> daysSpawn = new ();
+    private List<Zombie> spawnToday;
     
-    private int zombieLimit = 10;
-    
-    [SerializeField] private float zombieTime = 1f;
-    private List<Zombie> myZombies = new ();
-    private Coroutine spawnCoroutine;
+    private List<Zombie> zombiesAlive = new ();
     private Wendigo bossAlive;
+
+    private Coroutine spawnCoroutine;
 
     void Start()
     {
         GameState.Instance.OnNightStarted.AddListener(HandleNightStarted);
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
+        probabilityTotal = tankProbabilityAfterBoss + shooterProbabilityAfterBoss + basicProbabilityAfterBoss;
     }
 
     private void HandleDayStarted()
@@ -52,14 +64,14 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
             spawnCoroutine = null;
         }
 
-        var zombiesCpy = new List<Zombie>(myZombies);
+        var zombiesCpy = new List<Zombie>(zombiesAlive);
         foreach (var zombie in zombiesCpy)
         {
             if (zombie != null)
                 zombie.KillYourselfFromDaylight();
         }
 
-        myZombies.Clear();
+        zombiesAlive.Clear();
     }
 
     private void HandleNightStarted()
@@ -68,11 +80,12 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         perNightZombiesAlive = 0;
         var day = GameState.Instance.CurrentDay;
         day -= 1;
+        day += startNightForDebug;
         if (day < daysSpawn.Count)
         {
             spawnToday = daysSpawn[day].zombies;
         }
-        else if (day == 5)
+        else if (day == daysSpawn.Count)
         {
             spawnToday = new();
             SpawnWendigo();
@@ -80,22 +93,32 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         }
         else
         {
-            zombiesToSpawn = day * 4;
+            zombiesToSpawn = day * zombiesPerDayAfterBoss;
             spawnToday = new List<Zombie>();
             for (var i = 0; i < zombiesToSpawn; i++)
             {
-                var prefab = zombiePrefab;
-                if (Random.value < 0.3f)
-                    prefab = zombieTankPrefab;
-                else if (Random.value < 0.4f)
-                    prefab = zombieRangedPrefab;
-
-                spawnToday.Add(prefab);
+                spawnToday.Add(GetRandomZombiePrefab());
             }
         }
         zombiesToSpawn = spawnToday.Count;
         GameState.Instance.ZombiesToKill = zombiesToSpawn;
         spawnCoroutine = StartCoroutine(SpawnZombiesCoroutine());
+    }
+
+    private Zombie GetRandomZombiePrefab()
+    {
+        var r = probabilityTotal * Random.value;
+        if (r < basicProbabilityAfterBoss)
+        {
+            return zombiePrefab;
+        }
+        r-= basicProbabilityAfterBoss;
+        if (r <= tankProbabilityAfterBoss)
+        {
+            return zombieTankPrefab;
+        }
+
+        return zombieRangedPrefab;
     }
 
     private void SpawnWendigo()
@@ -115,7 +138,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
                 SpawnZombie();
                 ZombieSpawned();
             }
-            yield return new WaitForSeconds(zombieTime);
+            yield return new WaitForSeconds(zombieSpawnTime);
         }
     }
 
@@ -126,12 +149,12 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         Vector3 pos = transform.position + new Vector3(0, 1, 0);
         var z = Instantiate(prefab, pos, Quaternion.identity, transform);
         z.Spawner = this;
-        myZombies.Add(z);
+        zombiesAlive.Add(z);
     }
 
     public void OnZombieDied(Zombie z)
     {
-        myZombies.Remove(z);
+        zombiesAlive.Remove(z);
         ZombieDied();
     }
     

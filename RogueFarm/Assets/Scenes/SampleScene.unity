@@ -65935,6 +65935,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5232743203554439598, guid: 5dbe839fd557fb441b7db31982394cc5, type: 3}
+      propertyPath: startNightForDebug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232743203554439598, guid: 5dbe839fd557fb441b7db31982394cc5, type: 3}
       propertyPath: zombieRangedPrefab
       value: 
       objectReference: {fileID: 5054486581908269291, guid: 1daaca908c3f03b4f88215315da29f6f, type: 3}
