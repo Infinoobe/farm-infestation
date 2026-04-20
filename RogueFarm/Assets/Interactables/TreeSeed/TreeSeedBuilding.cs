@@ -9,27 +9,20 @@ public class TreeSeedBuilding : Building
         base.PlaceBuilding(onCells);
 
         GridCell mainCell = occupiedCells[0]; // assume treeSeed size 1
-        (int x, int y) = mainCell.myGrid.grid.WorldToGridPosition(gameObject.transform.position);
-        for(int i = x - range; i < x + range + 1; i++)
+        List<GridCell> cells = mainCell.myGrid.grid.GetGridCellsInRange(mainCell, range);
+        foreach (GridCell cell in cells)
         {
-            for(int j = y - range; j < y + range + 1; j++)
-            {
-                GridCell cell = mainCell.myGrid.grid.GetGridCell(i, j);
-                if(cell) cell.AddTreeSeedInRange();
-            }
+            cell.AddTreeSeedInRange();
         }
     }
 
     public override void DestroyBuilding()
     {
         GridCell mainCell = occupiedCells[0]; // assume treeSeed size 1
-        (int x, int y) = mainCell.myGrid.grid.WorldToGridPosition(gameObject.transform.position);
-        for (int i = x - range; i < x + range + 1; i++)
+        List<GridCell> cells = mainCell.myGrid.grid.GetGridCellsInRange(mainCell, range);
+        foreach(GridCell cell in cells)
         {
-            for (int j = y - range; j < y + range + 1; j++)
-            {
-                mainCell.myGrid.grid.GetGridCell(i, j).SubtractTreeSeedInRange();
-            }
+            cell.SubtractTreeSeedInRange();
         }
 
         base.DestroyBuilding();
