@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -49,6 +50,24 @@ public class GridSystemTool : MonoBehaviour
         }
     }
 
+    public List<GridCell> GetGridCellsInRange(GridCell cell, int range)
+    {
+        (int x, int y) = WorldToGridPosition(cell.transform.position);
+        return GetGridCellsInRange(x, y, range);
+    }
+    public List<GridCell> GetGridCellsInRange(int x, int y, int range)
+    {
+        List<GridCell> cells = new List<GridCell>();
+        for (int i = x - range; i < x + range + 1; i++)
+        {
+            for (int j = y - range; j < y + range + 1; j++)
+            {
+                GridCell cell = GetGridCell(i, j);
+                if (cell) cells.Add(cell);
+            }
+        }
+        return cells;
+    }
 
     private void PlaceGridCells()
     {
