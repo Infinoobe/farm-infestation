@@ -193,6 +193,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void KillYourself()
     {
+        hitPoints = 0;
         animator.Play("Death");
         Debug.Log("Player Died!");
     }
