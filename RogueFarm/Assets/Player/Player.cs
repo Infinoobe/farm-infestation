@@ -177,6 +177,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         if (IsDead) return;
         if (Time.time < invulnerableTimestamp) return;
+        if (GameState.Instance.GodCheat) return;
         
         animator.Play("Damage");
         hitPoints -= damageDealt;
@@ -225,12 +226,17 @@ public class Player : MonoBehaviour, IDamagable
         var position = attackPosition;
         var range = AttackRange;
         var dmg = damage + GameState.Instance.DamageBonusValue();
+
         var currentAnimation = animator.GetCurrentAnimatorStateInfo(0);
         if (currentAnimation.IsName("Sword Attack 3"))
         {
             position = transform.position;
             range = 2.5f * AttackRange;
             dmg = (int)(2.5 * dmg);
+        }
+        if (GameState.Instance.DamageCheat)
+        {
+            dmg = 9999;
         }
 
         //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);

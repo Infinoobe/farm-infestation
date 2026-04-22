@@ -13,8 +13,8 @@ public class GameState : MonoBehaviour
     [SerializeField] ItemsDatabaseSO itemsDatabase;
 
     [SerializeField] private Inventory inventory;
-    [FormerlySerializedAs("moneyItem")] [SerializeField] private ItemSO moneyItemSo;
-    [FormerlySerializedAs("handItem")] [SerializeField] private ItemSO handItemSo;
+    [SerializeField] public  ItemSO moneyItemSo;
+    [SerializeField] private ItemSO handItemSo;
     [SerializeField] public List<ItemSO> ItemsInShop = new List<ItemSO>();
 
 
@@ -35,6 +35,9 @@ public class GameState : MonoBehaviour
     public bool IsDay() { return currGamePhase == GamePhase.Day; }
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
     public int CurrentDay => currentDay;
+    public bool GodCheat { get; set; }
+    public bool DamageCheat { get; set; }
+
     public Player Player;
     public int ZombiesToKill;
 
