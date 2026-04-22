@@ -44,7 +44,15 @@ namespace UI
 
             if (GameState.Instance.IsNight())
             {
-                bottomLeft.text = $"Zombies to kill: {GameState.Instance.GetZombiesToKill()}";
+                var zombies = GameState.Instance.GetZombiesToKill();
+                if (zombies > 0)
+                {
+                    bottomLeft.text = $"Zombies to kill: {zombies}";
+                }
+                else
+                {
+                    bottomLeft.text = $"Kill the boss";
+                }
             }
             else
             {
