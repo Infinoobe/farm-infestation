@@ -1,4 +1,5 @@
 using System;
+using IngameDebugConsole;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,13 +17,15 @@ namespace UI
             DamageMode.isOn = gi.DamageCheat;
         }
 
-        public void GiveCashCheat()
+        [ConsoleMethod( "give_me_money", "Adds 999 $" )]
+        public static void GiveCashCheat()
         {
             var gi = GameState.Instance;
             gi.AddItem(gi.moneyItemSo, 999);
         }
     
-        public void GiveStuffForUpgades()
+        [ConsoleMethod( "items_for_upgrades", "Adds inventory to buy all upgrades" )]
+        public static void GiveStuffForUpgades()
         {
             var gi = GameState.Instance;
             var sns = FindObjectsByType<SkillNode>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -42,6 +45,20 @@ namespace UI
             var gi = GameState.Instance;
             gi.GodCheat = GodMode.isOn;
             gi.DamageCheat = DamageMode.isOn;
+        }
+
+        [ConsoleMethod("god_toggle", "Toggles god mode")]
+        public static  void ToggleGodCheat()
+        {
+            var gi = GameState.Instance;
+            gi.GodCheat = !gi.GodCheat;
+        }
+
+        [ConsoleMethod("dmg_toggle", "Toggles max damage mode")]
+        public static void ToggleDamageCheat()
+        {
+            var gi = GameState.Instance;
+            gi.DamageCheat = !gi.DamageCheat;
         }
 
     }
