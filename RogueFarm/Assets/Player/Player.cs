@@ -200,16 +200,35 @@ public class Player : MonoBehaviour, IDamagable
 
     private void MoveAndRotate()
     {
-        if (lastInput.magnitude > 0.01)
-        {
-            transform.LookAt(transform.position + lastInput);
-        }
+        RotateToMouse();
+        // if (lastInput.magnitude > 0.01)
+        // {
+        //     transform.LookAt(transform.position + lastInput);
+        // }
         
         const float FALL_VELOCITY = 500.0f;
         Controller.Move(velocity * Time.deltaTime);
         Controller.Move(Vector3.down * (FALL_VELOCITY * Time.deltaTime));
         animator.SetFloat("Speed", velocity.magnitude);
 
+    }
+
+    private void RotateToMouse()
+    {
+        var cam = Camera.main;
+        var ray = cam.ScreenPointToRay(Input.mousePosition);
+        var ground = new Plane(Vector3.up, Vector3.zero);
+        if (ground.Raycast(ray, out var distance))
+        {
+            var mousePos = ray.GetPoint(distance);
+            Vector3 direction = mousePos - transform.position;
+            direction.y = 0;  // stay in XZ plane
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(direction);
+                transform.rotation = targetRot;
+            }
+        }
     }
 
     private void Attack()
