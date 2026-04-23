@@ -51,7 +51,6 @@ public class Field : Building
         }
         if (!GameState.Instance.RemoveItem(item)) return;
 
-        p.animator.SetTrigger("Plant");
         if (item.plantPrefab == null)
         {
             Debug.LogError($"No plant set for seed {item.itemName} SO {item.name}");
@@ -125,7 +124,6 @@ public class Field : Building
 
         if (CanBeCollected())
         {
-            p.animator.SetTrigger("Plant");
             CollectPlant();
             return;
         }

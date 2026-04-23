@@ -98,7 +98,6 @@ public class Player : MonoBehaviour, IDamagable
         if (IsDead) return;
         
         var currentAnimation = animator.GetCurrentAnimatorStateInfo(0);
-        if (currentAnimation.IsName("Planting")) return;
         if (currentAnimation.IsName("Sword Attack") 
             || currentAnimation.IsName("Sword Attack 2")
             || currentAnimation.IsName("Sword Attack 3"))
