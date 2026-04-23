@@ -1,0 +1,7 @@
+*.cs text eol=crlf
+*.meta text eol=crlf
+*.prefab text eol=crlf
+*.asset text eol=crlf
+*.unity text eol=crlf
+*.anim text eol=crlf
+*.controller text eol=crlf
