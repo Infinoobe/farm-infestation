@@ -39,6 +39,12 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
     public bool CanBeDismantled => canBeDismantled;
     public float AttractionFactor => attractionFactor;
 
+    public bool IsPlaced
+    {
+        get => isPlaced;
+        set => isPlaced = value;
+    }
+
 
     void OnEnable()
     {
@@ -113,11 +119,12 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
         return transform.position;
     }
 
-    public void PlaceBuilding(List<GridCell> onCells)
+    virtual public void PlaceBuilding(List<GridCell> onCells)
     {
         occupiedCells = onCells;
         isPlaced = true;
         GameState.Instance.RegisterInteractable(this);
+        currHealth = maxHealth;
     }
 
     public void DismantleBuilding()

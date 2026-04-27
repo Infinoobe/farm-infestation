@@ -16,7 +16,7 @@ public class SelectedPlantUI : MonoBehaviour
             return;
         }
 
-        var item = GameState.Instance.Player.selectedItemSo;
+        var item = GameState.Instance.Player.SelectedItem;
 
         if (item == null || item == GameState.Instance.GetHandItemSo)
         {

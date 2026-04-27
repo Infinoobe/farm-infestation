@@ -157,17 +157,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233121b9384b23f478a1e33361ba4d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  influenceRange: 0
+  isInteractionEnabled: 1
+  canBeDismantled: 1
+  maxHealth: 100
+  attractionFactor: 1
+  isVulnerable: 1
   canBeTargeted: 1
-  canBeDestroyed: 1
-  canBeWalkedOn: 0
-  interactionEnabled: 1
-  canBePickedUp: 0
-  health: 0
-  range: 0
+  occupiedCells: []
+  isPlaced: 1
+  currHealth: 100
   buildingShapeUnits:
   - {fileID: 873140921327269606}
   - {fileID: 5161329763757382611}
-  isPlaced: 1
 --- !u!208 &8641274132182742601
 NavMeshObstacle:
   m_ObjectHideFlags: 0

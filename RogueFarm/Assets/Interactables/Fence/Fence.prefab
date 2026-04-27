@@ -148,16 +148,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcdbd8b0e087894bbbdcc7834c57c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  influenceRange: 0
+  isInteractionEnabled: 1
+  canBeDismantled: 1
+  maxHealth: 100
+  attractionFactor: 1
+  isVulnerable: 1
   canBeTargeted: 1
-  canBeDestroyed: 1
-  canBeWalkedOn: 0
-  interactionEnabled: 1
-  canBePickedUp: 1
-  health: 100
-  range: 0
+  occupiedCells: []
+  isPlaced: 1
+  currHealth: 100
   buildingShapeUnits:
   - {fileID: 8413817935547469139}
-  isPlaced: 1
 --- !u!1 &3575086900913140919
 GameObject:
   m_ObjectHideFlags: 0

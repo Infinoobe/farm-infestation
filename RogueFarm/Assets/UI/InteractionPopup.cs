@@ -22,13 +22,17 @@ public class InteractionPopup : MonoBehaviour
             return;
         }
 
-        var hasInteraction = p.TryGetInteractable(out var i);
-        interactionBG.gameObject.SetActive(hasInteraction);
-        if (hasInteraction)
+        string message;
+        if (p.TryGetInteractable(out var i) && i.GetDescription(out message))
         {
-           interactionBG.rectTransform.anchoredPosition = InteractabeToScreenSpace(i);
-            
-            interactionLabel.text = $"Click to {i.GetDescription()}";
+            interactionLabel.text = $"Click to {message}";
+            interactionBG.rectTransform.anchoredPosition = InteractabeToScreenSpace(i);
+            interactionBG.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            interactionBG.gameObject.SetActive(false);
         }
     }
 

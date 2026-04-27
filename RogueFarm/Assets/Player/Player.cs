@@ -49,6 +49,9 @@ public class Player : MonoBehaviour, IDamagable
     public bool IsVulnerable => Time.time >= invulnerableTimestamp;
     public bool CanBeTargeted => true;
 
+    public int CurrHealth => currHealth;
+    public int HealthMax => healthMax;
+
     void Start()
     {
         Controller = GetComponent<CharacterController>();
@@ -283,11 +286,10 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    //public bool CanInteract()
-    //{
-    //    return currGridSystem == null || !currGridSystem.HasGizmo();
-    //}
-
+    public bool CanInteract()
+    {
+        return currGridSystem == null || !currGridSystem.HasGizmo();
+    }
 
     private void Interact()
     {

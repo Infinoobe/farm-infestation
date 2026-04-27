@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TreeSeedBuilding : Building
 {
-    public override void PlaceBuilding(IEnumerable<GridCell> onCells)
+    public override void PlaceBuilding(List<GridCell> onCells)
     {
         base.PlaceBuilding(onCells);
 

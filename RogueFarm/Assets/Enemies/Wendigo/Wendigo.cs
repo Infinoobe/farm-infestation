@@ -33,7 +33,12 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
     
     int zombieCount;
     private List<Zombie> zombies = new List<Zombie>();
-    
+
+    public bool CanBeTargeted => false;
+
+    public float AttractionFactor => 0f;
+    public bool IsVulnerable => true;
+
     public void Start()
     {
         Agent = GetComponent<NavMeshAgent>();

@@ -10,8 +10,9 @@ public class ResearchTable : Building
         MainUI.Instance.OpenResearch();
     }
 
-    override public string GetDescription()
+    override public bool GetDescription(out string message)
     {
-        return "Research";
+        message = "research";
+        return true;
     }
 }

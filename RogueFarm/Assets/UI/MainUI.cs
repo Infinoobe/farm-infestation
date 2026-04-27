@@ -59,9 +59,9 @@ namespace UI
                 bottomLeft.text = $"";
             }
             
-            hpLabel.text = $"HP: {GameState.Instance.Player.currHealth}";
+            hpLabel.text = $"HP: {GameState.Instance.Player.CurrHealth}";
 
-            var barWidth = 600.0f * GameState.Instance.Player.currHealth / (GameState.Instance.Player.healthMax + GameState.Instance.MaxHealthBonusValue());
+            var barWidth = 600.0f * GameState.Instance.Player.CurrHealth / (GameState.Instance.Player.HealthMax + GameState.Instance.MaxHealthBonusValue());
             hpImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, barWidth);
             
             deadSplashScreen.SetActive(GameState.Instance.Player.IsDead);

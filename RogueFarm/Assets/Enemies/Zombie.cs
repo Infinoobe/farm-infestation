@@ -26,7 +26,12 @@ public class Zombie : MonoBehaviour, IDamagable
     [SerializeField] private float projectileSpeed = 10f;
 
     private bool IsDead = false;
-    
+
+    public bool CanBeTargeted => false;
+
+    public float AttractionFactor => 0f;
+    public bool IsVulnerable => true;
+
     public void Start()
     {
         Agent = GetComponent<NavMeshAgent>();

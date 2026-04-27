@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class Bed : MonoBehaviour, IInteractable
 {
-    [SerializeField] private bool interactionEnabled;
+    [SerializeField] private bool isInteractionEnabled;
+
+    public bool IsInteractionEnabled => isInteractionEnabled;
     void Start()
     {
         GameState.Instance.RegisterInteractable(this);
     }
 
-    public bool IsInteractionEnabled() { return interactionEnabled; }
-    public void EnableInteraction() { interactionEnabled = true; }
-    public void DisableInteraction() { interactionEnabled = false; }
-
     public void Interact(Player p)
     {
+        if (!IsInteractionEnabled) return;
         GameState.Instance.GoToSleep();
     }
 
@@ -22,8 +21,9 @@ public class Bed : MonoBehaviour, IInteractable
     {
         return transform.position;
     }
-    public string GetDescription()
+    public bool GetDescription(out string message)
     {
-        return "Sleep";
+        message = "sleep";
+        return true;
     }
 }
