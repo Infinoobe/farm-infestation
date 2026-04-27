@@ -4,12 +4,10 @@ namespace Interactable
 {
     public interface IInteractable
     {
+        public bool IsInteractionEnabled { get; }
+
         public void Interact(Player p);
         public Vector3 GetPosition();
-        public string GetDescription();
-
-        public void EnableInteraction();
-        public bool IsInteractionEnabled();
-        public void DisableInteraction();
+        public bool GetDescription(out string message);
     }
 }

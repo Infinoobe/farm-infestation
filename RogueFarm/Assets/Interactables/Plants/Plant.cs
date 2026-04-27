@@ -4,26 +4,38 @@ using TMPro;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class Plant : MonoBehaviour, IDamagable
+public class Plant : MonoBehaviour
 {
-    private bool canBeCollected = false;
-    [FormerlySerializedAs("collectItem")] [SerializeField] private ItemSO collectItemSo;
-    [SerializeField] private int collectItemAmount = 1;
-    [SerializeField] private int growthTime = 2;
-    [SerializeField] private int collectTimes = 1;
+    [Header("Plant growing settings")]
+    [SerializeField] protected int collectItemAmount = 1;
+    [SerializeField] protected int growthTime = 2;
+    [SerializeField] protected int collectTimes = 1;
     [SerializeField] private GameObject[] growthStages; // Size = growthTime; index 0 -> stage at day 0
     [SerializeField] private GameObject[] collectStages; // Size = collectTimes; index 0 -> stage at collecting 0 times
-    [SerializeField] private int healthMax = 100;
 
+    [Header("Plant combat settings")]
+    [SerializeField] protected int healthMax = 100;
+    [SerializeField] protected float attractionFactor = 1f;
+    [SerializeField] protected bool isVulnerable = true;
+
+    [Header("Playtime variables")]
+    [SerializeField] private GameObject currActiveVisualObject;
+    [SerializeField] protected int currHealth = 100;
+    [SerializeField] protected bool isWatered;
+    [SerializeField] protected bool canBeCollected = false;
+    [SerializeField] protected int currGrowthTime = 0;
+    [SerializeField] protected int currCollectTimes = 0;
+
+    [Header("Object settings")]
+    [FormerlySerializedAs("collectItem")][SerializeField] private ItemSO collectItemSo;
     [SerializeField] private Canvas canvas;
     [SerializeField] private Image hpBar;
     [SerializeField] private TMP_Text hpLabel;
-    public bool isWatered;
-    protected int health = 100;
-    protected int currGrowthTime = 0;
-    protected int currCollectTimes = 0;
-    private GameObject currActiveVisualObject;
+    
     public bool CanBeCollected => canBeCollected;
+    public bool IsWatered => isWatered;
+    public float AttractionFactor => attractionFactor;
+    public bool IsVulnerable => isVulnerable;
 
     public void Start()
     {
@@ -71,11 +83,11 @@ public class Plant : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damage)
     {
-        health = Math.Max(0, health - damage);
+        currHealth = Math.Max(0, currHealth - damage);
         canvas.enabled = true;
-        hpBar.fillAmount = ((float)health) / healthMax;
-        hpLabel.text = health + "/" + healthMax;
-        if (health <= 0) KillYourself();
+        hpBar.fillAmount = ((float)currHealth) / healthMax;
+        hpLabel.text = currHealth + "/" + healthMax;
+        if (currHealth <= 0) KillYourself();
     }
 
     public void KillYourself()
