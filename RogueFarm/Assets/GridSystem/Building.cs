@@ -127,7 +127,7 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
         DestroyBuilding();
     }
 
-    public void TakeDamage(int damage)
+    virtual public void TakeDamage(int damage)
     {
         if (!IsVulnerable) return;
         currHealth = Mathf.Max(0, currHealth-damage);
@@ -140,7 +140,7 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
         DestroyBuilding();
     }
 
-    public void DestroyBuilding()
+    virtual public void DestroyBuilding()
     {
         foreach (GridCell cell in occupiedCells)
         {

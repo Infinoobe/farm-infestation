@@ -33,9 +33,14 @@ public class Plant : MonoBehaviour
     [SerializeField] private TMP_Text hpLabel;
     
     public bool CanBeCollected => canBeCollected;
-    public bool IsWatered => isWatered;
+    public bool IsWatered
+    {
+        get => isWatered;
+        set => isWatered = value;
+    }
     public float AttractionFactor => attractionFactor;
     public bool IsVulnerable => isVulnerable;
+    public ItemSO CollectItemSO => collectItemSo;
 
     public void Start()
     {
