@@ -4,4 +4,5 @@
 *.unity text eol=lf
 *.mat text eol=lf
 *.anim text eol=crlf
+*.asset text eol=lf
 *.controller text eol=crlf

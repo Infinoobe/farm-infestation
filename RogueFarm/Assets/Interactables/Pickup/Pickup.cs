@@ -6,7 +6,7 @@ using Interactable.Common;
 public class ItemCount
 {
     public ItemSO item;
-    public int count;
+    public int count = 1;
 }
 
 public class Pickup : BaseInteractable

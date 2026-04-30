@@ -5,4 +5,10 @@ using UnityEngine;
 public class ItemsDatabaseSO : ScriptableObject
 {
     public List<ItemSO> items;
+
+    public Pickup pickupPrefab;
+
+    public ItemSO seedItemSo;
+    public ItemSO moneyItemSo;
+
 }
