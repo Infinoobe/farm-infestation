@@ -213,6 +213,11 @@ public class Player : MonoBehaviour, IDamagable
         Debug.Log("Player Died!");
     }
 
+    public void OnAttackStarted()
+    {
+        RotateToMouse();
+    }
+
     private void MoveAndRotate()
     {
         RotateToMouse();

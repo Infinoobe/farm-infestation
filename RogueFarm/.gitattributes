@@ -3,6 +3,6 @@
 *.prefab text eol=lf
 *.unity text eol=lf
 *.mat text eol=lf
-*.anim text eol=crlf
+*.anim text eol=lf
+*.controller text eol=lf
 *.asset text eol=lf
-*.controller text eol=crlf
