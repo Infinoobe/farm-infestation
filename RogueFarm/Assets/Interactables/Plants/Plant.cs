@@ -3,6 +3,7 @@ using System;
 using TMPro;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using System.ComponentModel;
 
 public class Plant : MonoBehaviour
 {
@@ -51,6 +52,10 @@ public class Plant : MonoBehaviour
         InitVisuals();
     }
 
+    public int HowManyDaysToGrow()
+    {
+        return growthTime - currGrowthTime;
+    }
 
     protected void InitVisuals()
     {

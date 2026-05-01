@@ -1,4 +1,5 @@
 using Interactable;
+using Interactable.Common;
 using UnityEngine;
 
 public class Field : Building
@@ -10,7 +11,7 @@ public class Field : Building
     [SerializeField] private Material wetDirt;
     [SerializeField] private bool isWatered;
 
-    public void Start()
+    protected override void OnStart()
     {
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
         GameState.Instance.OnNightStarted.AddListener(HandleNightStarted);
@@ -96,47 +97,44 @@ public class Field : Building
         return currentPlant.CanBeCollected;
     }
 
-    override public bool GetDescription(out string message)
+    override public ActionType GetDescription(out string message)
     {
         if (IsEmpty())
         {
             var item = GameState.Instance.Player.SelectedItem;
             if (item == null || item.itemType != ItemType.SEED)
             {
-                message = "do nothin (needs seed)";
-                return false;
+                message = "Equip seed to plant";
+                return ActionType.DESCRIPTION;
             }
             
             if (GameState.Instance.HasItems(item))
             {
-                message = $"plant {item.itemName}";
-                return true;
+                message = $"Click to plant {item.itemName}";
+                return ActionType.ITEM_USE;
             }
 
-            message = $"do nothing (needs {item.itemName})";
-            return false;
+            message = $"No {item.itemName}";
+            return ActionType.DESCRIPTION;
         }
 
         if (currentPlant.CanBeCollected) 
         {
-            message = $"collect {currentPlant.CollectItemSO.itemName}";
-            return true;
+            message = $"Click to collect {currentPlant.CollectItemSO.itemName}";
+            return ActionType.INTERACTION;
         }
         
-        if (!isWatered && GameState.Instance.Player.SelectedItem.itemName.Equals("Watercan"))
+        if (!isWatered)
         {
-            message = "water field";
-            return true;
-        }
-        else if(!isWatered)
-        {
-            message = "water field (needs watercan)";
-            return false;
+            message = "Use watercan to water field";
+            if (GameState.Instance.Player.SelectedItem.itemName.Equals("Watercan")) return ActionType.ITEM_USE;
+            else return ActionType.DESCRIPTION;
         }
 
-        message = "do nothing (needs time)";
-        string m;
-        return base.GetDescription(out m);
+        message = $"Plant growing ({currentPlant.HowManyDaysToGrow()} days)";
+        return ActionType.DESCRIPTION;
+        //string m;
+        //return base.GetDescription(out m);
     }
     
     override public void Interact(Player p)

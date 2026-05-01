@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using IngameDebugConsole;
 using Interactable;
+using Interactable.Common;
 using JetBrains.Annotations;
 using UI;
 using Unity.Mathematics;
@@ -22,11 +23,11 @@ public class Player : MonoBehaviour, IDamagable
     [Header("Player interaction settings")]
     [SerializeField] private float interactionRange = 1f;
     [SerializeField] private float rayLength = 3f;
-    
+    [SerializeField] private float maxInteractionRange = 3.0f;
+
     [Header("Playtime variables")]
     [SerializeField] private int healthMax = 100;
     [SerializeField] private GridSystemRuntime currGridSystem;
-    [SerializeField] private float maxInteractionRange = 3.0f;
 
     [SerializeField] private Transform rayStartingPoint;
     [SerializeField] private Vector3 lastInput;
@@ -336,14 +337,13 @@ public class Player : MonoBehaviour, IDamagable
         {
             currGridSystem.PlaceBuilding(selectedItemSo);
         }
-        else if (TryGetInteractable(out var nearest))
+        else if (TryGetInteractable(out var nearest) && nearest.IsInteractionEnabled())
         {
             string message;
-            if (nearest.IsInteractionEnabled && nearest.GetDescription(out message))
-            {
-                Debug.Log($"Interact ({message}) with {nearest}");
-                nearest.Interact(this);
-            }   
+            ActionType actionType = nearest.GetDescription(out message);
+
+            Debug.Log($"Interaction {actionType.ToString()} ({message}) with {nearest}");
+            nearest.Interact(this);
         }
     }
 
@@ -367,7 +367,8 @@ public class Player : MonoBehaviour, IDamagable
         nearest = null;
         foreach (var i in GameState.Instance.Interactables)
         {
-            if (!i.IsInteractionEnabled) continue;
+            if (i is not MonoBehaviour mb || mb == null) continue;
+            if (!i.IsInteractionEnabled()) continue;
             float dist = Vector3.Distance(interactionPosition, i.GetPosition());
             if (dist < minDistance)
             {

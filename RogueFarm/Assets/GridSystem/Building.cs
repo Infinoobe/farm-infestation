@@ -1,4 +1,5 @@
 using Interactable;
+using Interactable.Common;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Building : MonoBehaviour, IInteractable, IDamagable
+public class Building : BaseInteractable, IDamagable
 {
     [Header("Building settings")]
     [SerializeField] protected int influenceRange;
-    [SerializeField] protected bool isInteractionEnabled = false;
     [SerializeField] protected bool canBeDismantled = true;
 
     [Header("Building Combat")]
@@ -35,7 +35,6 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
     public int CurrHealth => currHealth;
     public int Range => influenceRange;
     public bool IsVulnerable => isVulnerable;
-    public bool IsInteractionEnabled => isPlaced && isInteractionEnabled;
     public bool CanBeDismantled => canBeDismantled;
     public float AttractionFactor => attractionFactor;
 
@@ -97,26 +96,21 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
         }
     }
 
-    virtual public bool GetDescription(out string message)
+    override public ActionType GetDescription(out string message)
     {
         if(canBeDismantled)
         {
-            message = "dismantle (Axe)";
-            return true;
+            message = "Use Axe to dismantle";
+            if (GameState.Instance.Player.SelectedItem.Equals("Axe")) return ActionType.ITEM_USE;
+            else return ActionType.DESCRIPTION;
         }
-        message = "do nothing";
-        return false;
+        return base.GetDescription(out message);
     }
 
-    virtual public void Interact(Player p)
+    override public void Interact(Player p)
     {
         if (!canBeDismantled) return;
         if (p.SelectedItem.name.Equals("Axe")) DismantleBuilding();
-    }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
     }
 
     virtual public void PlaceBuilding(List<GridCell> onCells)
@@ -153,7 +147,6 @@ public class Building : MonoBehaviour, IInteractable, IDamagable
         {
             cell.UnSetBuilding();
         }
-        GameState.Instance.UnRegisterInteractable(this);
         Destroy(gameObject);
     }
 }

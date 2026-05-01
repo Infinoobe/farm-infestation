@@ -1,32 +1,20 @@
 using System;
 using Interactable;
+using Interactable.Common;
 using UI;
 using UnityEngine;
 
-public class Shop : MonoBehaviour, IInteractable
+public class Shop : BaseInteractable
 {
-    [SerializeField] private bool isInteractionEnabled;
-    public bool IsInteractionEnabled => isInteractionEnabled;
-
-    public void Start()
+    public override void Interact(Player p)
     {
-        GameState.Instance.RegisterInteractable(this);
-    }
-
-    public void Interact(Player p)
-    {
-        if (!IsInteractionEnabled) return;
+        if (!IsInteractionEnabled()) return;
         MainUI.Instance.OpenShop();
     }
 
-    public Vector3 GetPosition()
+    public override ActionType GetDescription(out string message)
     {
-        return transform.position;
-    }
-
-    public bool GetDescription(out string message)
-    {
-        message = "shop";
-        return true;
+        message = "Click to open shop";
+        return ActionType.INTERACTION;
     }
 }

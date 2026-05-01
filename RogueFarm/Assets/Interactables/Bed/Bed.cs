@@ -1,29 +1,18 @@
 using Interactable;
+using Interactable.Common;
 using UnityEngine;
 
-public class Bed : MonoBehaviour, IInteractable
+public class Bed : BaseInteractable
 {
-    [SerializeField] private bool isInteractionEnabled;
-
-    public bool IsInteractionEnabled => isInteractionEnabled;
-    void Start()
+    public override void Interact(Player p)
     {
-        GameState.Instance.RegisterInteractable(this);
-    }
-
-    public void Interact(Player p)
-    {
-        if (!IsInteractionEnabled) return;
+        if (!IsInteractionEnabled()) return;
         GameState.Instance.GoToSleep();
     }
 
-    public Vector3 GetPosition()
+    public override ActionType GetDescription(out string message)
     {
-        return transform.position;
-    }
-    public bool GetDescription(out string message)
-    {
-        message = "sleep";
-        return true;
+        message = "Go to sleep";
+        return ActionType.INTERACTION;
     }
 }

@@ -23,14 +23,14 @@ public class Pickup : BaseInteractable
     }
 
 
-    public override string GetDescription()
+    public override ActionType GetDescription(out string message)
     {
         var desc = "";
         foreach (ItemCount i in items)
         {
             desc += $"{i.item.name} ({i.count}) ";
         }
-        return "Pickup "+desc;
+        message = "Pickup " + desc;
+        return ActionType.INTERACTION;
     }
-
 }
