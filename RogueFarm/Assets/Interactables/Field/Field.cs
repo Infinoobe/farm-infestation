@@ -127,7 +127,7 @@ public class Field : Building
         if (!isWatered)
         {
             message = "Use watercan to water field";
-            if (GameState.Instance.Player.SelectedItem.itemName.Equals("Watercan")) return ActionType.ITEM_USE;
+            if (GameState.Instance.Player.SelectedItem == GameState.Instance.itemsDatabase.waterCanSo) return ActionType.ITEM_USE;
             else return ActionType.DESCRIPTION;
         }
 
@@ -153,7 +153,7 @@ public class Field : Building
             return;
         }
 
-        if (!isWatered && p.SelectedItem.itemName.Equals("Watercan"))
+        if (!isWatered && p.SelectedItem == GameState.Instance.itemsDatabase.waterCanSo)
         {
             WaterField();
             return;

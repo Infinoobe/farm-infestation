@@ -101,7 +101,7 @@ public class Building : BaseInteractable, IDamagable
         if(canBeDismantled)
         {
             message = "Use Axe to dismantle";
-            if (GameState.Instance.Player.SelectedItem.Equals("Axe")) return ActionType.ITEM_USE;
+            if (GameState.Instance.Player == GameState.Instance.itemsDatabase.axeSo) return ActionType.ITEM_USE;
             else return ActionType.DESCRIPTION;
         }
         return base.GetDescription(out message);
@@ -110,7 +110,7 @@ public class Building : BaseInteractable, IDamagable
     override public void Interact(Player p)
     {
         if (!canBeDismantled) return;
-        if (p.SelectedItem.name.Equals("Axe")) DismantleBuilding();
+        if (p.SelectedItem == GameState.Instance.itemsDatabase.axeSo) DismantleBuilding();
     }
 
     virtual public void PlaceBuilding(List<GridCell> onCells)
