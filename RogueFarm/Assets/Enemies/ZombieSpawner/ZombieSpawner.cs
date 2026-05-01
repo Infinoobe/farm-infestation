@@ -156,6 +156,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
     {
         zombiesAlive.Remove(z);
         ZombieDied();
+        GameState.Instance.SpawnZombieLoot(z.transform.position);
     }
     
     public void ZombieSpawned()

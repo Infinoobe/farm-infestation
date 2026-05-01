@@ -21,7 +21,7 @@ namespace UI
         public static void GiveCashCheat()
         {
             var gi = GameState.Instance;
-            gi.AddItem(gi.moneyItemSo, 999);
+            gi.AddItem(gi.itemsDatabase.moneyItemSo, 999);
         }
     
         [ConsoleMethod( "items_for_upgrades", "Adds inventory to buy all upgrades" )]

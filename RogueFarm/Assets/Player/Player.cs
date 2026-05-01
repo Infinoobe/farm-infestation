@@ -26,6 +26,8 @@ public class Player : MonoBehaviour, IDamagable
     [Header("Playtime variables")]
     [SerializeField] private int healthMax = 100;
     [SerializeField] private GridSystemRuntime currGridSystem;
+    [SerializeField] private float maxInteractionRange = 3.0f;
+
     [SerializeField] private Transform rayStartingPoint;
     [SerializeField] private Vector3 lastInput;
     [SerializeField] private Vector3 velocity;
@@ -62,6 +64,19 @@ public class Player : MonoBehaviour, IDamagable
     private void UpdateGridSelection()
     {
         Vector3 startPos = rayStartingPoint.position;
+        if (TryGetMousePosition(out var mousePosition))
+        {
+            var toMouse = mousePosition - transform.position;
+            if (toMouse.magnitude <= maxInteractionRange)
+            {
+                startPos = mousePosition;
+            }
+            else
+            {
+                startPos = transform.position + toMouse.normalized * maxInteractionRange;
+            }
+        }
+
         Vector3 direction = Vector3.down;
         int layerMask = LayerMask.GetMask("GridGround");
 
@@ -208,6 +223,11 @@ public class Player : MonoBehaviour, IDamagable
         Debug.Log("Player Died!");
     }
 
+    public void OnAttackStarted()
+    {
+        RotateToMouse();
+    }
+
     private void MoveAndRotate()
     {
         RotateToMouse();
@@ -223,21 +243,34 @@ public class Player : MonoBehaviour, IDamagable
 
     }
 
-    private void RotateToMouse()
+    private bool TryGetMousePosition(out Vector3 mousePosition)
     {
         var cam = Camera.main;
         var ray = cam.ScreenPointToRay(Input.mousePosition);
         var ground = new Plane(Vector3.up, Vector3.zero);
         if (ground.Raycast(ray, out var distance))
         {
-            var mousePos = ray.GetPoint(distance);
-            Vector3 direction = mousePos - transform.position;
-            direction.y = 0;  // stay in XZ plane
-            if (direction.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRot = Quaternion.LookRotation(direction);
-                transform.rotation = targetRot;
-            }
+            mousePosition = ray.GetPoint(distance);
+            mousePosition.y = transform.position.y;
+            return true;
+        }
+
+        mousePosition = transform.position;
+        return false;
+    }
+
+    private void RotateToMouse()
+    {
+        if (!TryGetMousePosition(out Vector3 mousePosition))
+        {
+            return;
+        }
+        
+        Vector3 direction = mousePosition - transform.position;
+        direction.y = 0;  // stay in XZ plane
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            transform.rotation = Quaternion.LookRotation(direction);;
         }
     }
 
@@ -317,6 +350,18 @@ public class Player : MonoBehaviour, IDamagable
     public bool TryGetInteractable(out IInteractable nearest)
     {
         var interactionPosition = transform.position + transform.forward * AttackRange;
+        if (TryGetMousePosition(out var mousePosition))
+        {
+            var toMouse = mousePosition - transform.position;
+            if (toMouse.magnitude <= maxInteractionRange)
+            {
+                interactionPosition = mousePosition;
+            }
+            else
+            {
+                interactionPosition = transform.position + toMouse.normalized * maxInteractionRange;
+            }
+        }
         interactionPosition.y = 0;
         float minDistance = Mathf.Infinity;
         nearest = null;

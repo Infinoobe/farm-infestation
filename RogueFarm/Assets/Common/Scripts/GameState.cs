@@ -10,13 +10,12 @@ public class GameState : MonoBehaviour
     private int currentDay = 0;
 
     [Header("Items")]
-    [SerializeField] ItemsDatabaseSO itemsDatabase;
+    public ItemsDatabaseSO itemsDatabase;
 
     [SerializeField] private Inventory inventory;
-    [SerializeField] public  ItemSO moneyItemSo;
     [SerializeField] private ItemSO handItemSo;
     [SerializeField] public List<ItemSO> ItemsInShop = new List<ItemSO>();
-
+    public float zombieLootChance = 0.3f;
 
     [Header("Events")]
     [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
@@ -48,7 +47,7 @@ public class GameState : MonoBehaviour
 
     public int GetMoney()
     {
-        return inventory.GetAmount(moneyItemSo);
+        return inventory.GetAmount(itemsDatabase.moneyItemSo);
     }
 
     private void Awake()
@@ -72,7 +71,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         StartDay();
-        AddItem(moneyItemSo, 10);
+        AddItem(itemsDatabase.moneyItemSo, 10);
         AddItem(handItemSo, 1);
     }
     
@@ -212,7 +211,7 @@ public class GameState : MonoBehaviour
     {
         if(RemoveItem(itemSo, amount))
         {
-            AddItem(moneyItemSo, amount * itemSo.valueSelling);
+            AddItem(itemsDatabase.moneyItemSo, amount * itemSo.valueSelling);
             RefreshShop?.Invoke();
             RefreshBackpack.Invoke();
         }
@@ -225,7 +224,7 @@ public class GameState : MonoBehaviour
     public void BuyItem(ItemSO itemSo, int amount = 1)
     {
         var cost = itemSo.valueBuying * amount;
-        if (!RemoveItem(moneyItemSo, cost))
+        if (!RemoveItem(itemsDatabase.moneyItemSo, cost))
         {
             Debug.Log("Not enough money");
             return;
@@ -250,6 +249,26 @@ public class GameState : MonoBehaviour
     {
         if (!IsNight()) return 0;
         return ZombiesToKill;
+    }
+
+    public void SpawnBossLoot(Vector3 position)
+    {
+        position.y = 0;
+        var p = Instantiate(itemsDatabase.pickupPrefab, position, Quaternion.identity);
+        p.items.Clear();
+        p.items.Add(new ItemCount(){item = itemsDatabase.seedItemSo});
+    }
+    
+    public void SpawnZombieLoot(Vector3 position)
+    {
+        if (Random.value >= zombieLootChance)
+        {
+            return;
+        }
+        position.y = 0;
+        var p = Instantiate(itemsDatabase.pickupPrefab, position, Quaternion.identity);
+        p.items.Clear();
+        p.items.Add(new ItemCount(){item = itemsDatabase.moneyItemSo});
     }
 }
 

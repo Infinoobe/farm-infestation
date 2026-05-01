@@ -22,3 +22,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
   - {fileID: 11400000, guid: 488a5750bc01a5946b2efceff8af4b46, type: 2}
   - {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
+  pickupPrefab: {fileID: 232666767128474198, guid: e6201606fb3f3b045a9a3cafddf951a1, type: 3}
+  seedItemSo: {fileID: 11400000, guid: 728bfae0d4d949042912a8ae2e5ce584, type: 2}
+  moneyItemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}

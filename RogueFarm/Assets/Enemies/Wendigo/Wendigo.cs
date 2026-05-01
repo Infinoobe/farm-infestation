@@ -155,6 +155,8 @@ public class Wendigo : MonoBehaviour, IDamagable, IZombieSpawner
         Agent.enabled = false;
 
         animator.Play("Death");
+        
+        GameState.Instance.SpawnBossLoot(gameObject.transform.position);
     }
 
     public int getDamage()
