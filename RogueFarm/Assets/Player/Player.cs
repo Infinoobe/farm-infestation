@@ -43,7 +43,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] private CharacterController Controller;
 
     [Header("Events")]
-    public UnityEvent OnSelectedItemChanged = new UnityEvent();
+    public UnityEvent OnSelectedItemChanged = new ();
 
 
     public bool IsDead => currHealth <= 0;
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour, IDamagable
                 Attack();
             }
 
-            var v = transform.forward * Speed * 0.5f;
+            var v = 0.5f * Speed * transform.forward;
             Controller.Move(v * Time.deltaTime);
 
             return;
@@ -393,18 +393,18 @@ public class Player : MonoBehaviour, IDamagable
     // Cycles through Plants added in plantPrefabs list
     private void CyclePlants()
     {
-        var availableSeeds = GameState.Instance.GetItems()
-            .Where(i => i.Key.itemType == ItemType.SEED && i.Value > 0).ToList();
+        var availableSeeds = GameState.Instance.GetInventoryItems().GetListItemAmount(ItemType.SEED);
+
         if (availableSeeds.Count == 0)
         {
             return;
         }
 
-        var selectedIdx = availableSeeds.FindIndex(x => x.Key == selectedItemSo);
+        var selectedIdx = availableSeeds.FindIndex(x => x.itemSo == selectedItemSo);
         selectedIdx += 1;
         selectedIdx %= availableSeeds.Count;
 
-        selectedItemSo = availableSeeds[selectedIdx].Key;
+        selectedItemSo = availableSeeds[selectedIdx].itemSo;
         OnSelectedItemChanged.Invoke();
     }
 

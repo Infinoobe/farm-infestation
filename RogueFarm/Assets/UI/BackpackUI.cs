@@ -29,13 +29,13 @@ public class BackpackUI : MonoBehaviour
         }
 
         ClearBackpackView();
-        Dictionary<ItemSO, int> items = GameState.Instance.GetItems();
+        Dictionary<ItemSO, int> items = GameState.Instance.GetInventoryItems().GetDictionary();
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
 
-            if (amount <= 0 || itemSo.itemType == ItemType.UPGRADE) continue;
+            if (itemSo.itemType == ItemType.UPGRADE) continue;
 
             GameObject obj = Instantiate(itemViewPrefab, itemsList.transform);
             var itemUI = obj.GetComponent<BackpackItemUI>();

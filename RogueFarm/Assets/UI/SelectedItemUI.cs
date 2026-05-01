@@ -18,7 +18,7 @@ public class SelectedPlantUI : MonoBehaviour
 
         var item = GameState.Instance.Player.SelectedItem;
 
-        if (item == null || item == GameState.Instance.GetHandItemSo)
+        if (item == null || item == GameState.Instance.itemsDatabase.handItemSo)
         {
             ItemLabel.text = $"No item selected";
             ItemImage.color = Color.clear;
@@ -26,8 +26,8 @@ public class SelectedPlantUI : MonoBehaviour
         }
         
 
-        var items = GameState.Instance.GetItems();
-        items.TryGetValue(item, out var count);
+        ItemSet items = GameState.Instance.GetInventoryItems();
+        int count = items.GetAmount(item);
         ItemLabel.text = item.itemName;
         if (!item.unique)
         {

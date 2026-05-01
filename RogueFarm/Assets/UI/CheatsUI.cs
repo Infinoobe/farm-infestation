@@ -31,7 +31,7 @@ namespace UI
             var sns = FindObjectsByType<SkillNode>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var sn in sns)
             {
-                var items_needed = sn.skillSO.GetItemsDictionary();
+                var items_needed = sn.skillSO.GetRequiredItems().GetDictionary();
                 foreach (var (k, v) in items_needed)
                 {
                     gi.AddItem(k, v);

@@ -25,3 +25,6 @@ MonoBehaviour:
   pickupPrefab: {fileID: 232666767128474198, guid: e6201606fb3f3b045a9a3cafddf951a1, type: 3}
   seedItemSo: {fileID: 11400000, guid: 728bfae0d4d949042912a8ae2e5ce584, type: 2}
   moneyItemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+  handItemSo: {fileID: 11400000, guid: bb001825cc14c874986a6d9aba4c8ae7, type: 2}
+  axeSo: {fileID: 11400000, guid: 20e6e76b1e06a624c88424b67022e96e, type: 2}
+  waterCanSo: {fileID: 11400000, guid: 32d48a2077468ab4dba1f9ef2961a891, type: 2}

@@ -11,17 +11,16 @@ public class GameState : MonoBehaviour
 
     [Header("Items")]
     public ItemsDatabaseSO itemsDatabase;
-
+    [SerializeField] private List<ItemAmount> startingItems;
     [SerializeField] private Inventory inventory;
-    [SerializeField] private ItemSO handItemSo;
-    [SerializeField] public List<ItemSO> ItemsInShop = new List<ItemSO>();
+    [SerializeField] public List<ItemSO> ItemsInShop = new ();
     public float zombieLootChance = 0.3f;
 
     [Header("Events")]
-    [SerializeField] public UnityEvent OnDayStarted = new UnityEvent();
-    [SerializeField] public UnityEvent OnNightStarted = new UnityEvent();
-    [SerializeField] public UnityEvent RefreshShop = new UnityEvent();
-    [SerializeField] public UnityEvent RefreshBackpack = new UnityEvent();
+    [SerializeField] public UnityEvent OnDayStarted = new ();
+    [SerializeField] public UnityEvent OnNightStarted = new ();
+    [SerializeField] public UnityEvent RefreshShop = new ();
+    [SerializeField] public UnityEvent RefreshBackpack = new ();
 
 
     [Header("Interactables")]
@@ -29,7 +28,6 @@ public class GameState : MonoBehaviour
 
     public static GameState Instance { get; private set; }
 
-    public ItemSO GetHandItemSo => handItemSo;
     public GamePhase CurrentPhase => currGamePhase;
     public bool IsDay() { return currGamePhase == GamePhase.Day; }
     public bool IsNight() { return currGamePhase == GamePhase.Night; }
@@ -40,14 +38,14 @@ public class GameState : MonoBehaviour
     public Player Player;
     public int ZombiesToKill;
 
-    public Dictionary<ItemSO, int> GetItems()
+    public ItemSet GetInventoryItems()
     {
-        return inventory.items;
+        return inventory.GetItems();
     }
 
     public int GetMoney()
     {
-        return inventory.GetAmount(itemsDatabase.moneyItemSo);
+        return GetInventoryItems().GetAmount(itemsDatabase.moneyItemSo);
     }
 
     private void Awake()
@@ -71,8 +69,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         StartDay();
-        AddItem(itemsDatabase.moneyItemSo, 10);
-        AddItem(handItemSo, 1);
+        inventory.CreateInventory(startingItems);
     }
     
     public void SetPlayer(Player player)
@@ -127,13 +124,11 @@ public class GameState : MonoBehaviour
     private int SleepHealValue()
     {
         int healValue = 0;
-        Dictionary<ItemSO, int> items = GetItems();
+        Dictionary<ItemSO, int> items = GetInventoryItems().GetDictionary(ItemType.UPGRADE);
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
-
-            if (amount <= 0 || itemSo.itemType != ItemType.UPGRADE) continue;
 
             healValue += itemSo.regenerationBonus * amount;
         }
@@ -143,13 +138,11 @@ public class GameState : MonoBehaviour
     public int DamageBonusValue()
     {
         int damageValue = 0;
-        Dictionary<ItemSO, int> items = GetItems();
+        Dictionary<ItemSO, int> items = GetInventoryItems().GetDictionary(ItemType.UPGRADE);
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
-
-            if (amount <= 0 || itemSo.itemType != ItemType.UPGRADE) continue;
 
             damageValue += itemSo.damageBonus * amount;
         }
@@ -159,13 +152,11 @@ public class GameState : MonoBehaviour
     public int MaxHealthBonusValue()
     {
         int maxHealthBonus = 0;
-        Dictionary<ItemSO, int> items = GetItems();
+        Dictionary<ItemSO, int> items = GetInventoryItems().GetDictionary(ItemType.UPGRADE);
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
             int amount = kvp.Value;
-
-            if (amount <= 0 || itemSo.itemType != ItemType.UPGRADE) continue;
 
             maxHealthBonus += itemSo.maxHealthBonus * amount;
         }
@@ -174,36 +165,30 @@ public class GameState : MonoBehaviour
 
     public bool HasItems(ItemSO itemSo, int amount = 1)
     {
-        return inventory.GetAmount(itemSo) >= amount;
+        return GetInventoryItems().GetAmount(itemSo) >= amount;
     }
 
     public bool RemoveItem(ItemSO itemSo, int amount = 1)
     {
         if (!HasItems(itemSo, amount)) return false;
+        GetInventoryItems().RemoveItem(itemSo, amount);
 
-        inventory.RemoveItem(itemSo, amount);
         RefreshBackpack.Invoke();
         return true;
     }
 
-    public bool RemoveItems(Dictionary<ItemSO, int> items)
+    public bool RemoveItems(ItemSet itemSet)
     {
-        foreach(var item in items)
-        {
-            if (!HasItems(item.Key, item.Value)) return false;
-        }
+        if(!GetInventoryItems().HasItems(itemSet)) return false;
+        GetInventoryItems().RemoveItems(itemSet);
 
-        foreach (var item in items)
-        {
-            inventory.RemoveItem(item.Key, item.Value);
-        }
         RefreshBackpack.Invoke();
         return true;
     }
 
     public void AddItem(ItemSO itemSo, int amount = 1)
     {
-        inventory.AddItem(itemSo, amount);
+        GetInventoryItems().AddItem(itemSo, amount);
         RefreshBackpack.Invoke();
     }
 
@@ -256,7 +241,7 @@ public class GameState : MonoBehaviour
         position.y = 0;
         var p = Instantiate(itemsDatabase.pickupPrefab, position, Quaternion.identity);
         p.items.Clear();
-        p.items.Add(new ItemCount(){item = itemsDatabase.seedItemSo});
+        p.items.Add(new ItemAmount(){itemSo = itemsDatabase.seedItemSo});
     }
     
     public void SpawnZombieLoot(Vector3 position)
@@ -268,7 +253,7 @@ public class GameState : MonoBehaviour
         position.y = 0;
         var p = Instantiate(itemsDatabase.pickupPrefab, position, Quaternion.identity);
         p.items.Clear();
-        p.items.Add(new ItemCount(){item = itemsDatabase.moneyItemSo});
+        p.items.Add(new ItemAmount(){itemSo = itemsDatabase.moneyItemSo});
     }
 }
 

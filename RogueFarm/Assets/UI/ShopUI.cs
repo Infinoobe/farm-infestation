@@ -56,7 +56,7 @@ public class ShopUI : MonoBehaviour
     {
         if (GameState.Instance == null)
             return;
-        Dictionary<ItemSO, int> items = GameState.Instance.GetItems();
+        Dictionary<ItemSO, int> items = GameState.Instance.GetInventoryItems().GetDictionary();
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;

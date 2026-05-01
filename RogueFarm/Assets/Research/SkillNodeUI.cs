@@ -16,9 +16,9 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public bool isUnlocked;
     public bool isResearched;
 
-    public UnityEvent<SkillNode> OnSkillResearched = new UnityEvent<SkillNode>();
-    public UnityEvent<SkillNode> OnMouseEnterSkillNode = new UnityEvent<SkillNode>();
-    public UnityEvent<SkillNode> OnMouseExitSkillNode = new UnityEvent<SkillNode>();
+    public UnityEvent<SkillNode> OnSkillResearched = new ();
+    public UnityEvent<SkillNode> OnMouseEnterSkillNode = new ();
+    public UnityEvent<SkillNode> OnMouseExitSkillNode = new ();
 
     private void Start()
     {
@@ -74,7 +74,7 @@ public class SkillNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void TryResearch()
     {
         if (isUnlocked && !isResearched &&
-            GameState.Instance.RemoveItems(skillSO.GetItemsDictionary()))
+            GameState.Instance.RemoveItems(skillSO.GetRequiredItems()))
         {
             isResearched = true;
             UpdateUI();

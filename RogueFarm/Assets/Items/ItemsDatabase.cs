@@ -10,5 +10,7 @@ public class ItemsDatabaseSO : ScriptableObject
 
     public ItemSO seedItemSo;
     public ItemSO moneyItemSo;
-
+    public ItemSO handItemSo;
+    public ItemSO axeSo;
+    public ItemSO waterCanSo;
 }
