@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Weed Plant
   skillIcon: {fileID: -358426464, guid: 0d3b7b5231f972845b5a37f3ac2a765a, type: 3}
-  requiredItems:
+  requiredItemsList:
   - itemSo: {fileID: 11400000, guid: 2e2ccfc944b31c84583eeaf23b6e5240, type: 2}
     amount: 10
-  - itemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
-    amount: 50
   - itemSo: {fileID: 11400000, guid: 4d4c8551ec0e2be48ae9b58841fbe4bc, type: 2}
     amount: 10
+  - itemSo: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}
+    amount: 20
+  - itemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+    amount: 50
