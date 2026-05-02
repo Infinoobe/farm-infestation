@@ -154,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba12372dd66d6244d8a0e50419697ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionEnabled: 1
   influenceRange: 2
-  isInteractionEnabled: 0
-  canBeDismantled: 1
+  canBeDismantled: 0
   maxHealth: 100
   attractionFactor: 1
   isVulnerable: 1
