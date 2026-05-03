@@ -17,6 +17,7 @@ public class Building : BaseInteractable, IDamagable
     [SerializeField] private int maxHealth = 100;
     [SerializeField] protected float enemyAttractionFactor = 1f;
     [SerializeField] protected bool canBeTargetedByEnemy = true;
+    [SerializeField] public int zombieSpawnFreeRange = 1;
 
     [Header("Playtime variables")]
     [SerializeField] protected List<GridCell> occupiedCells;
@@ -26,8 +27,6 @@ public class Building : BaseInteractable, IDamagable
     [Header("Object settings")]
     [SerializeField] private BuildingShapeUnit[] buildingShapeUnits;
 
-    //[Header("Events")]
-    //public UnityEvent OnBuildingPlaced = new UnityEvent();
     
     public BuildingShapeUnit[] BuildingShapeUnits => buildingShapeUnits;
     public bool CanBeTargetedByEnemy => canBeTargetedByEnemy;

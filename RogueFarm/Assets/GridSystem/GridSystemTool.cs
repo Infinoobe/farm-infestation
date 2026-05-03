@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 [ExecuteAlways]
 public class GridSystemTool : MonoBehaviour
@@ -9,9 +11,69 @@ public class GridSystemTool : MonoBehaviour
     public int height = 10;
     public GameObject gridCellPrefab;
     public GridCell[,] gridCells;
-    public List<GridCell> spawnPoints;
+    public int includeSpawnRange = 3;
+    private Dictionary<GridCell, int> spawnFreeGridCells = new();
+    private Dictionary<GridCell, int> potentialSpawnGridCells = new();
     private Vector3 lowerLeftCorner;
 
+    private void AddCells(Dictionary<GridCell, int> dict, List<GridCell> cells)
+    {
+        foreach (var c in cells)
+        {
+            if (dict.ContainsKey(c))
+                dict[c]++;
+            else
+                dict[c] = 1;
+        }
+    }
+
+    private void RemoveCells(Dictionary<GridCell, int> dict, List<GridCell> cells)
+    {
+        foreach (var c in cells)
+        {
+            if (!dict.ContainsKey(c)) continue;
+
+            dict[c]--;
+
+            if (dict[c] <= 0)
+                dict.Remove(c);
+        }
+    }
+
+    public void OnBuildingPlaced(GridCell cell)
+    {
+        Building building = cell.currBuilding.GetComponent<Building>();
+
+        int excludeRange = building.zombieSpawnFreeRange;
+        int includeRange = excludeRange + includeSpawnRange;
+
+        var toInclude = GetGridCellsInRange(cell, includeRange);
+        var toExclude = GetGridCellsInRange(cell, excludeRange);
+
+        AddCells(potentialSpawnGridCells, toInclude);
+        AddCells(spawnFreeGridCells, toExclude);
+    }
+
+    public void OnBuildingRemoved(GridCell cell)
+    {
+        Building building = cell.currBuilding.GetComponent<Building>();
+
+        int excludeRange = building.zombieSpawnFreeRange;
+        int includeRange = excludeRange + includeSpawnRange;
+
+        var toInclude = GetGridCellsInRange(cell, includeRange);
+        var toExclude = GetGridCellsInRange(cell, excludeRange);
+
+        RemoveCells(potentialSpawnGridCells, toInclude);
+        RemoveCells(spawnFreeGridCells, toExclude);
+    }
+
+    public List<GridCell> GetZombieSpawnPoints()
+    {
+        return potentialSpawnGridCells.Keys
+        .Where(c => !spawnFreeGridCells.ContainsKey(c))
+        .ToList();
+    }
 
     void Awake()
     {
@@ -34,8 +96,6 @@ public class GridSystemTool : MonoBehaviour
             return;
         }
 
-        //transform.localScale = new Vector3(width / 10f * gridCellSize, 1f, height / 10f * gridCellSize);
-
         lowerLeftCorner = transform.position - new Vector3(width, 0, height) * 0.5f * gridCellSize;
 
         ClearGridCells();
@@ -55,6 +115,7 @@ public class GridSystemTool : MonoBehaviour
         (int x, int y) = WorldToGridPosition(cell.transform.position);
         return GetGridCellsInRange(x, y, range);
     }
+
     public List<GridCell> GetGridCellsInRange(int x, int y, int range)
     {
         List<GridCell> cells = new List<GridCell>();
@@ -62,6 +123,24 @@ public class GridSystemTool : MonoBehaviour
         {
             for (int j = y - range; j < y + range + 1; j++)
             {
+                GridCell cell = GetGridCell(i, j);
+                if (cell) cells.Add(cell);
+            }
+        }
+        return cells;
+    }
+
+    public List<GridCell> GetGridCellsBetween(int x, int y, int range1, int range2)
+    {
+        List<GridCell> cells = new List<GridCell>();
+        for (int i = x - range2; i < x + range2 + 1; i++)
+        {
+            for (int j = y - range2; j < y + range2 + 1; j++)
+            {
+                if (i >= x - range1 && i <= x + range1 &&
+                j >= y - range1 && j <= y + range1)
+                    continue;
+
                 GridCell cell = GetGridCell(i, j);
                 if (cell) cells.Add(cell);
             }
@@ -79,6 +158,8 @@ public class GridSystemTool : MonoBehaviour
                 gridCells[x, y] = Instantiate(gridCellPrefab, GridToWorldPosition(x, y), Quaternion.identity, gameObject.transform).GetComponent<GridCell>();
                 gridCells[x, y].gameObject.transform.localScale *= gridCellSize;
                 gridCells[x, y].myGrid = gameObject.GetComponent<GridSystemRuntime>();
+                gridCells[x, y].OnBuildingPlaced.AddListener(OnBuildingPlaced);
+                gridCells[x, y].OnBuildingRemoved.AddListener(OnBuildingRemoved);
             }
         }
     }
@@ -102,10 +183,5 @@ public class GridSystemTool : MonoBehaviour
             return null;
         }
         return gridCells[x, y];
-    }
-
-    private void GenerateSpawnPoints()
-    {
-
     }
 }

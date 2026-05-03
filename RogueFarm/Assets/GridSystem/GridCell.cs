@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GridCell : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class GridCell : MonoBehaviour
     public GridSystemRuntime myGrid;
     public int treeSeedsInRange = 0;
     public GameObject currBuilding;
+
+    public UnityEvent<GridCell> OnBuildingPlaced = new();
+    public UnityEvent<GridCell> OnBuildingRemoved = new();
+
 
     private void Start()
     {
@@ -38,6 +43,7 @@ public class GridCell : MonoBehaviour
     public void SetBuilding(GameObject newBuilding)
     {
         currBuilding = newBuilding;
+        OnBuildingPlaced.Invoke(this);
     }
 
     public void UnSetBuilding()
@@ -50,6 +56,7 @@ public class GridCell : MonoBehaviour
         if (!currBuilding) return;
         Building currBuildingScript = currBuilding.GetComponent<Building>();
         if (!currBuildingScript) return;
+        OnBuildingRemoved.Invoke(this);
         currBuildingScript.DestroyBuilding();
     }
 }
