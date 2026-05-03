@@ -18,6 +18,7 @@ public class Building : BaseInteractable, IDamagable
     [SerializeField] protected float enemyAttractionFactor = 1f;
     [SerializeField] protected bool canBeTargetedByEnemy = true;
     [SerializeField] public int zombieSpawnFreeRange = 1;
+    [SerializeField] public bool ignoreBuildingWhenSpawning = false;
 
     [Header("Playtime variables")]
     [SerializeField] protected List<GridCell> occupiedCells;

@@ -24,7 +24,6 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
     [SerializeField] private Zombie zombieRangedPrefab;
 
     [SerializeField] private int zombieLimit = 10;
-    [SerializeField] private float zombieSpawnTime = 1f;
     
     [SerializeField] private List<DayInfo> daysSpawn = new ();
     
@@ -38,6 +37,11 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
     [SerializeField] private float shooterProbabilityAfterBoss = 0.7f*0.4f;
     private float probabilityTotal;
 
+    [SerializeField] GridSystemTool grid;
+    [SerializeField] List<GridCell> possibleSpawnPoints;
+    [SerializeField] private int currWave = 0;
+    [SerializeField] private float waveDelay = 10f;
+    [SerializeField] private float startNightDelay = 3f;
 
     private int perNightZombiesSpawned;
     private int perNightZombiesAlive;
@@ -76,8 +80,11 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
 
     private void HandleNightStarted()
     {
+        possibleSpawnPoints = grid.GetZombieSpawnPoints();
+
         perNightZombiesSpawned = 0;
         perNightZombiesAlive = 0;
+        currWave = 0;
         var day = GameState.Instance.CurrentDay;
         day -= 1;
         day += startNightForDebug;
@@ -102,8 +109,9 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         }
         zombiesToSpawn = spawnToday.Count;
         GameState.Instance.ZombiesToKill = zombiesToSpawn;
-        spawnCoroutine = StartCoroutine(SpawnZombiesCoroutine());
+        spawnCoroutine = StartCoroutine(SpawnZombieWavesCoroutine());
     }
+
 
     private Zombie GetRandomZombiePrefab()
     {
@@ -129,27 +137,42 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         bossAlive.patrolPath = wendigoPath;
     }
 
-    private IEnumerator SpawnZombiesCoroutine()
+
+    private IEnumerator SpawnZombieWavesCoroutine()
     {
+        yield return new WaitForSeconds(startNightDelay);
+
         while (CanSpawnZombieThisNight())
         {
-            if (CanSpawnZombieNow())
-            {
-                SpawnZombie();
-                ZombieSpawned();
-            }
-            yield return new WaitForSeconds(zombieSpawnTime);
+            SpawnWave();
+            yield return new WaitForSeconds(waveDelay);
         }
     }
 
-    private void SpawnZombie()
+    private void SpawnZombie(Vector3 pos)
     {
         var prefab = spawnToday[perNightZombiesSpawned];
-
-        Vector3 pos = transform.position + new Vector3(0, 1, 0);
+        
         var z = Instantiate(prefab, pos, Quaternion.identity, transform);
         z.Spawner = this;
         zombiesAlive.Add(z);
+    }
+
+    private void SpawnWave()
+    {
+        int zombieCount;
+        if (currWave == 0) zombieCount = zombiesToSpawn % zombieLimit;
+        else zombieCount = Math.Min(zombieLimit, zombiesToSpawn - perNightZombiesSpawned);
+
+        List<GridCell> spawnPoints = GetRandomWithoutRepetition(possibleSpawnPoints, zombieCount);
+        zombieCount = spawnPoints.Count;
+        Debug.Log($"Wave: {currWave}, Zombie Count: {zombieCount}");
+        foreach(GridCell spawnPoint in spawnPoints)
+        {
+            SpawnZombie(spawnPoint.transform.position);
+            ZombieSpawned();
+        }
+        currWave++;
     }
 
     public void OnZombieDied(Zombie z)
@@ -165,7 +188,7 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
         ++perNightZombiesAlive;
         Debug.Log($"Zombie Spawned! Zombies left: {zombiesToSpawn - perNightZombiesSpawned}" );
     }
-    
+
     public void ZombieDied()
     {
         --perNightZombiesAlive;
@@ -176,8 +199,28 @@ public class ZombieSpawner : MonoBehaviour, IZombieSpawner
             GameState.Instance.DelayedStartDay();
         }
     }
-    
 
+    public List<GridCell> GetRandomWithoutRepetition(List<GridCell> source, int count)
+    {
+        if (count > source.Count)
+            count = source.Count;
+
+        List<GridCell> temp = new List<GridCell>(source);
+
+        for (int i = temp.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (temp[i], temp[j]) = (temp[j], temp[i]);
+        }
+
+        return temp.GetRange(0, count);
+    }
+
+
+    public bool CanStartNextWave()
+    {
+        return perNightZombiesAlive == 0;
+    }
     public bool CanSpawnZombieNow()
     {
         return CanSpawnZombieThisNight() && perNightZombiesAlive < zombieLimit;

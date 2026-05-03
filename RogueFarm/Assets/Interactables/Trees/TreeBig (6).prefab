@@ -155,16 +155,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a96a269e99b68f45aa0d0dea3c72917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canBeTargeted: 0
-  canBeDestroyed: 1
-  canBeWalkedOn: 0
   interactionEnabled: 1
-  canBePickedUp: 1
-  health: 0
-  range: 0
+  influenceRange: 0
+  canBeDismantled: 1
+  maxHealth: 100
+  enemyAttractionFactor: 1
+  canBeTargetedByEnemy: 0
+  zombieSpawnFreeRange: 0
+  ignoreBuildingWhenSpawning: 1
+  occupiedCells: []
+  isPlaced: 1
+  currHealth: 100
   buildingShapeUnits:
   - {fileID: 5914452109693972070}
-  isPlaced: 1
   treeModel: {fileID: 8340356196028447356}
 --- !u!208 &9208258704149435174
 NavMeshObstacle:

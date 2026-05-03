@@ -157,13 +157,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233121b9384b23f478a1e33361ba4d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionEnabled: 1
   influenceRange: 0
-  isInteractionEnabled: 1
   canBeDismantled: 1
   maxHealth: 100
-  attractionFactor: 1
-  isVulnerable: 1
-  canBeTargeted: 1
+  enemyAttractionFactor: 1
+  canBeTargetedByEnemy: 1
+  zombieSpawnFreeRange: 1
   occupiedCells: []
   isPlaced: 1
   currHealth: 100

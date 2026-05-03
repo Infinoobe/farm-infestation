@@ -52,6 +52,7 @@ MonoBehaviour:
   maxHealth: 100
   enemyAttractionFactor: 1
   canBeTargetedByEnemy: 1
+  zombieSpawnFreeRange: 1
   occupiedCells: []
   isPlaced: 1
   currHealth: 100

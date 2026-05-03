@@ -43,7 +43,7 @@ public class GridSystemTool : MonoBehaviour
     public void OnBuildingPlaced(GridCell cell)
     {
         Building building = cell.currBuilding.GetComponent<Building>();
-
+        if (building.ignoreBuildingWhenSpawning) return;
         int excludeRange = building.zombieSpawnFreeRange;
         int includeRange = excludeRange + includeSpawnRange;
 
@@ -57,7 +57,7 @@ public class GridSystemTool : MonoBehaviour
     public void OnBuildingRemoved(GridCell cell)
     {
         Building building = cell.currBuilding.GetComponent<Building>();
-
+        if (building.ignoreBuildingWhenSpawning) return;
         int excludeRange = building.zombieSpawnFreeRange;
         int includeRange = excludeRange + includeSpawnRange;
 
@@ -85,6 +85,8 @@ public class GridSystemTool : MonoBehaviour
             (int x, int y) = WorldToGridPosition(cell.gameObject.transform.position);
             gridCells[x, y] = cell;
             cell.myGrid = gameObject.GetComponent<GridSystemRuntime>();
+            cell.OnBuildingPlaced.AddListener(OnBuildingPlaced);
+            cell.OnBuildingRemoved.AddListener(OnBuildingRemoved);
         }
     }
 
@@ -158,8 +160,6 @@ public class GridSystemTool : MonoBehaviour
                 gridCells[x, y] = Instantiate(gridCellPrefab, GridToWorldPosition(x, y), Quaternion.identity, gameObject.transform).GetComponent<GridCell>();
                 gridCells[x, y].gameObject.transform.localScale *= gridCellSize;
                 gridCells[x, y].myGrid = gameObject.GetComponent<GridSystemRuntime>();
-                gridCells[x, y].OnBuildingPlaced.AddListener(OnBuildingPlaced);
-                gridCells[x, y].OnBuildingRemoved.AddListener(OnBuildingRemoved);
             }
         }
     }

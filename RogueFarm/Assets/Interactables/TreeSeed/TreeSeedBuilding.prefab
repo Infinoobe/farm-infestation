@@ -158,9 +158,10 @@ MonoBehaviour:
   influenceRange: 2
   canBeDismantled: 0
   maxHealth: 100
-  attractionFactor: 1
-  isVulnerable: 1
-  canBeTargeted: 1
+  enemyAttractionFactor: 1
+  canBeTargetedByEnemy: 1
+  zombieSpawnFreeRange: 3
+  ignoreBuildingWhenSpawning: 0
   occupiedCells: []
   isPlaced: 1
   currHealth: 100
