@@ -9,8 +9,8 @@ public class GridSystemTool : MonoBehaviour
     public int height = 10;
     public GameObject gridCellPrefab;
     public GridCell[,] gridCells;
+    public List<GridCell> spawnPoints;
     private Vector3 lowerLeftCorner;
-    [SerializeField] ItemSO buildingToPlaceEditor;
 
 
     void Awake()
@@ -102,5 +102,10 @@ public class GridSystemTool : MonoBehaviour
             return null;
         }
         return gridCells[x, y];
+    }
+
+    private void GenerateSpawnPoints()
+    {
+
     }
 }
