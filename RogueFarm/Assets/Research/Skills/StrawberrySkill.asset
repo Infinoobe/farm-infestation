@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Strawberry Plant
   skillIcon: {fileID: 0}
-  requiredItems:
+  requiredItemsList:
   - itemSo: {fileID: 11400000, guid: c4720139ffcccd242a0a2fbf43489f64, type: 2}
     amount: 5
+  - itemSo: {fileID: 11400000, guid: e87d66c18daf1e2458b6834b8a592767, type: 2}
+    amount: 10

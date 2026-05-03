@@ -2,35 +2,27 @@ using System;
 using System.Collections.Generic;
 using Interactable.Common;
 
-[Serializable]
-public class ItemCount
-{
-    public ItemSO item;
-    public int count = 1;
-}
-
 public class Pickup : BaseInteractable
 {
-
-    public List<ItemCount> items;
+    public List<ItemAmount> items;
     public override void Interact(Player p)
     {
-        foreach (ItemCount i in items)
+        foreach (ItemAmount i in items)
         {
-            GameState.Instance.AddItem(i.item, i.count);
+            GameState.Instance.AddItem(i.itemSo, i.amount);
         }
         Destroy(gameObject);
     }
 
 
-    public override string GetDescription()
+    public override ActionType GetDescription(out string message)
     {
         var desc = "";
-        foreach (ItemCount i in items)
+        foreach (ItemAmount i in items)
         {
-            desc += $"{i.item.name} ({i.count}) ";
+            desc += $"{i.itemSo.name} ({i.amount}) ";
         }
-        return "Pickup "+desc;
+        message = "Pickup " + desc;
+        return ActionType.INTERACTION;
     }
-
 }

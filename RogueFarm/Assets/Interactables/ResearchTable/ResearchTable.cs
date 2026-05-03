@@ -1,4 +1,5 @@
 using Interactable;
+using Interactable.Common;
 using UI;
 using UnityEngine;
 
@@ -7,11 +8,13 @@ public class ResearchTable : Building
 
     override public void Interact(Player p)
     {
+        if (!IsInteractionEnabled()) return;
         MainUI.Instance.OpenResearch();
     }
 
-    override public string GetDescription()
+    override public ActionType GetDescription(out string message)
     {
-        return "Research";
+        message = "Click to research";
+        return ActionType.INTERACTION;
     }
 }

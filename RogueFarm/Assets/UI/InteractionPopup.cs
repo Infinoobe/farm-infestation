@@ -1,4 +1,5 @@
 using Interactable;
+using Interactable.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,13 +23,19 @@ public class InteractionPopup : MonoBehaviour
             return;
         }
 
-        var hasInteraction = p.TryGetInteractable(out var i);
-        interactionBG.gameObject.SetActive(hasInteraction);
-        if (hasInteraction)
+        string message = "";
+        ActionType action = ActionType.NONE;
+        if(p.TryGetInteractable(out var i)) action = i.GetDescription(out message);
+        
+        if(action == ActionType.NONE)
         {
-           interactionBG.rectTransform.anchoredPosition = InteractabeToScreenSpace(i);
-            
-            interactionLabel.text = $"Click to {i.GetDescription()}";
+            interactionBG.gameObject.SetActive(false);
+        }
+        else
+        {
+            interactionLabel.text = message;
+            interactionBG.rectTransform.anchoredPosition = InteractabeToScreenSpace(i);
+            interactionBG.gameObject.SetActive(true);
         }
     }
 

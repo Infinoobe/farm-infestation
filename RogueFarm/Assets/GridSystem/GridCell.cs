@@ -49,7 +49,7 @@ public class GridCell : MonoBehaviour
     {
         if (!currBuilding) return;
         Building currBuildingScript = currBuilding.GetComponent<Building>();
-        if (!currBuildingScript || currBuildingScript.CanBeDestroyed) return;
-        currBuildingScript.RemoveBuilding();
+        if (!currBuildingScript) return;
+        currBuildingScript.DestroyBuilding();
     }
 }

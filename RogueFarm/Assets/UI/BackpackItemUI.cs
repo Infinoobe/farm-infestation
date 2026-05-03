@@ -24,7 +24,7 @@ public class BackpackItemUI : MonoBehaviour,  IPointerEnterHandler
         if (itemSo.itemType == ItemType.SEED)
         {
             img.color = new Color(0,0.3f,0);
-            if (itemSo == GameState.Instance.Player.selectedItemSo)
+            if (itemSo == GameState.Instance.Player.SelectedItemSo)
             {
                 img.color = new Color(0.2f,0.7f,0.2f);
                 nameText.color = Color.black;
@@ -33,7 +33,7 @@ public class BackpackItemUI : MonoBehaviour,  IPointerEnterHandler
         if (itemSo.itemType == ItemType.TOOL || itemSo.itemType == ItemType.BUILDING)
         {
             img.color = new Color(0.3f,0.3f,0.3f);
-            if (itemSo == GameState.Instance.Player.selectedItemSo)
+            if (itemSo == GameState.Instance.Player.SelectedItemSo)
             {
                 img.color = new Color(0.7f,0.7f,0.7f);
                 nameText.color = Color.black;
@@ -47,7 +47,7 @@ public class BackpackItemUI : MonoBehaviour,  IPointerEnterHandler
 
         if (itemSo.itemType == ItemType.SEED || itemSo.itemType == ItemType.TOOL || itemSo.itemType == ItemType.BUILDING)
         {
-            if (GameState.Instance.Player.selectedItemSo != itemSo)
+            if (GameState.Instance.Player.SelectedItemSo != itemSo)
             {
                 GameState.Instance.Player.SelectItem(itemSo);
             }

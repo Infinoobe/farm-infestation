@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using IngameDebugConsole;
 using Interactable;
+using Interactable.Common;
 using JetBrains.Annotations;
 using UI;
 using Unity.Mathematics;
@@ -12,36 +13,47 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    private CharacterController Controller;
+    [Header("Player combat settings")]
+    [SerializeField] private float Speed = 5f;
+    [SerializeField] private float AttackRange = 1.0f;
+    [SerializeField] private int currHealth = 100;
+    [SerializeField] private int damage = 10;
+    [SerializeField] protected float enemyAttractionFactor = 1f;
 
-    public float Speed = 5f;
-    public float AttackRange = 1.0f;
+    [Header("Player interaction settings")]
     [SerializeField] private float interactionRange = 1f;
-    public Animator animator;
-    public GameObject sword;
-    public PlayerAnimEvents playerAnimEvents;
     [SerializeField] private float rayLength = 3f;
     [SerializeField] private float maxInteractionRange = 3.0f;
 
+    [Header("Playtime variables")]
+    [SerializeField] private int healthMax = 100;
+    [SerializeField] private GridSystemRuntime currGridSystem;
+
     [SerializeField] private Transform rayStartingPoint;
-    private GridSystemRuntime currGridSystem;
+    [SerializeField] private Vector3 lastInput;
+    [SerializeField] private Vector3 velocity;
+    [SerializeField] private float timeSinceAttackPressed = 999.0f;
+    [SerializeField] private float invulnerableTimestamp = 0.0f;
+    [FormerlySerializedAs("SelectedItem")][CanBeNull] private ItemSO selectedItemSo;
 
-    [FormerlySerializedAs("SelectedItem")] [CanBeNull] public ItemSO selectedItemSo;
-    public UnityEvent OnSelectedItemChanged = new UnityEvent();
+    [Header("Object settings")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject sword;
+    [SerializeField] private PlayerAnimEvents playerAnimEvents;
+    [SerializeField] private CharacterController Controller;
 
-    public bool IsDead => hitPoints <= 0;
+    [Header("Events")]
+    public UnityEvent OnSelectedItemChanged = new ();
 
-    public float invulnerableTimestamp = 0.0f;
 
-    // Combat
-    public int hitPoints = 100;
-    public int hitPointsMax = 100;
-    [SerializeField] private int damage = 10;
+    public bool IsDead => currHealth <= 0;
+    public float EnemyAttractionFactor => enemyAttractionFactor;
+    public ItemSO SelectedItemSo => selectedItemSo;
+    public bool IsVulnerable => Time.time >= invulnerableTimestamp;
+    public bool CanBeTargetedByEnemy => true;
 
-    private Vector3 lastInput;
-    private Vector3 velocity;
-    private float timeSinceAttackPressed = 999.0f;
-
+    public int CurrHealth => currHealth;
+    public int HealthMax => healthMax;
 
     void Start()
     {
@@ -93,7 +105,6 @@ public class Player : MonoBehaviour, IDamagable
         } else if (Input.mouseScrollDelta.y < 0)
         {
             currGridSystem.RotateGizmo(true);
-
         }
     }
 
@@ -122,13 +133,13 @@ public class Player : MonoBehaviour, IDamagable
                 Attack();
             }
 
-            var v = transform.forward * Speed * 0.5f;
+            var v = 0.5f * Speed * transform.forward;
             Controller.Move(v * Time.deltaTime);
 
             return;
         }
 
-        UpdateGridSelection();        
+        UpdateGridSelection();
 
         sword.SetActive(GameState.Instance.IsNight());
 
@@ -190,25 +201,25 @@ public class Player : MonoBehaviour, IDamagable
     public void TakeDamage(int damageDealt)
     {
         if (IsDead) return;
-        if (Time.time < invulnerableTimestamp) return;
+        if (!IsVulnerable) return;
         if (GameState.Instance.GodCheat) return;
         
         animator.Play("Damage");
-        hitPoints -= damageDealt;
+        currHealth -= damageDealt;
         invulnerableTimestamp = Time.time + 0.1f;
-        if (hitPoints <= 0)
+        if (currHealth <= 0)
             KillYourself();
     }
     
     public void Heal(int damageHealed)
     {
-        hitPoints += damageHealed;
-        hitPoints = math.min(hitPoints, hitPointsMax + GameState.Instance.MaxHealthBonusValue());
+        currHealth += damageHealed;
+        currHealth = math.min(currHealth, healthMax + GameState.Instance.MaxHealthBonusValue());
     }
 
     public void KillYourself()
     {
-        hitPoints = 0;
+        currHealth = 0;
         animator.Play("Death");
         Debug.Log("Player Died!");
     }
@@ -313,7 +324,6 @@ public class Player : MonoBehaviour, IDamagable
     {
         return currGridSystem == null || !currGridSystem.HasGizmo();
     }
-    
 
     private void Interact()
     {
@@ -327,9 +337,11 @@ public class Player : MonoBehaviour, IDamagable
         {
             currGridSystem.PlaceBuilding(selectedItemSo);
         }
-        else if (TryGetInteractable(out var nearest))
+        else if (TryGetInteractable(out var nearest) && nearest.IsInteractionEnabled())
         {
-            Debug.Log($"Interact ({nearest.GetDescription()}) with {nearest}");
+            ActionType actionType = nearest.GetDescription(out var message);
+
+            Debug.Log($"Interaction {actionType.ToString()} ({message}) with {nearest}");
             nearest.Interact(this);
         }
     }
@@ -354,6 +366,7 @@ public class Player : MonoBehaviour, IDamagable
         nearest = null;
         foreach (var i in GameState.Instance.Interactables)
         {
+            if (i is not MonoBehaviour mb || mb == null) continue;
             if (!i.IsInteractionEnabled()) continue;
             float dist = Vector3.Distance(interactionPosition, i.GetPosition());
             if (dist < minDistance)
@@ -379,18 +392,18 @@ public class Player : MonoBehaviour, IDamagable
     // Cycles through Plants added in plantPrefabs list
     private void CyclePlants()
     {
-        var availableSeeds = GameState.Instance.GetItems()
-            .Where(i => i.Key.itemType == ItemType.SEED && i.Value > 0).ToList();
+        var availableSeeds = GameState.Instance.Inventory.GetItems().GetItemsOfTypeList(ItemType.SEED);
+
         if (availableSeeds.Count == 0)
         {
             return;
         }
 
-        var selectedIdx = availableSeeds.FindIndex(x => x.Key == selectedItemSo);
+        var selectedIdx = availableSeeds.FindIndex(x => x.itemSo == selectedItemSo);
         selectedIdx += 1;
         selectedIdx %= availableSeeds.Count;
 
-        selectedItemSo = availableSeeds[selectedIdx].Key;
+        selectedItemSo = availableSeeds[selectedIdx].itemSo;
         OnSelectedItemChanged.Invoke();
     }
 
@@ -399,5 +412,4 @@ public class Player : MonoBehaviour, IDamagable
         selectedItemSo = itemSo;
         OnSelectedItemChanged.Invoke();
     }
-
 }

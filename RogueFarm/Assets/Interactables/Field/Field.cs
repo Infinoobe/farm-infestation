@@ -1,23 +1,30 @@
 using Interactable;
+using Interactable.Common;
 using UnityEngine;
 
 public class Field : Building
 {
+    [Header("Field")]
     [SerializeField] private Plant currentPlant;
     [SerializeField] private MeshRenderer mesh;
     [SerializeField] private Material dryDirt;
     [SerializeField] private Material wetDirt;
-    public bool isWatered;
+    [SerializeField] private bool isWatered;
 
-    public void Start()
+    protected override void OnStart()
     {
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
         GameState.Instance.OnNightStarted.AddListener(HandleNightStarted);
-        GameState.Instance.RegisterInteractable(this);
         isWatered = false;
         SetMaterial();
     }
 
+    public override void DestroyBuilding()
+    {
+        GameState.Instance.OnDayStarted.RemoveListener(HandleDayStarted);
+        GameState.Instance.OnNightStarted.RemoveListener(HandleNightStarted);
+        base.DestroyBuilding();
+    }
     private void SetMaterial()
     {
         if (isWatered) mesh.material = wetDirt;
@@ -38,13 +45,19 @@ public class Field : Building
 
     private void HandleNightStarted()
     {
-        if (currentPlant) currentPlant.isWatered = isWatered;
+        if (currentPlant) currentPlant.IsWatered = isWatered;
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        if (currentPlant) currentPlant.TakeDamage(damage);
+        base.TakeDamage(damage);
     }
 
     public void PlantSeed(Player p)
     {
         if (!IsEmpty()) return;
-        var item = GameState.Instance.Player.selectedItemSo;
+        var item = GameState.Instance.Player.SelectedItemSo;
         if (item == null || item.itemType != ItemType.SEED)
         {
             return;
@@ -81,39 +94,51 @@ public class Field : Building
     public bool CanBeCollected()
     {
         if (IsEmpty()) return false;
-        return currentPlant.CanBeCollected;
+        return currentPlant.canBeCollected;
     }
 
-    override public string GetDescription()
+    override public ActionType GetDescription(out string message)
     {
         if (IsEmpty())
         {
-            var item = GameState.Instance.Player.selectedItemSo;
+            var item = GameState.Instance.Player.SelectedItemSo;
             if (item == null || item.itemType != ItemType.SEED)
             {
-                return $"Select Seed to plant";
+                message = "Equip seed to plant";
+                return ActionType.DESCRIPTION;
             }
             
             if (GameState.Instance.HasItems(item))
-                return $"Plant {item.itemName}";
-            return $"Do nothing (no {item.itemName})";
+            {
+                message = $"Click to plant {item.itemName}";
+                return ActionType.ITEM_USE;
+            }
+
+            message = $"No {item.itemName}";
+            return ActionType.DESCRIPTION;
         }
-        if (currentPlant.CanBeCollected) return "Collect";
-        if (!isWatered && GameState.Instance.Player.selectedItemSo.itemName.Equals("Watercan"))
+
+        if (currentPlant.canBeCollected) 
         {
-            return "Water field";
+            message = $"Click to collect {currentPlant.CollectItemSO.itemName}";
+            return ActionType.INTERACTION;
         }
-        else if(!isWatered)
+        
+        if (!isWatered)
         {
-            return "Water field (Needs watercan)";
+            message = "Use watercan to water field";
+            if (GameState.Instance.Player.SelectedItemSo == GameState.Instance.itemsDatabase.waterCanSo) return ActionType.ITEM_USE;
+            else return ActionType.DESCRIPTION;
         }
-        return "Do nothing (Plant Growing)";
+
+        message = $"Plant growing ({currentPlant.HowManyDaysToGrow()} days)";
+        return ActionType.DESCRIPTION;
+        //string m;
+        //return base.GetDescription(out m);
     }
     
     override public void Interact(Player p)
     {
-        // Add checking current player item
-
         base.Interact(p);
 
         if (IsEmpty())
@@ -128,7 +153,7 @@ public class Field : Building
             return;
         }
 
-        if (!isWatered && p.selectedItemSo.itemName.Equals("Watercan"))
+        if (!isWatered && p.SelectedItemSo == GameState.Instance.itemsDatabase.waterCanSo)
         {
             WaterField();
             return;

@@ -1,30 +1,47 @@
 using Interactable;
+using Interactable.Common;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Building : MonoBehaviour, IInteractable
+public class Building : BaseInteractable, IDamagable
 {
-    [SerializeField] private bool canBeTargeted;
-    [SerializeField] private bool canBeDestroyed;
-    [SerializeField] private bool canBeWalkedOn;
-    [SerializeField] private bool interactionEnabled;
-    [SerializeField] private bool canBePickedUp;
-    [SerializeField] private int health;
-    [SerializeField] protected int range;
-    [SerializeField] private BuildingShapeUnit[] buildingShapeUnits;
-    public bool isPlaced = true;
-    protected List<GridCell> occupiedCells;
+    [Header("Building settings")]
+    [SerializeField] protected int influenceRange;
+    [SerializeField] protected bool canBeDismantled = true;
 
+    [Header("Building Combat")]
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] protected float enemyAttractionFactor = 1f;
+    [SerializeField] protected bool canBeTargetedByEnemy = true;
+
+    [Header("Playtime variables")]
+    [SerializeField] protected List<GridCell> occupiedCells;
+    [SerializeField] protected bool isPlaced = true;
+    [SerializeField] private int currHealth = 100;
+
+    [Header("Object settings")]
+    [SerializeField] private BuildingShapeUnit[] buildingShapeUnits;
+
+    //[Header("Events")]
+    //public UnityEvent OnBuildingPlaced = new UnityEvent();
+    
     public BuildingShapeUnit[] BuildingShapeUnits => buildingShapeUnits;
-    public bool CanBeDestroyed => canBeDestroyed;
-    public bool CanBeTargeted => canBeTargeted;
-    public bool CanBeWalkedOn => canBeWalkedOn;
-    public bool CanBePickedUp => canBePickedUp;
-    public int CurrHealth => health;
-    public int Range => range;
+    public bool CanBeTargetedByEnemy => canBeTargetedByEnemy;
+    public int CurrHealth => currHealth;
+    public int Range => influenceRange;
+    public bool CanBeDismantled => canBeDismantled;
+    public float EnemyAttractionFactor => enemyAttractionFactor;
+
+    public bool IsPlaced
+    {
+        get => isPlaced;
+        set => isPlaced = value;
+    }
+
 
     void OnEnable()
     {
@@ -63,7 +80,7 @@ public class Building : MonoBehaviour, IInteractable
             {
                 if (cell.currBuilding)
                 {
-                    Debug.Log($"Building {gameObject.name} cannot be put on grid");
+                    Debug.LogError($"Building {gameObject.name} cannot be put on grid!");
                     return;
                 }
                 cell.SetBuilding(gameObject);
@@ -77,59 +94,56 @@ public class Building : MonoBehaviour, IInteractable
         }
     }
 
-    public bool IsInteractionEnabled() 
+    override public ActionType GetDescription(out string message)
     {
-        if (!isPlaced || !interactionEnabled) return false;
-        return true;
-    }
-    public void EnableInteraction() { interactionEnabled = true; }
-    public void DisableInteraction() { interactionEnabled = false; }
-
-    virtual public string GetDescription()
-    {
-        if (canBePickedUp) return "Destroy (Axe)";
-        else return "Do nothing (building)";
-    }
-
-    virtual public void Interact(Player p)
-    {
-        if (!canBePickedUp) return;
-        if (p.selectedItemSo.name.Equals("Axe")) RemoveBuilding();
-    }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
-    virtual public void PlaceBuilding(IEnumerable<GridCell> onCells)
-    {
-        occupiedCells = onCells.ToList();
-        isPlaced = true;
-        EnableInteraction();
-        GameState.Instance.RegisterInteractable(this);
-    }
-
-    public void RemoveBuilding()
-    {
-        if (!canBeDestroyed) return;
-        foreach(GridCell cell in occupiedCells){
-            cell.UnSetBuilding();
+        if(canBeDismantled)
+        {
+            message = "Use Axe to dismantle";
+            if (GameState.Instance.Player == GameState.Instance.itemsDatabase.axeSo) return ActionType.ITEM_USE;
+            else return ActionType.DESCRIPTION;
         }
-        GameState.Instance.UnRegisterInteractable(this);
+        return base.GetDescription(out message);
+    }
 
-        // TODO: returning some resources
+    override public void Interact(Player p)
+    {
+        if (!canBeDismantled) return;
+        if (p.SelectedItemSo == GameState.Instance.itemsDatabase.axeSo) DismantleBuilding();
+    }
+
+    virtual public void PlaceBuilding(List<GridCell> onCells)
+    {
+        occupiedCells = onCells;
+        isPlaced = true;
+        GameState.Instance.RegisterInteractable(this);
+        currHealth = maxHealth;
+    }
+
+    public void DismantleBuilding()
+    {
+        if (!CanBeDismantled) return;
+        // TODO: return resources
+        DestroyBuilding();
+    }
+
+    virtual public void TakeDamage(int damage)
+    {
+        currHealth = Mathf.Max(0, currHealth-damage);
+        if (currHealth == 0) KillYourself();
+    }
+
+    public void KillYourself()
+    {
+        // TODO: particles/animation for dying in combat
         DestroyBuilding();
     }
 
     virtual public void DestroyBuilding()
     {
+        foreach (GridCell cell in occupiedCells)
+        {
+            cell.UnSetBuilding();
+        }
         Destroy(gameObject);
     }
-
-    public void TakeDamage(int damage)
-    {
-        health = Mathf.Max(0, health-damage);
-        if (health == 0) DestroyBuilding();
-    }  
 }

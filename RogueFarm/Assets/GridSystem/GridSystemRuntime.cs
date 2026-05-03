@@ -30,7 +30,7 @@ public class GridSystemRuntime : MonoBehaviour
         {
             Debug.LogError($"Item {itemSo.name} : buildingPrefab {buildingPrefab.name} is not a Building.");
         }
-        b.isPlaced = false;
+        b.IsPlaced = false;
 
         currGizmo.layer = LayerMask.NameToLayer("BuildingGizmo");
         SetLayerRecursively(currGizmo, currGizmo.layer);
