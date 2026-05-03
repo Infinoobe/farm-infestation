@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd0f908c289f5e4a803e91e32a4611a, type: 3}
+  m_Name: Sprinkler
+  m_EditorClassIdentifier: 
+  itemType: 5
+  canBeSold: 0
+  unique: 0
+  itemName: Sprinkler
+  icon: {fileID: 21300000, guid: 66305a19e3614694f868c75a982e6b68, type: 3}
+  valueBuying: 1
+  valueSelling: 1
+  plantPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 122522188189108011, guid: c486a3f1b389c7543995a92ff5dbd77c, type: 3}
+  damageBonus: 0
+  maxHealthBonus: 0
+  regenerationBonus: 0

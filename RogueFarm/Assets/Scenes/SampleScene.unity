@@ -74336,6 +74336,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09343e49dd711484fbf9a52a5452e126, type: 2}
   - {fileID: 11400000, guid: 7b134caba4e671549beeb6fc661422e1, type: 2}
   - {fileID: 11400000, guid: 20e6e76b1e06a624c88424b67022e96e, type: 2}
+  - {fileID: 11400000, guid: 331ed91d25153624ea192234a8147f22, type: 2}
   zombieLootChance: 0.3
   OnDayStarted:
     m_PersistentCalls:
@@ -78649,7 +78650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000022888184
+      value: -0.00002670288
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
