@@ -16,7 +16,7 @@ public class SelectedPlantUI : MonoBehaviour
             return;
         }
 
-        var item = GameState.Instance.Player.SelectedItem;
+        var item = GameState.Instance.Player.SelectedItemSo;
 
         if (item == null || item == GameState.Instance.itemsDatabase.handItemSo)
         {
@@ -26,7 +26,7 @@ public class SelectedPlantUI : MonoBehaviour
         }
         
 
-        ItemSet items = GameState.Instance.GetInventoryItems();
+        ItemSet items = GameState.Instance.Inventory.GetItems();
         int count = items.GetAmount(item);
         ItemLabel.text = item.itemName;
         if (!item.unique)

@@ -18,7 +18,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] private float AttackRange = 1.0f;
     [SerializeField] private int currHealth = 100;
     [SerializeField] private int damage = 10;
-    [SerializeField] protected float attractionFactor = 1f;
+    [SerializeField] protected float enemyAttractionFactor = 1f;
 
     [Header("Player interaction settings")]
     [SerializeField] private float interactionRange = 1f;
@@ -47,10 +47,10 @@ public class Player : MonoBehaviour, IDamagable
 
 
     public bool IsDead => currHealth <= 0;
-    public float AttractionFactor => attractionFactor;
-    public ItemSO SelectedItem => selectedItemSo;
+    public float EnemyAttractionFactor => enemyAttractionFactor;
+    public ItemSO SelectedItemSo => selectedItemSo;
     public bool IsVulnerable => Time.time >= invulnerableTimestamp;
-    public bool CanBeTargeted => true;
+    public bool CanBeTargetedByEnemy => true;
 
     public int CurrHealth => currHealth;
     public int HealthMax => healthMax;
@@ -339,8 +339,7 @@ public class Player : MonoBehaviour, IDamagable
         }
         else if (TryGetInteractable(out var nearest) && nearest.IsInteractionEnabled())
         {
-            string message;
-            ActionType actionType = nearest.GetDescription(out message);
+            ActionType actionType = nearest.GetDescription(out var message);
 
             Debug.Log($"Interaction {actionType.ToString()} ({message}) with {nearest}");
             nearest.Interact(this);
@@ -393,7 +392,7 @@ public class Player : MonoBehaviour, IDamagable
     // Cycles through Plants added in plantPrefabs list
     private void CyclePlants()
     {
-        var availableSeeds = GameState.Instance.GetInventoryItems().GetListItemAmount(ItemType.SEED);
+        var availableSeeds = GameState.Instance.Inventory.GetItems().GetItemsOfTypeList(ItemType.SEED);
 
         if (availableSeeds.Count == 0)
         {

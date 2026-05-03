@@ -28,7 +28,7 @@ public class ItemSet
         }
     }
 
-    public Dictionary<ItemSO, int> GetDictionary(ItemType type = ItemType.UNASSIGNED)
+    public Dictionary<ItemSO, int> GetItemsOfTypeDict(ItemType type = ItemType.UNASSIGNED)
     {
         var result = new Dictionary<ItemSO, int>();
 
@@ -49,7 +49,7 @@ public class ItemSet
         return result;
     }
 
-    public List<ItemAmount> GetListItemAmount(ItemType type = ItemType.UNASSIGNED)
+    public List<ItemAmount> GetItemsOfTypeList(ItemType type = ItemType.UNASSIGNED)
     {
         var list = new List<ItemAmount>();
 
@@ -74,7 +74,7 @@ public class ItemSet
         return list;
     }
 
-    public override string ToString()
+    public string GetStringDescription()
     {
         if (itemsDictionary.Count == 0)
             return "Empty";

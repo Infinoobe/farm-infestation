@@ -91,7 +91,7 @@ public class SkillTreeManager : MonoBehaviour
             return;
         }
         
-        Dictionary<ItemSO, int> requiredItems = skillNode.skillSO.GetRequiredItems().GetDictionary();
+        Dictionary<ItemSO, int> requiredItems = skillNode.skillSO.GetRequiredItems().GetItemsOfTypeDict();
         SetPopupHeight(82f * (requiredItems.Count + 1));
         foreach (var (item, amount) in requiredItems)
         {

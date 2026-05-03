@@ -57,7 +57,7 @@ public class Field : Building
     public void PlantSeed(Player p)
     {
         if (!IsEmpty()) return;
-        var item = GameState.Instance.Player.SelectedItem;
+        var item = GameState.Instance.Player.SelectedItemSo;
         if (item == null || item.itemType != ItemType.SEED)
         {
             return;
@@ -94,14 +94,14 @@ public class Field : Building
     public bool CanBeCollected()
     {
         if (IsEmpty()) return false;
-        return currentPlant.CanBeCollected;
+        return currentPlant.canBeCollected;
     }
 
     override public ActionType GetDescription(out string message)
     {
         if (IsEmpty())
         {
-            var item = GameState.Instance.Player.SelectedItem;
+            var item = GameState.Instance.Player.SelectedItemSo;
             if (item == null || item.itemType != ItemType.SEED)
             {
                 message = "Equip seed to plant";
@@ -118,7 +118,7 @@ public class Field : Building
             return ActionType.DESCRIPTION;
         }
 
-        if (currentPlant.CanBeCollected) 
+        if (currentPlant.canBeCollected) 
         {
             message = $"Click to collect {currentPlant.CollectItemSO.itemName}";
             return ActionType.INTERACTION;
@@ -127,7 +127,7 @@ public class Field : Building
         if (!isWatered)
         {
             message = "Use watercan to water field";
-            if (GameState.Instance.Player.SelectedItem == GameState.Instance.itemsDatabase.waterCanSo) return ActionType.ITEM_USE;
+            if (GameState.Instance.Player.SelectedItemSo == GameState.Instance.itemsDatabase.waterCanSo) return ActionType.ITEM_USE;
             else return ActionType.DESCRIPTION;
         }
 
@@ -153,7 +153,7 @@ public class Field : Building
             return;
         }
 
-        if (!isWatered && p.SelectedItem == GameState.Instance.itemsDatabase.waterCanSo)
+        if (!isWatered && p.SelectedItemSo == GameState.Instance.itemsDatabase.waterCanSo)
         {
             WaterField();
             return;

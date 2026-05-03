@@ -27,10 +27,9 @@ public class Zombie : MonoBehaviour, IDamagable
 
     private bool IsDead = false;
 
-    public bool CanBeTargeted => false;
+    public bool CanBeTargetedByEnemy => false;
 
-    public float AttractionFactor => 0f;
-    public bool IsVulnerable => true;
+    public float EnemyAttractionFactor => 0f;
 
     public void Start()
     {

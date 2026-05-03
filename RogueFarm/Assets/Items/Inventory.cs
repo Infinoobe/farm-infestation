@@ -31,29 +31,4 @@ public class Inventory : MonoBehaviour
         }
         GameState.Instance.AddItem( item, amount );
     }
-
-    //public void AddItem(ItemSO itemSo, int amount = 1)
-    //{
-    //    items.AddItem(itemSo, amount);
-    //}
-
-    //public void RemoveItems(ItemSO itemSo, int amount = 1)
-    //{
-    //    items.RemoveItem(itemSo, amount);
-    //}
-
-    //public void AddItems(ItemSet itemSet)
-    //{
-    //    items.AddItems(itemSet);
-    //}
-
-    //public void RemoveItem(ItemSet itemSet)
-    //{
-    //    items.RemoveItems(itemSet);
-    //}
-
-    //public int GetAmount(ItemSO itemSo)
-    //{
-    //    return items.GetAmount(itemSo);
-    //}
 }

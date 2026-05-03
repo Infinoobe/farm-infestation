@@ -15,9 +15,8 @@ public class Building : BaseInteractable, IDamagable
 
     [Header("Building Combat")]
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] protected float attractionFactor = 1f;
-    [SerializeField] protected bool isVulnerable = true;
-    [SerializeField] protected bool canBeTargeted = true;
+    [SerializeField] protected float enemyAttractionFactor = 1f;
+    [SerializeField] protected bool canBeTargetedByEnemy = true;
 
     [Header("Playtime variables")]
     [SerializeField] protected List<GridCell> occupiedCells;
@@ -31,12 +30,11 @@ public class Building : BaseInteractable, IDamagable
     //public UnityEvent OnBuildingPlaced = new UnityEvent();
     
     public BuildingShapeUnit[] BuildingShapeUnits => buildingShapeUnits;
-    public bool CanBeTargeted => canBeTargeted;
+    public bool CanBeTargetedByEnemy => canBeTargetedByEnemy;
     public int CurrHealth => currHealth;
     public int Range => influenceRange;
-    public bool IsVulnerable => isVulnerable;
     public bool CanBeDismantled => canBeDismantled;
-    public float AttractionFactor => attractionFactor;
+    public float EnemyAttractionFactor => enemyAttractionFactor;
 
     public bool IsPlaced
     {
@@ -60,7 +58,7 @@ public class Building : BaseInteractable, IDamagable
         InitOnGrid();
     }
 
-    private void InitOnGrid() // For placing before runtime
+    private void InitOnGrid()
     {
         if (occupiedCells != null && occupiedCells.Count != 0 && isPlaced) return;
         else Debug.Log($"Building {gameObject.name} is on grid");
@@ -110,7 +108,7 @@ public class Building : BaseInteractable, IDamagable
     override public void Interact(Player p)
     {
         if (!canBeDismantled) return;
-        if (p.SelectedItem == GameState.Instance.itemsDatabase.axeSo) DismantleBuilding();
+        if (p.SelectedItemSo == GameState.Instance.itemsDatabase.axeSo) DismantleBuilding();
     }
 
     virtual public void PlaceBuilding(List<GridCell> onCells)
@@ -130,14 +128,13 @@ public class Building : BaseInteractable, IDamagable
 
     virtual public void TakeDamage(int damage)
     {
-        if (!IsVulnerable) return;
         currHealth = Mathf.Max(0, currHealth-damage);
         if (currHealth == 0) KillYourself();
     }
 
     public void KillYourself()
     {
-        // TODO: died in combat
+        // TODO: particles/animation for dying in combat
         DestroyBuilding();
     }
 

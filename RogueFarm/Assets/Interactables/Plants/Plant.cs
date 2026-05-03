@@ -23,7 +23,7 @@ public class Plant : MonoBehaviour
     [SerializeField] private GameObject currActiveVisualObject;
     [SerializeField] protected int currHealth = 100;
     [SerializeField] protected bool isWatered;
-    [SerializeField] protected bool canBeCollected = false;
+    [SerializeField] public bool canBeCollected = false;
     [SerializeField] protected int currGrowthTime = 0;
     [SerializeField] protected int currCollectTimes = 0;
 
@@ -33,7 +33,6 @@ public class Plant : MonoBehaviour
     [SerializeField] private Image hpBar;
     [SerializeField] private TMP_Text hpLabel;
     
-    public bool CanBeCollected => canBeCollected;
     public bool IsWatered
     {
         get => isWatered;

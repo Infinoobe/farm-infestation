@@ -29,7 +29,7 @@ public class BackpackUI : MonoBehaviour
         }
 
         ClearBackpackView();
-        Dictionary<ItemSO, int> items = GameState.Instance.GetInventoryItems().GetDictionary();
+        Dictionary<ItemSO, int> items = GameState.Instance.Inventory.GetItems().GetItemsOfTypeDict();
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;

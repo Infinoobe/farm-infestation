@@ -35,17 +35,13 @@ public class GameState : MonoBehaviour
     public bool GodCheat { get; set; }
     public bool DamageCheat { get; set; }
 
+    public Inventory Inventory => inventory;
     public Player Player;
     public int ZombiesToKill;
 
-    public ItemSet GetInventoryItems()
-    {
-        return inventory.GetItems();
-    }
-
     public int GetMoney()
     {
-        return GetInventoryItems().GetAmount(itemsDatabase.moneyItemSo);
+        return inventory.GetItems().GetAmount(itemsDatabase.moneyItemSo);
     }
 
     private void Awake()
@@ -124,7 +120,7 @@ public class GameState : MonoBehaviour
     private int SleepHealValue()
     {
         int healValue = 0;
-        Dictionary<ItemSO, int> items = GetInventoryItems().GetDictionary(ItemType.UPGRADE);
+        Dictionary<ItemSO, int> items = inventory.GetItems().GetItemsOfTypeDict(ItemType.UPGRADE);
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
@@ -138,7 +134,7 @@ public class GameState : MonoBehaviour
     public int DamageBonusValue()
     {
         int damageValue = 0;
-        Dictionary<ItemSO, int> items = GetInventoryItems().GetDictionary(ItemType.UPGRADE);
+        Dictionary<ItemSO, int> items = inventory.GetItems().GetItemsOfTypeDict(ItemType.UPGRADE);
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
@@ -152,7 +148,7 @@ public class GameState : MonoBehaviour
     public int MaxHealthBonusValue()
     {
         int maxHealthBonus = 0;
-        Dictionary<ItemSO, int> items = GetInventoryItems().GetDictionary(ItemType.UPGRADE);
+        Dictionary<ItemSO, int> items = inventory.GetItems().GetItemsOfTypeDict(ItemType.UPGRADE);
         foreach (var kvp in items)
         {
             ItemSO itemSo = kvp.Key;
@@ -165,13 +161,13 @@ public class GameState : MonoBehaviour
 
     public bool HasItems(ItemSO itemSo, int amount = 1)
     {
-        return GetInventoryItems().GetAmount(itemSo) >= amount;
+        return inventory.GetItems().GetAmount(itemSo) >= amount;
     }
 
     public bool RemoveItem(ItemSO itemSo, int amount = 1)
     {
         if (!HasItems(itemSo, amount)) return false;
-        GetInventoryItems().RemoveItem(itemSo, amount);
+        inventory.GetItems().RemoveItem(itemSo, amount);
 
         RefreshBackpack.Invoke();
         return true;
@@ -179,8 +175,8 @@ public class GameState : MonoBehaviour
 
     public bool RemoveItems(ItemSet itemSet)
     {
-        if(!GetInventoryItems().HasItems(itemSet)) return false;
-        GetInventoryItems().RemoveItems(itemSet);
+        if(!inventory.GetItems().HasItems(itemSet)) return false;
+        inventory.GetItems().RemoveItems(itemSet);
 
         RefreshBackpack.Invoke();
         return true;
@@ -188,7 +184,7 @@ public class GameState : MonoBehaviour
 
     public void AddItem(ItemSO itemSo, int amount = 1)
     {
-        GetInventoryItems().AddItem(itemSo, amount);
+        inventory.GetItems().AddItem(itemSo, amount);
         RefreshBackpack.Invoke();
     }
 
