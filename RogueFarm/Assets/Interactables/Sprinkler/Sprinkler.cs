@@ -27,7 +27,7 @@ public class Sprinkler : Building
         List<GridCell> cells = mainCell.myGrid.grid.GetGridCellsInRange(mainCell, influenceRange);
         foreach (GridCell cell in cells)
         {
-            if(cell.currBuilding.TryGetComponent<Field>(out var field))
+            if(cell.currBuilding && cell.currBuilding.TryGetComponent<Field>(out var field))
             {
                 field.WaterField();
             }
