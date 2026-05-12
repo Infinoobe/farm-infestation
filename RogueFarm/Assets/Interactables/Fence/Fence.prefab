@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: -2781397223143168581}
   m_Layer: 0
   m_Name: Fence
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   enemyAttractionFactor: 1
   canBeTargetedByEnemy: 1
   zombieSpawnFreeRange: 1
+  ignoreBuildingWhenSpawning: 0
   occupiedCells: []
   isPlaced: 1
   currHealth: 100

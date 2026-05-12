@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 8641274132182742601}
   m_Layer: 13
   m_Name: ResearchTable
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
   enemyAttractionFactor: 1
   canBeTargetedByEnemy: 1
   zombieSpawnFreeRange: 1
+  ignoreBuildingWhenSpawning: 0
   occupiedCells: []
   isPlaced: 1
   currHealth: 100

@@ -38,7 +38,7 @@ public class Plant : MonoBehaviour
         get => isWatered;
         set => isWatered = value;
     }
-    public float AttractionFactor => attractionFactor;
+    public float EnemyAttractionFactor => attractionFactor;
     public bool IsVulnerable => isVulnerable;
     public ItemSO CollectItemSO => collectItemSo;
 

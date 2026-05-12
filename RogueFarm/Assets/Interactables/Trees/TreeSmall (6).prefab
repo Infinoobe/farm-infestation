@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 7169086529816528376}
   m_Layer: 13
   m_Name: TreeSmall (6)
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
