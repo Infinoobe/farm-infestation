@@ -30,11 +30,11 @@ public class Building : BaseInteractable, IDamagable
 
     
     public BuildingShapeUnit[] BuildingShapeUnits => buildingShapeUnits;
-    public bool CanBeTargetedByEnemy => canBeTargetedByEnemy;
+    virtual public bool CanBeTargetedByEnemy => canBeTargetedByEnemy;
     public int CurrHealth => currHealth;
     public int Range => influenceRange;
     public bool CanBeDismantled => canBeDismantled;
-    public float EnemyAttractionFactor => enemyAttractionFactor;
+    virtual public float EnemyAttractionFactor => enemyAttractionFactor;
 
     public bool IsPlaced
     {

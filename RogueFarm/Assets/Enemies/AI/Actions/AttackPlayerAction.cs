@@ -5,10 +5,10 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "AttackPlayer", story: "[Self] attacks [Player]", category: "Action", id: "e0758f0f6070ce9b305e1a4c6d14d997")]
+[NodeDescription(name: "AttackPlayer", story: "[Self] attacks [Target]", category: "Action", id: "e0758f0f6070ce9b305e1a4c6d14d997")]
 public partial class AttackPlayerAction : Action
 {
-    [SerializeReference] public BlackboardVariable<Player> Player;
+    [SerializeReference] public BlackboardVariable<GameObject> Target;
     [SerializeReference] public BlackboardVariable<GameObject> Self;
 
     protected override Status OnStart()
@@ -16,7 +16,7 @@ public partial class AttackPlayerAction : Action
         var z = Self.Value.GetComponent<Zombie>();
         if (z != null)
         {
-            var target = Player.Value.transform.position;
+            var target = Target.Value.transform.position;
             target.y = z.transform.position.y;
             z.transform.LookAt(target);
             z.animator.Play("Attack");

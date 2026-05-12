@@ -6,6 +6,7 @@ TagManager:
   tags:
   - plant
   - Building
+  - field
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6388154473258746058}
   m_Layer: 13
   m_Name: Field
-  m_TagString: Building
+  m_TagString: field
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,13 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a03171f4628c0d40ad0b67f76a01979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionEnabled: 1
   influenceRange: 0
-  isInteractionEnabled: 1
   canBeDismantled: 1
   maxHealth: 100
-  attractionFactor: 1
-  isVulnerable: 1
-  canBeTargeted: 1
+  enemyAttractionFactor: 1
+  canBeTargetedByEnemy: 1
+  zombieSpawnFreeRange: 1
+  ignoreBuildingWhenSpawning: 0
   occupiedCells: []
   isPlaced: 1
   currHealth: 100

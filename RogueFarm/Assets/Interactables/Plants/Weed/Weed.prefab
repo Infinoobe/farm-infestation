@@ -134,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc9cc1c998951744af61f5459d41be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectItemSo: {fileID: 11400000, guid: 488a5750bc01a5946b2efceff8af4b46, type: 2}
   collectItemAmount: 1
   growthTime: 3
   collectTimes: 1
@@ -145,6 +144,15 @@ MonoBehaviour:
   collectStages:
   - {fileID: 8212200025339119867}
   healthMax: 100
+  attractionFactor: 1
+  isVulnerable: 1
+  currActiveVisualObject: {fileID: 0}
+  currHealth: 100
+  isWatered: 0
+  canBeCollected: 0
+  currGrowthTime: 0
+  currCollectTimes: 0
+  collectItemSo: {fileID: 11400000, guid: 488a5750bc01a5946b2efceff8af4b46, type: 2}
   canvas: {fileID: 9173638467972191665}
   hpBar: {fileID: 8326928786325827479}
   hpLabel: {fileID: 4991952175121103915}
@@ -1081,6 +1089,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

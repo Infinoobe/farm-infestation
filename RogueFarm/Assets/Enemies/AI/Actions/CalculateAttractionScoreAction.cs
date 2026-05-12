@@ -31,8 +31,6 @@ public partial class CalculateAttractionScoreAction : Action
             factor = player.EnemyAttractionFactor;
         else if (Object.Value.TryGetComponent<Building>(out Building building))
             factor = building.EnemyAttractionFactor;
-        else if (Object.Value.TryGetComponent<Plant>(out Plant plant))
-            factor = plant.EnemyAttractionFactor;
 
         AttractionScore.Value = dist * factor;
 

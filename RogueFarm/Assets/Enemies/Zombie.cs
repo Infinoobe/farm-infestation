@@ -1,7 +1,10 @@
 using System;
+using System.Linq;
+using NUnit.Framework;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class Zombie : MonoBehaviour, IDamagable
 {
@@ -62,7 +65,10 @@ public class Zombie : MonoBehaviour, IDamagable
     public void DealAttackDamage()
     {
         if (IsDead) return;
-        var enemies = FindObjectsByType<Player>(FindObjectsSortMode.None);
+        List<IDamagable> enemies = new ();
+        enemies.Add(GameState.Instance.Player);
+        var buildings = FindObjectsByType<Building>(FindObjectsSortMode.None);
+        foreach (Building building in buildings) if (building.CanBeTargetedByEnemy) enemies.Add(building);
 
         // Melee
         if (!isRanged)
@@ -71,17 +77,24 @@ public class Zombie : MonoBehaviour, IDamagable
             //Debug.DrawRay(transform.position, attackPosition-transform.position, Color.red, 0.5f);
             foreach (var enemy in enemies)
             {
-                if ((enemy.transform.position - attackPosition).magnitude < attackRange)
+                if (enemy is MonoBehaviour mb)
                 {
-                    enemy.TakeDamage(damage);
+                    var pos = mb.transform.position;
+                    if ((pos - attackPosition).magnitude < attackRange)
+                    {
+                        enemy.TakeDamage(damage);
+                    }
                 }
+                
             }
         }
         else // Ranged
         {
             foreach (var enemy in enemies)
             {
-                Vector3 direction = (enemy.transform.position - projectileSpawnPoint.position).normalized;
+                Vector3 pos = new Vector3();
+                if (enemy is MonoBehaviour mb) pos = mb.transform.position;
+                Vector3 direction = (pos - projectileSpawnPoint.position).normalized;
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
 
                 Debug.Log(projectileSpawnPoint);

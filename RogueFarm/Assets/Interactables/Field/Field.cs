@@ -11,6 +11,8 @@ public class Field : Building
     [SerializeField] private Material wetDirt;
     [SerializeField] private bool isWatered;
 
+    public override bool CanBeTargetedByEnemy => base.CanBeTargetedByEnemy && !IsEmpty();
+    public override float EnemyAttractionFactor => !IsEmpty() ? currentPlant.EnemyAttractionFactor : enemyAttractionFactor;
     protected override void OnStart()
     {
         GameState.Instance.OnDayStarted.AddListener(HandleDayStarted);
