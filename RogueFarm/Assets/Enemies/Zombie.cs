@@ -28,7 +28,7 @@ public class Zombie : MonoBehaviour, IDamagable
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private float projectileSpeed = 10f;
 
-    private bool IsDead = false;
+    public bool IsDead { get; protected set; } = false;
 
     public bool CanBeTargetedByEnemy => false;
 
