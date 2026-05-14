@@ -77038,6 +77038,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7b134caba4e671549beeb6fc661422e1, type: 2}
   - {fileID: 11400000, guid: 20e6e76b1e06a624c88424b67022e96e, type: 2}
   - {fileID: 11400000, guid: 331ed91d25153624ea192234a8147f22, type: 2}
+  - {fileID: 11400000, guid: 5b1b1742d59393b418758830e247dc08, type: 2}
   zombieLootChance: 0.3
   OnDayStarted:
     m_PersistentCalls:

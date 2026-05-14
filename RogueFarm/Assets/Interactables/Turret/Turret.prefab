@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191bc009ea5306b4a9796efb7014daab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionEnabled: 1
+  interactionEnabled: 0
   influenceRange: 0
   canBeDismantled: 1
   maxHealth: 100
@@ -58,7 +58,8 @@ MonoBehaviour:
   occupiedCells: []
   isPlaced: 1
   currHealth: 100
-  buildingShapeUnits: []
+  buildingShapeUnits:
+  - {fileID: 5639034484753032540}
   TurretRotatingTop: {fileID: 6075067139717016495}
   ShooArea: {fileID: 7518490741294427174}
   BulletPrefab: {fileID: 4519455776754796638, guid: 4b2bf425788223c44a305294437fca34, type: 3}
@@ -462,3 +463,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5454030599515215351, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
   m_PrefabInstance: {fileID: 4809774799377609489}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5639034484753032540 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 936220196524709453, guid: 88367b341a1ebfd40898c941773c3156, type: 3}
+  m_PrefabInstance: {fileID: 4809774799377609489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28dee8d7f1637c842adbb044905044c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

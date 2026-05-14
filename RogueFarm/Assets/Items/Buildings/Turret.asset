@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd0f908c289f5e4a803e91e32a4611a, type: 3}
+  m_Name: Turret
+  m_EditorClassIdentifier: 
+  itemType: 5
+  canBeSold: 1
+  unique: 0
+  itemName: Turret
+  icon: {fileID: 1071053893, guid: 8eb17427616c1824ca3e9fadf0b31e21, type: 3}
+  valueBuying: 100
+  valueSelling: 70
+  plantPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 122522188189108011, guid: 4a3912597a91c4547bdb5ddb5f684057, type: 3}
+  damageBonus: 0
+  maxHealthBonus: 0
+  regenerationBonus: 0
