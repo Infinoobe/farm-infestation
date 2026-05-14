@@ -21737,11 +21737,11 @@ MonoBehaviour:
     Enabled: 0
     m_Value: 0
   OutputChannel: 1
-  StandbyUpdate: 2
+  StandbyUpdate: 0
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1257907517}
+    TrackingTarget: {fileID: 8628891553195047027}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -21804,9 +21804,9 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
+  Damping: {x: 0, y: 0, z: 0}
   Lookahead:
-    Enabled: 1
+    Enabled: 0
     Time: 0.6
     Smoothing: 7
     IgnoreY: 0
@@ -84004,11 +84004,6 @@ MonoBehaviour:
   OnBuildingRemoved:
     m_PersistentCalls:
       m_Calls: []
---- !u!4 &1257907517 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6325677826827988052, guid: 84882431fd6f1c147977baae390635c3, type: 3}
-  m_PrefabInstance: {fileID: 8628891553195047026}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1259713989
 GameObject:
   m_ObjectHideFlags: 0
@@ -142380,6 +142375,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+--- !u!4 &8628891553195047027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6157548196224193099, guid: 84882431fd6f1c147977baae390635c3, type: 3}
+  m_PrefabInstance: {fileID: 8628891553195047026}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

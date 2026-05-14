@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] private GameObject sword;
     [SerializeField] private PlayerAnimEvents playerAnimEvents;
     [SerializeField] private CharacterController Controller;
+    [SerializeField] private GameObject cameraTarget;
 
     [Header("Events")]
     public UnityEvent OnSelectedItemChanged = new ();
@@ -271,8 +272,25 @@ public class Player : MonoBehaviour, IDamagable
         direction.y = 0;  // stay in XZ plane
         if (direction.sqrMagnitude > 0.01f)
         {
-            transform.rotation = Quaternion.LookRotation(direction);;
+            transform.rotation = Quaternion.LookRotation(direction);
         }
+        //
+        // var min = 4f;
+        // var max = 5f;
+        // var camMax = 4f;
+        // if (direction.sqrMagnitude < min*min)
+        // {
+        //     cameraTarget.transform.position = transform.position;
+        // }
+        // else if (direction.sqrMagnitude > max*max)
+        // {
+        //     cameraTarget.transform.position = transform.position + direction.normalized * camMax;
+        // }
+        // else
+        // {
+        //     cameraTarget.transform.position = Vector3.Lerp(transform.position, transform.position + direction.normalized * camMax, (direction.magnitude-min) / (max-min));
+        // }
+
     }
 
     private void Attack()

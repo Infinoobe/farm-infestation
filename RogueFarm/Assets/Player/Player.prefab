@@ -145,6 +145,7 @@ Transform:
   m_Children:
   - {fileID: 8683486520051685680}
   - {fileID: 6481439652483190483}
+  - {fileID: 6157548196224193099}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6995272627084493882
@@ -161,26 +162,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   AttackRange: 1
+  currHealth: 100
+  damage: 10
+  enemyAttractionFactor: 1
   interactionRange: 1
-  plantPrefabs:
-  - {fileID: 5088195311929033051, guid: a81b031299a76f84895fb70bea59e847, type: 3}
-  - {fileID: 5088195311929033051, guid: fd428aa11f9dba249a4792413cbc51a8, type: 3}
-  - {fileID: 3532521775650770915, guid: 233753cb8a22f264e9194981a389c5e1, type: 3}
-  - {fileID: 5393942059564119705, guid: 5456565020e5e5249bd906081ed42729, type: 3}
-  neededSeeds:
-  - {fileID: 11400000, guid: e02fa3d96058684408429518353c41c5, type: 2}
-  - {fileID: 11400000, guid: b3643d2c30a9ae0438aa7e1dee28be0f, type: 2}
-  - {fileID: 11400000, guid: 89328f8d26f02584c89f5d0b274892cb, type: 2}
-  - {fileID: 11400000, guid: 1531e6e0d2a07bf4aa887e86d410a6e7, type: 2}
+  rayLength: 10
+  maxInteractionRange: 3
+  healthMax: 100
+  currGridSystem: {fileID: 0}
+  rayStartingPoint: {fileID: 6481439652483190483}
+  lastInput: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  timeSinceAttackPressed: 999
+  invulnerableTimestamp: 0
   animator: {fileID: 4033709399600204765}
   sword: {fileID: 1510715506965206046}
   playerAnimEvents: {fileID: 6072969647759613369}
-  rayLength: 10
-  rayStartingPoint: {fileID: 6481439652483190483}
-  invulnerableTimestamp: 0
-  hitPoints: 100
-  hitPointsMax: 100
-  OnPlantChanged:
+  Controller: {fileID: 0}
+  cameraTarget: {fileID: 8942417642696358574}
+  OnSelectedItemChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!143 &271673070562000943
@@ -293,6 +293,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6325677826827988052}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8942417642696358574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6157548196224193099}
+  m_Layer: 0
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6157548196224193099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8942417642696358574}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
