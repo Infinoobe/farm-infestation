@@ -71,10 +71,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: 7751397996869009878, guid: ee594d25ef4f0fb44910ea3b32a4a685, type: 2}
+  m_Graph: {fileID: 790040139665602247, guid: 447da3355c0685b42b3943b7b950e3e1, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 495608797258318165
-  m_OriginalGraph: {fileID: 7751397996869009878, guid: ee594d25ef4f0fb44910ea3b32a4a685, type: 2}
+  - rid: 8656526911138169689
+  - rid: 8656526911138169690
+  m_OriginalGraph: {fileID: 790040139665602247, guid: 447da3355c0685b42b3943b7b950e3e1, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -88,6 +90,22 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 6715690679636976095}
+    - rid: 8656526911138169689
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1043524593113865123
+          m_Value1: 13153120204766412182
+        Name: PlayerInterruptRange
+        m_Value: 2
+    - rid: 8656526911138169690
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15023480374583106184
+          m_Value1: 6330133341334805578
+        Name: PlayerPursueRange
+        m_Value: 5
 --- !u!136 &5606071795611371149
 CapsuleCollider:
   m_ObjectHideFlags: 0

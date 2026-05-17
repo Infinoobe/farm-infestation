@@ -164,7 +164,7 @@ MonoBehaviour:
   AttackRange: 1
   currHealth: 100
   damage: 10
-  enemyAttractionFactor: 1
+  enemyAttractionFactor: 0.7
   interactionRange: 1
   rayLength: 10
   maxInteractionRange: 3
